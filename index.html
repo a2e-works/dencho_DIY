@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>電帳DIY ─ デモ版(体験版)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #F3EEE2;
+    --paper-line: #D9D2C0;
+    --ink: #1F3252;
+    --ink-soft: #4A5A78;
+    --stamp: #B7472A;
+    --stamp-soft: #E8C9BF;
+    --gray: #6B6558;
+    --ok: #3E6B4F;
+    --card: #FBF9F3;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      repeating-linear-gradient(180deg, transparent, transparent 35px, var(--paper-line) 35px, var(--paper-line) 36px),
+      var(--paper);
+    font-family:'Noto Sans JP', sans-serif;
+    color:var(--ink);
+    min-height:100vh;
+    padding:0 0 80px 0;
+  }
+  .wrap{max-width:760px; margin:0 auto; padding:0 20px;}
+
+  header{
+    padding:56px 0 28px 0;
+    position:relative;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:.14em;
+    color:var(--stamp);
+    font-weight:700;
+    margin-bottom:10px;
+  }
+  h1{
+    font-family:'Shippori Mincho', serif;
+    font-size:clamp(28px, 5vw, 42px);
+    line-height:1.4;
+    margin:0 0 14px 0;
+    font-weight:700;
+  }
+  .lead{
+    font-size:15px;
+    color:var(--ink-soft);
+    line-height:1.9;
+    max-width:56ch;
+  }
+
+  .newsbar{
+    margin-top:26px;
+    border:1px solid var(--paper-line);
+    background:var(--card);
+    border-radius:2px;
+    overflow:hidden;
+  }
+  .newsbar-head{
+    display:flex; align-items:center; gap:8px;
+    padding:9px 14px;
+    background:var(--ink);
+    color:var(--paper);
+    font-size:12px;
+    letter-spacing:.08em;
+    font-weight:700;
+  }
+  .newsbar-head .dot{
+    width:6px;height:6px;border-radius:50%;
+    background:var(--stamp);
+    animation:pulse 1.8s infinite;
+  }
+  @keyframes pulse{
+    0%,100%{opacity:1;} 50%{opacity:.25;}
+  }
+  .news-item{
+    padding:12px 14px;
+    border-top:1px dashed var(--paper-line);
+    font-size:13.5px;
+    line-height:1.7;
+    color:var(--ink-soft);
+  }
+  .news-item:first-of-type{border-top:none;}
+  .news-item b{color:var(--ink); font-weight:700;}
+  .news-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    padding:1px 6px;
+    border:1px solid var(--stamp);
+    color:var(--stamp);
+    border-radius:2px;
+    margin-right:8px;
+    vertical-align:1px;
+  }
+
+  section{margin-top:44px;}
+  .section-title{
+    font-family:'Shippori Mincho', serif;
+    font-size:19px;
+    font-weight:700;
+    display:flex; align-items:baseline; gap:10px;
+    margin-bottom:16px;
+  }
+  .section-title .no{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--stamp);
+  }
+
+  .ledger-card{
+    background:var(--card);
+    border:1px solid var(--paper-line);
+    border-radius:3px;
+    padding:28px;
+    position:relative;
+    box-shadow:0 1px 0 var(--paper-line);
+  }
+
+  .dropzone{
+    border:2px dashed var(--paper-line);
+    border-radius:3px;
+    padding:40px 20px;
+    text-align:center;
+    cursor:pointer;
+    transition:border-color .2s, background .2s;
+    background:repeating-linear-gradient(180deg, transparent, transparent 27px, #eee7d6 27px, #eee7d6 28px);
+  }
+  .dropzone.drag{
+    border-color:var(--stamp);
+    background-color:#FBF2ED;
+  }
+  .dropzone .icon{font-size:30px; margin-bottom:10px;}
+  .dropzone .main{font-size:14.5px; color:var(--ink); font-weight:500;}
+  .dropzone .sub{font-size:12px; color:var(--gray); margin-top:6px;}
+  .dz-buttons{
+    display:flex; gap:10px; justify-content:center; flex-wrap:wrap;
+    margin-top:20px;
+  }
+  .dz-btn{
+    font-family:'Noto Sans JP', sans-serif;
+    font-size:13px;
+    font-weight:700;
+    padding:10px 18px;
+    border-radius:2px;
+    border:1px solid var(--ink);
+    background:var(--ink);
+    color:var(--paper);
+    cursor:pointer;
+    transition:opacity .15s, transform .1s;
+  }
+  .dz-btn.ghost{
+    background:#fff;
+    color:var(--ink);
+  }
+  .dz-btn:hover{opacity:.82;}
+  .dz-btn:active{transform:scale(.97);}
+  input[type=file]{display:none;}
+
+  .status-line{
+    display:flex; align-items:center; gap:10px;
+    font-size:13px; color:var(--ink-soft);
+    margin-top:16px;
+    min-height:20px;
+  }
+  .spinner{
+    width:13px; height:13px; border-radius:50%;
+    border:2px solid var(--paper-line);
+    border-top-color:var(--stamp);
+    animation:spin .8s linear infinite;
+    display:none;
+  }
+  .spinner.on{display:inline-block;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  .result{
+    margin-top:22px;
+    display:none;
+    position:relative;
+  }
+  .result.show{display:block;}
+
+  .stamp{
+    position:absolute;
+    top:-14px; right:-6px;
+    width:84px; height:84px;
+    border:3px solid var(--stamp);
+    border-radius:50%;
+    color:var(--stamp);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+    font-size:15px;
+    transform:rotate(-14deg) scale(0);
+    opacity:0;
+    letter-spacing:.1em;
+    background:rgba(255,255,255,.5);
+    mix-blend-mode:multiply;
+  }
+  .stamp.pop{
+    animation:stampIn .45s cubic-bezier(.2,1.4,.4,1) forwards;
+  }
+  @keyframes stampIn{
+    0%{transform:rotate(-14deg) scale(2.2); opacity:0;}
+    60%{transform:rotate(-14deg) scale(.92); opacity:1;}
+    100%{transform:rotate(-14deg) scale(1); opacity:1;}
+  }
+
+  .field-grid{
+    display:grid;
+    grid-template-columns:88px 1fr;
+    gap:10px 14px;
+    align-items:center;
+  }
+  .field-label{
+    font-size:12.5px; color:var(--gray); font-weight:500;
+  }
+  .field-input{
+    font-family:'JetBrains Mono', monospace;
+    font-size:14.5px;
+    padding:9px 10px;
+    border:1px solid var(--paper-line);
+    border-radius:2px;
+    background:#fff;
+    color:var(--ink);
+    width:100%;
+  }
+  .field-input:focus{outline:2px solid var(--ink-soft); outline-offset:1px;}
+
+  .filename-preview{
+    margin-top:18px;
+    padding:12px 14px;
+    background:#fff;
+    border:1px solid var(--paper-line);
+    border-radius:2px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px;
+    color:var(--ink);
+    word-break:break-all;
+  }
+  .filename-preview .tag{
+    display:block;
+    font-family:'Noto Sans JP', sans-serif;
+    font-size:11px;
+    color:var(--gray);
+    margin-bottom:4px;
+  }
+
+  .actions{
+    margin-top:18px;
+    display:flex; gap:10px; flex-wrap:wrap;
+  }
+  button{
+    font-family:'Noto Sans JP', sans-serif;
+    font-size:13.5px;
+    font-weight:700;
+    padding:11px 20px;
+    border-radius:2px;
+    border:1px solid var(--ink);
+    background:var(--ink);
+    color:var(--paper);
+    cursor:pointer;
+    transition:opacity .15s;
+  }
+  button.ghost{
+    background:transparent;
+    color:var(--ink);
+  }
+  button:hover{opacity:.85;}
+  button:disabled{opacity:.35; cursor:not-allowed;}
+
+  .quota{
+    margin-top:14px;
+    font-size:12px;
+    color:var(--gray);
+  }
+  .quota b{color:var(--stamp);}
+
+  .savedir-row{
+    display:flex; align-items:center; justify-content:space-between; gap:14px;
+    flex-wrap:wrap;
+  }
+  .savedir-label{font-size:11.5px; color:var(--gray); margin-bottom:3px;}
+  .savedir-path{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13.5px;
+    color:var(--ink);
+    word-break:break-all;
+  }
+  .savedir-path.set{color:var(--ok);}
+  .savedir-note{
+    font-size:11.5px; color:var(--gray); line-height:1.7;
+    margin:14px 0 0 0;
+  }
+
+  .edit-hint{
+    font-size:11.5px; color:var(--gray); margin:10px 0 0 0;
+  }
+
+  .preview-row{
+    display:flex; align-items:center; gap:14px;
+    margin-bottom:18px;
+    padding-bottom:16px;
+    border-bottom:1px dashed var(--paper-line);
+  }
+  .thumb-img{
+    width:64px; height:84px;
+    object-fit:cover;
+    border:1px solid var(--paper-line);
+    border-radius:2px;
+    background:#fff;
+    box-shadow:0 1px 3px rgba(0,0,0,.08);
+  }
+  .preview-caption{
+    font-size:13px; color:var(--ok); font-weight:700; line-height:1.6;
+  }
+  .preview-caption span{
+    display:block; font-size:11.5px; color:var(--gray); font-weight:500;
+    font-family:'JetBrains Mono', monospace;
+  }
+  .open-link{
+    display:inline-block;
+    margin-top:6px;
+    background:none; border:none; padding:0;
+    font-family:'Noto Sans JP', sans-serif;
+    font-size:12px; font-weight:700;
+    color:var(--ink-soft);
+    text-decoration:underline;
+    cursor:pointer;
+  }
+  .open-link:hover{color:var(--stamp);}
+
+  .rule-desc{
+    font-size:12.5px; color:var(--gray); line-height:1.8; margin:0 0 16px 0;
+  }
+  .rule-options{
+    display:flex; flex-direction:column; gap:10px;
+    margin-bottom:16px;
+  }
+  .rule-radio{
+    display:flex; align-items:baseline; gap:9px;
+    font-size:13.5px; color:var(--ink);
+    cursor:pointer;
+  }
+  .rule-radio input{accent-color:var(--stamp);}
+  .rule-radio em{
+    font-style:normal; color:var(--gray); font-size:12px;
+    font-family:'JetBrains Mono', monospace;
+  }
+  .rule-checkbox{
+    display:flex; align-items:center; gap:9px;
+    font-size:13px; color:var(--ink);
+    padding-top:12px; border-top:1px dashed var(--paper-line);
+    cursor:pointer;
+  }
+  .rule-checkbox input{accent-color:var(--stamp);}
+
+  .statement-toggle{
+    margin-top:16px;
+    padding-top:14px;
+    border-top:1px dashed var(--paper-line);
+  }
+  .statement-note{
+    margin-top:10px;
+    padding:12px 14px;
+    background:#FBF2ED;
+    border:1px solid var(--stamp-soft);
+    border-radius:2px;
+    font-size:12px;
+    line-height:1.8;
+    color:var(--ink-soft);
+  }
+  .statement-note b{color:var(--stamp);}
+
+  .learn-desc{
+    font-size:12.5px; color:var(--gray); margin:0 0 14px 0; line-height:1.7;
+  }
+  .learn-list{display:flex; flex-direction:column; gap:8px;}
+  .learn-empty{font-size:12.5px; color:var(--gray);}
+  .learn-item{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    padding:9px 12px;
+    background:#fff;
+    border:1px solid var(--paper-line);
+    border-radius:2px;
+    font-size:13px;
+  }
+  .learn-item .arrow{color:var(--gray); margin:0 8px;}
+  .learn-item .from{color:var(--gray); font-family:'JetBrains Mono', monospace; font-size:12px;}
+  .learn-item .to{color:var(--ink); font-weight:700;}
+  .learn-del{
+    background:none; border:none; color:var(--stamp); cursor:pointer;
+    font-size:16px; padding:0 4px; font-weight:700;
+  }
+
+  .limit-card{
+    margin-top:18px;
+    padding:20px;
+    border:1px solid var(--stamp-soft);
+    background:#FBF2ED;
+    border-radius:3px;
+    display:none;
+  }
+  .limit-card.show{display:block;}
+  .limit-card h3{
+    font-family:'Shippori Mincho', serif;
+    font-size:16px;
+    margin:0 0 8px 0;
+    color:var(--stamp);
+  }
+  .limit-card p{
+    font-size:13px; line-height:1.8; color:var(--ink-soft); margin:0 0 12px 0;
+  }
+  .price-badge{
+    display:inline-flex; align-items:baseline; gap:4px;
+    font-family:'JetBrains Mono', monospace;
+    font-weight:700;
+    color:var(--ink);
+  }
+  .price-badge .yen{font-size:20px;}
+  .price-badge .unit{font-size:11px; color:var(--gray); font-weight:500;}
+
+  .compare-table{
+    width:100%; border-collapse:collapse; margin-top:8px; font-size:13px;
+  }
+  .compare-table th, .compare-table td{
+    text-align:left; padding:9px 10px; border-bottom:1px solid var(--paper-line);
+  }
+  .compare-table th{color:var(--gray); font-weight:500; font-size:11.5px;}
+  .compare-table td.center, .compare-table th.center{text-align:center;}
+  .ok-mark{color:var(--ok); font-weight:700;}
+  .no-mark{color:var(--gray);}
+
+  footer{
+    margin-top:60px;
+    padding-top:20px;
+    border-top:1px dashed var(--paper-line);
+    font-size:11.5px;
+    color:var(--gray);
+    line-height:1.9;
+  }
+  footer b{color:var(--ink-soft);}
+
+  @media (max-width:480px){
+    .field-grid{grid-template-columns:70px 1fr;}
+    .ledger-card{padding:20px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">DEMO · 体験版 · 処理はすべてブラウザ内で完結</div>
+    <h1>電帳DIY</h1>
+    <p class="lead">
+      レシート・請求書・払込用紙を、撮る・貼るだけで。日付と取引先、金額を読み取り、
+      帳簿に残せる形にファイル名を整えます。
+    </p>
+
+    <div class="newsbar">
+      <div class="newsbar-head"><span class="dot"></span> 制度アップデート</div>
+      <div class="news-item">
+        <span class="news-tag">2026.10〜</span>
+        <b>2割特例が今年9月末で終了予定。</b>個人事業主向けの3割特例が新設される見込みで、免税事業者からの仕入に対する控除割合も段階的に縮小されます。記帳・証憑保存の重要性は今後さらに増していきます。
+      </div>
+      <div class="news-item">
+        <span class="news-tag">継続対応</span>
+        制度改正のたびに、判定ロジックや対応フォーマットを見直しています。本ツールは正式版でアップデートを継続提供する予定です。
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="section-title"><span class="no">01</span> 保存先を設定する</div>
+    <div class="ledger-card">
+      <div class="savedir-row">
+        <div class="savedir-info">
+          <div class="savedir-label">現在の保存先</div>
+          <div class="savedir-path" id="savedirPath">未設定(保存のたびにダウンロードフォルダへ)</div>
+        </div>
+        <button type="button" class="dz-btn ghost" id="btnSetDir">📂 フォルダを設定</button>
+      </div>
+      <p class="savedir-note" id="savedirNote">
+        一度フォルダを選ぶと、次回以降は確認なしでそのフォルダに保存されます。
+        (この機能はChrome/Edgeで、https経由の公開ページを開いた場合のみ使えます)
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title"><span class="no">02</span> 命名ルールを設定する</div>
+    <div class="ledger-card">
+      <p class="rule-desc">
+        電子帳簿保存法の検索要件は「取引年月日・取引先・取引金額」をファイル名から
+        判別できることを求めています。並び順と書類種類の有無を選べます。
+      </p>
+
+      <div class="rule-options" id="ruleOptions">
+        <label class="rule-radio">
+          <input type="radio" name="namingRule" value="date_vendor_amount" checked>
+          <span>取引年月日_取引先_取引金額 <em>(2026-08-20_ENEOS練馬給油所_3825円)</em></span>
+        </label>
+        <label class="rule-radio">
+          <input type="radio" name="namingRule" value="vendor_date_amount">
+          <span>取引先_取引年月日_取引金額 <em>(ENEOS練馬給油所_2026-08-20_3825円)</em></span>
+        </label>
+        <label class="rule-radio">
+          <input type="radio" name="namingRule" value="amount_date_vendor">
+          <span>取引金額_取引年月日_取引先 <em>(3825円_2026-08-20_ENEOS練馬給油所)</em></span>
+        </label>
+      </div>
+
+      <label class="rule-checkbox">
+        <input type="checkbox" id="includeDocType">
+        <span>書類の種類をファイル名に含める</span>
+      </label>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title"><span class="no">03</span> 証憑を読み込む</div>
+    <div class="ledger-card">
+
+      <div class="dropzone" id="dropzone">
+        <div class="icon">📎</div>
+        <div class="main">画像またはPDFをドラッグ&ドロップ</div>
+        <div class="sub">レシート写真・請求書PDF・スクリーンショットに対応(デモ版)</div>
+        <div class="dz-buttons">
+          <button type="button" class="dz-btn" id="btnCamera">📷 カメラで撮影</button>
+          <button type="button" class="dz-btn ghost" id="btnPick">📁 ファイルを選択(画像・PDF)</button>
+        </div>
+        <input type="file" id="fileInput" accept="image/*,application/pdf">
+        <input type="file" id="cameraInput" accept="image/*" capture="environment">
+      </div>
+
+      <div class="status-line">
+        <span class="spinner" id="spinner"></span>
+        <span id="statusText"></span>
+      </div>
+
+      <div class="quota" id="quotaText"></div>
+
+      <div class="result" id="result">
+        <div class="stamp" id="stamp">受理</div>
+
+        <div class="preview-row">
+          <img id="thumbImg" class="thumb-img" alt="読み込んだ証憑のプレビュー">
+          <div class="preview-caption">
+            ✓ 読み込み完了<br>
+            <span id="thumbFilename"></span>
+            <button type="button" class="open-link" id="btnOpenOriginal">元のファイルを開く ↗</button>
+          </div>
+        </div>
+
+        <div class="field-grid">
+          <div class="field-label">取引年月日</div>
+          <input class="field-input" id="fDate" placeholder="例:2026-08-20">
+          <div class="field-label">取引先</div>
+          <input class="field-input" id="fVendor" placeholder="例:〇〇商店">
+          <div class="field-label">金額</div>
+          <input class="field-input" id="fAmount" placeholder="例:1200">
+          <div class="field-label" id="docTypeLabel" style="display:none;">書類種類</div>
+          <select class="field-input" id="fDocType" style="display:none;">
+            <option value="領収書">領収書</option>
+            <option value="請求書">請求書</option>
+            <option value="明細書">明細書</option>
+            <option value="納品書">納品書</option>
+            <option value="その他">その他</option>
+          </select>
+          <div class="field-label" id="withdrawalLabel" style="display:none;">引落(予定)日</div>
+          <input class="field-input" id="fWithdrawal" style="display:none;" placeholder="例:2026-09-10">
+        </div>
+        <p class="edit-hint">↑ 内容は自由に修正できます。取引先名を修正すると、次回以降その表記を学習します。</p>
+
+        <label class="rule-checkbox statement-toggle">
+          <input type="checkbox" id="isStatement">
+          <span>これはカード明細など、複数の取引をまとめた証憑です</span>
+        </label>
+        <p class="statement-note" id="statementNote" style="display:none;">
+          発生主義の原則上、帳簿への計上日は「購入・サービス利用日」(レシート記載日、
+          またはレシートがない場合は明細内の各取引の利用日)を使用します。
+          <b>引落日は計上日として使わず</b>、「未払金の決済日」として別途記録してください。
+          電子帳簿保存法上、この明細ファイル自体は分割せず1ファイルのまま保存するのが原則です。
+        </p>
+
+        <div class="filename-preview">
+
+          <span class="tag">推奨ファイル名(上記の命名ルール設定を反映)</span>
+          <span id="filenamePreview">-</span>
+        </div>
+
+        <div class="actions">
+          <button id="btnSave">この内容で保存する</button>
+          <button class="ghost" id="btnReset">別の証憑を読み込む</button>
+        </div>
+      </div>
+
+      <div class="limit-card" id="limitCard">
+        <h3>体験版は10件までです</h3>
+        <p>
+          正式版では件数無制限に加え、命名ルールの自由編集・勘定科目の自動サジェスト・
+          インボイス番号のチェック・Google Drive連携などが使えるようになります。
+          制度改正への対応も継続してアップデート予定です。
+        </p>
+        <div class="price-badge">
+          <span class="yen">¥8,000</span><span class="unit">買い切り(アップデートは都度980円)</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title"><span class="no">04</span> 学習した取引先の表記</div>
+    <div class="ledger-card">
+      <p class="learn-desc">
+        取引先名を修正すると、同じ表記が読み取られた際に自動で正しい名前に置き換えます。
+      </p>
+      <div id="learnList" class="learn-list">
+        <div class="learn-empty" id="learnEmpty">まだ学習した表記はありません。</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title"><span class="no">05</span> 体験版と正式版の違い</div>
+    <div class="ledger-card">
+      <table class="compare-table">
+        <tr><th></th><th class="center">体験版</th><th class="center">正式版(予定)</th></tr>
+        <tr><td>画像・PDFの読み取り</td><td class="center ok-mark">○</td><td class="center ok-mark">○(高精度)</td></tr>
+        <tr><td>ファイル名の自動生成</td><td class="center ok-mark">テンプレートから選択</td><td class="center ok-mark">完全自由編集・複数プリセット保存</td></tr>
+        <tr><td>1回に処理できる件数</td><td class="center">10件まで</td><td class="center ok-mark">無制限</td></tr>
+        <tr><td>払込用紙(電気・税金等)の判定</td><td class="center no-mark">検出のみ</td><td class="center ok-mark">内容まで判定</td></tr>
+        <tr><td>勘定科目の自動サジェスト</td><td class="center no-mark">─</td><td class="center ok-mark">○</td></tr>
+        <tr><td>インボイス番号チェック</td><td class="center no-mark">─</td><td class="center ok-mark">○</td></tr>
+        <tr><td>Google Drive連携</td><td class="center no-mark">─</td><td class="center ok-mark">○</td></tr>
+        <tr><td>ローカルフォルダ保存</td><td class="center ok-mark">○(Chrome)</td><td class="center ok-mark">○(Chrome)</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    本デモはサンプルです。画像・PDFの解析処理はすべてお使いのブラウザ内で完結し、<b>証憑データが外部サーバーへ送信されることはありません。</b>
+    読み取り精度は体験版仕様のため、正式版より低く設定しています。ご相談・お問い合わせはサービスページのメッセージ機能よりお願いいたします。
+  </footer>
+
+</div>
+
+<script src="lib/pdf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc = "lib/pdf.worker.min.js";
+
+const MAX_FREE = 10;
+const TESTING_MODE = true; // ← テスト中はtrue。公開時はfalseに戻す(10件制限が復活します)
+const dropzone = document.getElementById('dropzone');
+const fileInput = document.getElementById('fileInput');
+const statusText = document.getElementById('statusText');
+const spinner = document.getElementById('spinner');
+const result = document.getElementById('result');
+const stampEl = document.getElementById('stamp');
+const quotaText = document.getElementById('quotaText');
+const limitCard = document.getElementById('limitCard');
+const fDate = document.getElementById('fDate');
+const fVendor = document.getElementById('fVendor');
+const fAmount = document.getElementById('fAmount');
+const filenamePreview = document.getElementById('filenamePreview');
+const btnSave = document.getElementById('btnSave');
+const btnReset = document.getElementById('btnReset');
+
+let currentFile = null;
+let currentExt = 'txt';
+let lastRawVendor = '';
+let savedDirHandle = null;
+
+/* ---------- IndexedDBでフォルダのハンドルを保存 ---------- */
+function idbOpen(){
+  return new Promise((resolve, reject)=>{
+    const req = indexedDB.open('denshou-db', 1);
+    req.onupgradeneeded = ()=> req.result.createObjectStore('handles');
+    req.onsuccess = ()=> resolve(req.result);
+    req.onerror = ()=> reject(req.error);
+  });
+}
+async function idbSet(key, val){
+  const db = await idbOpen();
+  return new Promise((resolve, reject)=>{
+    const tx = db.transaction('handles', 'readwrite');
+    tx.objectStore('handles').put(val, key);
+    tx.oncomplete = resolve;
+    tx.onerror = ()=> reject(tx.error);
+  });
+}
+async function idbGet(key){
+  const db = await idbOpen();
+  return new Promise((resolve, reject)=>{
+    const tx = db.transaction('handles', 'readonly');
+    const req = tx.objectStore('handles').get(key);
+    req.onsuccess = ()=> resolve(req.result);
+    req.onerror = ()=> reject(req.error);
+  });
+}
+
+const savedirPath = document.getElementById('savedirPath');
+const savedirNote = document.getElementById('savedirNote');
+const btnSetDir = document.getElementById('btnSetDir');
+
+async function refreshSavedirUI(){
+  if(savedDirHandle){
+    savedirPath.textContent = `📁 ${savedDirHandle.name}`;
+    savedirPath.classList.add('set');
+    btnSetDir.textContent = '📂 フォルダを変更';
+  } else {
+    savedirPath.textContent = '未設定(保存のたびにダウンロードフォルダへ)';
+    savedirPath.classList.remove('set');
+    btnSetDir.textContent = '📂 フォルダを設定';
+  }
+}
+
+(async function initSavedir(){
+  if(!('showDirectoryPicker' in window)){
+    btnSetDir.disabled = true;
+    savedirNote.textContent = 'お使いのブラウザ、または file:// で直接開いている場合はこの機能を利用できません。GitHub Pages等で公開後、Chrome/Edgeでお試しください。';
+    return;
+  }
+  try{
+    const handle = await idbGet('saveDir');
+    if(handle){
+      const perm = await handle.queryPermission({mode:'readwrite'});
+      if(perm === 'granted'){
+        savedDirHandle = handle;
+      }
+    }
+  }catch(e){ /* 何もしない(未設定として扱う) */ }
+  refreshSavedirUI();
+})();
+
+btnSetDir.addEventListener('click', async ()=>{
+  try{
+    const handle = await window.showDirectoryPicker();
+    const perm = await handle.requestPermission({mode:'readwrite'});
+    if(perm !== 'granted'){
+      setStatus('フォルダへの書き込み許可が得られませんでした。', false);
+      return;
+    }
+    savedDirHandle = handle;
+    await idbSet('saveDir', handle);
+    refreshSavedirUI();
+  }catch(e){
+    if(e.name !== 'AbortError') console.error(e);
+  }
+});
+
+/* ---------- 取引先の学習(表記ゆれの補正) ---------- */
+function getLearnMap(){
+  try{ return JSON.parse(localStorage.getItem('denshou_vendor_learn') || '{}'); }
+  catch(e){ return {}; }
+}
+function setLearnMap(map){
+  localStorage.setItem('denshou_vendor_learn', JSON.stringify(map));
+}
+function applyLearnedVendor(rawText, guess){
+  const map = getLearnMap();
+  const lowerText = rawText.toLowerCase();
+  for(const key in map){
+    if(key && lowerText.includes(key.toLowerCase())){
+      return map[key];
+    }
+  }
+  return guess;
+}
+function learnVendorIfEdited(){
+  const edited = fVendor.value.trim();
+  const raw = (lastRawVendor || '').trim();
+  if(!raw || !edited || raw === edited) return;
+  const map = getLearnMap();
+  map[raw] = edited;
+  setLearnMap(map);
+  renderLearnList();
+}
+
+const learnList = document.getElementById('learnList');
+const learnEmpty = document.getElementById('learnEmpty');
+function renderLearnList(){
+  const map = getLearnMap();
+  const keys = Object.keys(map);
+  learnList.querySelectorAll('.learn-item').forEach(el=>el.remove());
+  learnEmpty.style.display = keys.length ? 'none' : 'block';
+  keys.forEach(rawKey=>{
+    const row = document.createElement('div');
+    row.className = 'learn-item';
+    row.innerHTML = `<span><span class="from"></span><span class="arrow">→</span><span class="to"></span></span>`;
+    row.querySelector('.from').textContent = rawKey;
+    row.querySelector('.to').textContent = map[rawKey];
+    const del = document.createElement('button');
+    del.className = 'learn-del';
+    del.textContent = '✕';
+    del.addEventListener('click', ()=>{
+      const m = getLearnMap();
+      delete m[rawKey];
+      setLearnMap(m);
+      renderLearnList();
+    });
+    row.appendChild(del);
+    learnList.appendChild(row);
+  });
+}
+renderLearnList();
+
+function getUsedCount(){
+  return parseInt(localStorage.getItem('denshou_used') || '0', 10);
+}
+function setUsedCount(n){
+  localStorage.setItem('denshou_used', String(n));
+}
+function refreshQuota(){
+  if(TESTING_MODE){
+    quotaText.innerHTML = `<b style="color:var(--ok)">テストモード:回数制限なし</b>`;
+    limitCard.classList.remove('show');
+    dropzone.style.pointerEvents = '';
+    dropzone.style.opacity = '';
+    return;
+  }
+  const used = getUsedCount();
+  const remain = Math.max(0, MAX_FREE - used);
+  quotaText.innerHTML = `体験版の残り利用回数: <b>${remain} / ${MAX_FREE}</b>`;
+  if(remain <= 0){
+    limitCard.classList.add('show');
+    dropzone.style.pointerEvents = 'none';
+    dropzone.style.opacity = '0.4';
+  }
+}
+refreshQuota();
+
+['dragenter','dragover'].forEach(ev=>{
+  dropzone.addEventListener(ev, e=>{
+    e.preventDefault(); e.stopPropagation();
+    dropzone.classList.add('drag');
+  });
+});
+['dragleave','drop'].forEach(ev=>{
+  dropzone.addEventListener(ev, e=>{
+    e.preventDefault(); e.stopPropagation();
+    dropzone.classList.remove('drag');
+  });
+});
+dropzone.addEventListener('drop', e=>{
+  const f = e.dataTransfer.files[0];
+  if(f) handleFile(f);
+});
+
+const btnCamera = document.getElementById('btnCamera');
+const btnPick = document.getElementById('btnPick');
+const cameraInput = document.getElementById('cameraInput');
+
+btnCamera.addEventListener('click', e=>{
+  e.stopPropagation();
+  if(!TESTING_MODE && getUsedCount() >= MAX_FREE) return;
+  cameraInput.click();
+});
+btnPick.addEventListener('click', e=>{
+  e.stopPropagation();
+  if(!TESTING_MODE && getUsedCount() >= MAX_FREE) return;
+  fileInput.click();
+});
+cameraInput.addEventListener('change', e=>{
+  const f = e.target.files[0];
+  if(f) handleFile(f);
+});
+fileInput.addEventListener('change', e=>{
+  const f = e.target.files[0];
+  if(f) handleFile(f);
+});
+
+const btnOpenOriginal = document.getElementById('btnOpenOriginal');
+btnOpenOriginal.addEventListener('click', ()=>{
+  if(!currentFile) return;
+  const url = URL.createObjectURL(currentFile);
+  window.open(url, '_blank');
+  // 開いたタブ側でファイルを表示し終える時間を考慮し、少し遅らせて解放
+  setTimeout(()=> URL.revokeObjectURL(url), 60000);
+});
+
+/* ---------- カード明細モード ---------- */
+const isStatement = document.getElementById('isStatement');
+const statementNote = document.getElementById('statementNote');
+const fieldLabels = document.querySelectorAll('.field-grid .field-label');
+const withdrawalLabel = document.getElementById('withdrawalLabel');
+const fWithdrawal = document.getElementById('fWithdrawal');
+// fieldLabels[0]=取引年月日, [1]=取引先, [2]=金額, [3]=書類種類, [4]=引落(予定)日
+
+isStatement.addEventListener('change', ()=>{
+  statementNote.style.display = isStatement.checked ? 'block' : 'none';
+  withdrawalLabel.style.display = isStatement.checked ? '' : 'none';
+  fWithdrawal.style.display = isStatement.checked ? '' : 'none';
+
+  if(isStatement.checked){
+    fieldLabels[0].textContent = '対象期間の締め日';
+    fieldLabels[1].textContent = 'カード会社名';
+    fieldLabels[2].textContent = '合計請求額';
+    fAmount.placeholder = '例:合計請求額';
+    if(!includeDocType.checked){
+      includeDocType.checked = true;
+      docTypeLabel.style.display = '';
+      fDocType.style.display = '';
+    }
+    fDocType.value = '明細書';
+    saveNamingSettings();
+  } else {
+    fieldLabels[0].textContent = '取引年月日';
+    fieldLabels[1].textContent = '取引先';
+    fieldLabels[2].textContent = '金額';
+    fAmount.placeholder = '例:1200';
+    fWithdrawal.value = '';
+  }
+  updatePreview();
+});
+
+function setStatus(msg, spinning){
+  statusText.textContent = msg;
+  spinner.classList.toggle('on', !!spinning);
+}
+
+async function renderThumbnail(file){
+  const thumbImg = document.getElementById('thumbImg');
+  if(file.type === 'application/pdf'){
+    const buf = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({data: buf}).promise;
+    const page = await pdf.getPage(1);
+    const viewport = page.getViewport({scale: 0.4});
+    const canvas = document.createElement('canvas');
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+    await page.render({canvasContext: canvas.getContext('2d'), viewport}).promise;
+    thumbImg.src = canvas.toDataURL('image/png');
+  } else {
+    thumbImg.src = await new Promise(res=>{
+      const reader = new FileReader();
+      reader.onload = () => res(reader.result);
+      reader.readAsDataURL(file);
+    });
+  }
+}
+
+async function handleFile(file){
+  if(!TESTING_MODE && getUsedCount() >= MAX_FREE) return;
+  currentFile = file;
+  currentExt = (file.name.split('.').pop() || 'txt').toLowerCase();
+  result.classList.remove('show');
+  stampEl.classList.remove('pop');
+
+  try{
+    let text = '';
+    if(file.type === 'application/pdf'){
+      text = await extractFromPdf(file);
+    } else {
+      text = await extractFromImage(file);
+    }
+    await renderThumbnail(file);
+    document.getElementById('thumbFilename').textContent = file.name;
+    const parsed = parseText(text);
+    fDate.value = parsed.date;
+    fVendor.value = parsed.vendor;
+    fAmount.value = parsed.amount;
+    updatePreview();
+
+    result.classList.add('show');
+    requestAnimationFrame(()=> stampEl.classList.add('pop'));
+
+    const used = getUsedCount() + 1;
+    setUsedCount(used);
+    refreshQuota();
+    setStatus('読み取りが完了しました。内容を確認してください。', false);
+  }catch(err){
+    console.error(err);
+    setStatus('読み取りに失敗しました。別のファイルでお試しください。', false);
+  }
+}
+
+async function extractFromPdf(file){
+  setStatus('PDFを解析しています…(テキスト情報を確認中)', true);
+  const buf = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({data: buf}).promise;
+  const page = await pdf.getPage(1);
+  const content = await page.getTextContent();
+  const text = content.items.map(it=>it.str).join('\n');
+
+  if(text.replace(/\s/g,'').length > 8){
+    // テキスト層がある場合はそのまま利用(高精度)
+    return text;
+  }
+
+  // テキスト層がない(画像埋め込み型)場合はOCRにフォールバック
+  setStatus('テキスト情報が見当たらないため、画像として読み取っています…', true);
+  const viewport = page.getViewport({scale: 2});
+  const canvas = document.createElement('canvas');
+  canvas.width = viewport.width;
+  canvas.height = viewport.height;
+  const ctx = canvas.getContext('2d');
+  await page.render({canvasContext: ctx, viewport}).promise;
+  return await ocrCanvas(canvas);
+}
+
+async function extractFromImage(file){
+  setStatus('画像を読み取っています…(体験版エンジン)', true);
+  const dataUrl = await new Promise(res=>{
+    const reader = new FileReader();
+    reader.onload = () => res(reader.result);
+    reader.readAsDataURL(file);
+  });
+  const img = new Image();
+  await new Promise(res=>{ img.onload = res; img.src = dataUrl; });
+  const canvas = document.createElement('canvas');
+  canvas.width = img.width;
+  canvas.height = img.height;
+  canvas.getContext('2d').drawImage(img, 0, 0);
+  return await ocrCanvas(canvas);
+}
+
+async function ocrCanvas(canvas){
+  const { data } = await Tesseract.recognize(canvas, 'jpn+eng', {
+    logger: m=>{
+      if(m.status === 'recognizing text'){
+        setStatus(`文字を認識しています… ${Math.round(m.progress*100)}%`, true);
+      }
+    }
+  });
+  return data.text;
+}
+
+function parseText(text){
+  // デモ版:簡易な正規表現ベースの抽出(本番版は判定ロジックを強化)
+  let date = '';
+  let amount = '';
+  let vendor = '';
+
+  const datePatterns = [
+    /(\d{4})[年\/\-](\d{1,2})[月\/\-](\d{1,2})/,
+    /(令和|平成)(\d{1,2})年(\d{1,2})月(\d{1,2})日/
+  ];
+  for(const p of datePatterns){
+    const m = text.match(p);
+    if(m){
+      if(m.length === 4 && !isNaN(m[1])){
+        date = `${m[1]}-${String(m[2]).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}`;
+      } else {
+        date = m[0];
+      }
+      break;
+    }
+  }
+
+  const amountMatches = [...text.matchAll(/[¥￥]\s?([0-9][0-9,]{2,})/g)]
+    .concat([...text.matchAll(/([0-9][0-9,]{2,})\s?円/g)]);
+  if(amountMatches.length){
+    const nums = amountMatches.map(m=>parseInt(m[1].replace(/,/g,''),10)).filter(n=>!isNaN(n));
+    if(nums.length) amount = String(Math.max(...nums));
+  }
+
+  const lines = text.split('\n').map(l=>l.trim()).filter(Boolean);
+  if(lines.length){
+    vendor = lines[0].slice(0, 20);
+  }
+
+  lastRawVendor = vendor;
+  vendor = applyLearnedVendor(text, vendor);
+
+  return {
+    date: date || '不明(手入力してください)',
+    amount: amount || '',
+    vendor: vendor || '不明(手入力してください)'
+  };
+}
+
+function sanitize(s){
+  return (s||'').replace(/[\\\/:*?"<>|]/g, '').trim() || '未設定';
+}
+
+/* ---------- 命名ルール設定(電子帳簿保存法の検索要件に準拠) ---------- */
+const docTypeLabel = document.getElementById('docTypeLabel');
+const fDocType = document.getElementById('fDocType');
+const includeDocType = document.getElementById('includeDocType');
+const ruleOptions = document.getElementById('ruleOptions');
+
+function getNamingSettings(){
+  try{
+    return JSON.parse(localStorage.getItem('denshou_naming_rule') || '{}');
+  }catch(e){ return {}; }
+}
+function saveNamingSettings(){
+  const template = document.querySelector('input[name="namingRule"]:checked').value;
+  localStorage.setItem('denshou_naming_rule', JSON.stringify({
+    template, includeType: includeDocType.checked
+  }));
+}
+(function initNamingSettings(){
+  const s = getNamingSettings();
+  if(s.template){
+    const radio = document.querySelector(`input[name="namingRule"][value="${s.template}"]`);
+    if(radio) radio.checked = true;
+  }
+  if(s.includeType){
+    includeDocType.checked = true;
+  }
+  docTypeLabel.style.display = includeDocType.checked ? '' : 'none';
+  fDocType.style.display = includeDocType.checked ? '' : 'none';
+})();
+ruleOptions.addEventListener('change', ()=>{ saveNamingSettings(); updatePreview(); });
+includeDocType.addEventListener('change', ()=>{
+  docTypeLabel.style.display = includeDocType.checked ? '' : 'none';
+  fDocType.style.display = includeDocType.checked ? '' : 'none';
+  saveNamingSettings();
+  updatePreview();
+});
+fDocType.addEventListener('change', updatePreview);
+
+function updatePreview(){
+  const template = document.querySelector('input[name="namingRule"]:checked').value;
+  const date = sanitize(fDate.value);
+  const vendor = sanitize(fVendor.value);
+  const amount = `${sanitize(fAmount.value)}円`;
+
+  let parts;
+  if(template === 'vendor_date_amount'){
+    parts = [vendor, date, amount];
+  } else if(template === 'amount_date_vendor'){
+    parts = [amount, date, vendor];
+  } else {
+    parts = [date, vendor, amount];
+  }
+  if(includeDocType.checked){
+    parts.push(sanitize(fDocType.value));
+  }
+  filenamePreview.textContent = `${parts.join('_')}.${currentExt}`;
+}
+[fDate, fVendor, fAmount].forEach(el=> el.addEventListener('input', updatePreview));
+
+btnReset.addEventListener('click', ()=>{
+  result.classList.remove('show');
+  stampEl.classList.remove('pop');
+  fileInput.value = '';
+  setStatus('', false);
+});
+
+btnSave.addEventListener('click', async ()=>{
+  if(!currentFile) return;
+  learnVendorIfEdited();
+  const filename = filenamePreview.textContent;
+
+  // ①保存先フォルダが設定済みなら、確認なしでそこへ直接保存
+  if(savedDirHandle){
+    try{
+      const perm = await savedDirHandle.queryPermission({mode:'readwrite'});
+      if(perm === 'granted' || (await savedDirHandle.requestPermission({mode:'readwrite'})) === 'granted'){
+        const fh = await savedDirHandle.getFileHandle(filename, {create:true});
+        const writable = await fh.createWritable();
+        await writable.write(currentFile);
+        await writable.close();
+        setStatus(`「${savedDirHandle.name}」フォルダへ保存しました。`, false);
+        return;
+      }
+    }catch(e){
+      console.error(e);
+      setStatus('設定済みフォルダへの保存に失敗しました。フォルダを選び直してください。', false);
+    }
+  }
+
+  // ②未設定の場合:都度フォルダを選ぶ(File System Access API)
+  if(window.showSaveFilePicker){
+    try{
+      const handle = await window.showSaveFilePicker({ suggestedName: filename });
+      const writable = await handle.createWritable();
+      await writable.write(currentFile);
+      await writable.close();
+      setStatus('ローカルフォルダへ保存しました。', false);
+      return;
+    }catch(e){
+      if(e.name === 'AbortError') return;
+    }
+  }
+
+  // ③非対応ブラウザ向けフォールバック:通常のダウンロード
+  const url = URL.createObjectURL(currentFile);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+  setStatus('ダウンロードフォルダに保存しました。', false);
+});
+</script>
+</body>
+</html>
