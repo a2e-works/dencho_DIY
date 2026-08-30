@@ -383,67 +383,20 @@
   .learn-desc{
     font-size:12.5px; color:var(--gray); margin:0 0 14px 0; line-height:1.7;
   }
-  .learn-list{display:flex; flex-direction:column; gap:10px;}
+  .learn-list{display:flex; flex-direction:column; gap:8px;}
   .learn-empty{font-size:12.5px; color:var(--gray);}
   .learn-item{
-    padding:12px 14px;
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    padding:9px 12px;
     background:#fff;
     border:1px solid var(--paper-line);
     border-radius:2px;
     font-size:13px;
   }
-  .learn-main{
-    display:flex; align-items:center; gap:8px; flex-wrap:wrap;
-    margin-bottom:8px;
-  }
-  .learn-item .arrow{color:var(--gray);}
+  .learn-item .arrow{color:var(--gray); margin:0 8px;}
   .learn-item .from{color:var(--gray); font-family:'JetBrains Mono', monospace; font-size:12px;}
-  .learn-edit-input{
-    flex:1; min-width:120px;
-    font-family:'Noto Sans JP', sans-serif;
-    font-weight:700;
-    font-size:13px;
-    color:var(--ink);
-    border:1px solid transparent;
-    border-bottom:1px dashed var(--paper-line);
-    padding:2px 4px;
-    background:transparent;
-  }
-  .learn-edit-input:focus{
-    outline:none; border-bottom-color:var(--stamp); background:#FBF9F3;
-  }
-  .learn-options{
-    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
-    padding-top:8px; border-top:1px dashed var(--paper-line);
-  }
-  .learn-checkbox-label{
-    display:flex; align-items:center; gap:6px;
-    font-size:12px; color:var(--ink-soft); cursor:pointer;
-  }
-  .learn-checkbox-label input{accent-color:var(--stamp);}
-  .learn-offset-wrap{
-    display:inline-flex; align-items:center; gap:6px;
-    font-size:12px; color:var(--ink-soft);
-  }
-  .learn-offset-input{
-    width:48px;
-    font-family:'JetBrains Mono', monospace;
-    font-size:12.5px;
-    padding:3px 6px;
-    border:1px solid var(--paper-line);
-    border-radius:2px;
-    text-align:center;
-  }
-  .learn-offset-select{
-    font-family:'Noto Sans JP', sans-serif;
-    font-size:12px;
-    padding:3px 4px;
-    border:1px solid var(--paper-line);
-    border-radius:2px;
-    background:#fff;
-  }
+  .learn-item .to{color:var(--ink); font-weight:700;}
   .learn-del{
-    margin-left:auto;
     background:none; border:none; color:var(--stamp); cursor:pointer;
     font-size:16px; padding:0 4px; font-weight:700;
   }
@@ -534,7 +487,7 @@
           <div class="savedir-label">現在の保存先</div>
           <div class="savedir-path" id="savedirPath">未設定(保存のたびにダウンロードフォルダへ)</div>
         </div>
-        <button type="button" class="dz-btn ghost" id="btnSetDir">📂 フォルダを設定(正式版で利用可)</button>
+        <button type="button" class="dz-btn ghost" id="btnSetDir" disabled>📂 フォルダを設定(正式版で利用可)</button>
       </div>
       <p class="savedir-note" id="savedirNote">
         体験版では保存機能を無効化しています。フォルダの自動保存・ファイルの保存は正式版(¥8,000)でご利用いただけます。
@@ -625,18 +578,16 @@
           <div class="field-label" id="withdrawalLabel" style="display:none;">引落(予定)日</div>
           <input class="field-input" id="fWithdrawal" style="display:none;" placeholder="例:2026-09-10">
         </div>
-        <p class="edit-hint">↑ 内容は自由に修正できます。取引先を確定(他の欄をクリック等)すると、次回以降その表記・明細モード・引落日数を学習します。</p>
+        <p class="edit-hint">↑ 内容は自由に修正できます。取引先名を修正すると、次回以降その表記を学習します。</p>
 
         <label class="rule-checkbox statement-toggle">
           <input type="checkbox" id="isStatement">
           <span>これはカード明細など、複数の取引をまとめた証憑です</span>
         </label>
         <p class="statement-note" id="statementNote" style="display:none;">
-          個々のレシート(発生主義の計上根拠)は「購入・サービス利用日」を取引年月日とします。
-          一方、<b>この明細ファイル自体は「未払金の決済(引落)」という取引を表すため、
-          複式簿記上は引落日を取引年月日として扱います。</b>
-          引落日は「毎月同日、非営業日なら翌営業日」という一般的なルールに基づき、
-          学習した設定から自動計算されます(04で編集可能)。
+          発生主義の原則上、帳簿への計上日は「購入・サービス利用日」(レシート記載日、
+          またはレシートがない場合は明細内の各取引の利用日)を使用します。
+          <b>引落日は計上日として使わず</b>、「未払金の決済日」として別途記録してください。
           電子帳簿保存法上、この明細ファイル自体は分割せず1ファイルのまま保存するのが原則です。
         </p>
 
@@ -647,7 +598,7 @@
         </div>
 
         <div class="actions">
-          <button id="btnSave">この内容で保存する(正式版で利用可)</button>
+          <button id="btnSave" disabled>この内容で保存する(正式版で利用可)</button>
           <button class="ghost" id="btnReset">別の証憑を読み込む</button>
         </div>
       </div>
@@ -672,8 +623,6 @@
     <div class="ledger-card">
       <p class="learn-desc">
         取引先名を修正すると、同じ表記が読み取られた際に自動で正しい名前に置き換えます。
-        「明細モード」のチェックや引落日数も一緒に記憶され、次回同じ取引先が読み取られた際に自動反映されます。
-        内容は下記で直接編集できます。
       </p>
       <div id="learnList" class="learn-list">
         <div class="learn-empty" id="learnEmpty">まだ学習した表記はありません。</div>
@@ -712,7 +661,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = "lib/pdf.worker.min.js";
 
 const MAX_FREE = 10;
 const TESTING_MODE = true; // ← テスト中はtrue。公開時はfalseに戻す(10件制限が復活します)
-const SAVE_ENABLED_FOR_TESTING = true; // ← テスト中はtrue。公開時はfalseに戻す(保存機能が無効化されます)
 const dropzone = document.getElementById('dropzone');
 const fileInput = document.getElementById('fileInput');
 const statusText = document.getElementById('statusText');
@@ -778,31 +726,14 @@ async function refreshSavedirUI(){
 }
 
 (async function initSavedir(){
-  if(!SAVE_ENABLED_FOR_TESTING){
-    // 公開版(体験版)では保存機能そのものを無効化する
-    btnSetDir.disabled = true;
-    btnSetDir.textContent = '📂 フォルダを設定(正式版で利用可)';
-    return;
-  }
-  if(!('showDirectoryPicker' in window)){
-    btnSetDir.disabled = true;
-    savedirNote.textContent = 'お使いのブラウザ、または file:// で直接開いている場合はこの機能を利用できません。GitHub Pages等で公開後、Chrome/Edgeでお試しください。';
-    return;
-  }
-  try{
-    const handle = await idbGet('saveDir');
-    if(handle){
-      const perm = await handle.queryPermission({mode:'readwrite'});
-      if(perm === 'granted'){
-        savedDirHandle = handle;
-      }
-    }
-  }catch(e){ /* 何もしない(未設定として扱う) */ }
-  refreshSavedirUI();
+  // 体験版では保存機能そのものを無効化する
+  btnSetDir.disabled = true;
+  btnSetDir.textContent = '📂 フォルダを設定(正式版で利用可)';
+  return;
 })();
 
 btnSetDir.addEventListener('click', async ()=>{
-  if(btnSetDir.disabled || !SAVE_ENABLED_FOR_TESTING) return;
+  if(btnSetDir.disabled) return;
   try{
     const handle = await window.showDirectoryPicker();
     const perm = await handle.requestPermission({mode:'readwrite'});
@@ -818,105 +749,30 @@ btnSetDir.addEventListener('click', async ()=>{
   }
 });
 
-/* ---------- 日本の祝日データ(内閣府公表、2026・2027年) ---------- */
-const JP_HOLIDAYS = new Set([
-  // 2026年(令和8年)
-  '2026-01-01','2026-01-12','2026-02-11','2026-02-23','2026-03-20',
-  '2026-04-29','2026-05-03','2026-05-04','2026-05-05','2026-05-06',
-  '2026-07-20','2026-08-11','2026-09-21','2026-09-22','2026-09-23',
-  '2026-10-12','2026-11-03','2026-11-23',
-  // 2027年(令和9年)
-  '2027-01-01','2027-01-11','2027-02-11','2027-02-23','2027-03-21',
-  '2027-03-22','2027-04-29','2027-05-03','2027-05-04','2027-05-05',
-  '2027-07-19','2027-08-11','2027-09-20','2027-09-23','2027-10-11',
-  '2027-11-03','2027-11-23'
-]);
-function isBusinessDay(dateStr){
-  const d = new Date(dateStr);
-  if(isNaN(d)) return false;
-  const day = d.getDay(); // 0=日, 6=土
-  if(day === 0 || day === 6) return false;
-  if(JP_HOLIDAYS.has(dateStr)) return false;
-  return true;
-}
-function toDateStr(d){ return d.toISOString().slice(0,10); }
-function nextBusinessDay(dateStr){
-  let d = new Date(dateStr);
-  while(!isBusinessDay(toDateStr(d))){
-    d.setDate(d.getDate() + 1);
-  }
-  return toDateStr(d);
-}
-
-/* ---------- 取引先の学習(表記ゆれ・明細モード・引落日の補正) ---------- */
+/* ---------- 取引先の学習(表記ゆれの補正) ---------- */
 function getLearnMap(){
-  try{
-    const raw = JSON.parse(localStorage.getItem('denshou_vendor_learn') || '{}');
-    // 旧形式からの移行(offsetDays方式 → withdrawalDay方式)
-    const migrated = {};
-    for(const k in raw){
-      const v = raw[k];
-      if(typeof v === 'string'){
-        migrated[k] = { vendor: v, isStatement: false, withdrawalDay: null, monthOffset: 1 };
-      } else if(v && 'offsetDays' in v && !('withdrawalDay' in v)){
-        migrated[k] = { vendor: v.vendor, isStatement: v.isStatement, withdrawalDay: null, monthOffset: 1 };
-      } else {
-        migrated[k] = v;
-      }
-    }
-    return migrated;
-  }catch(e){ return {}; }
+  try{ return JSON.parse(localStorage.getItem('denshou_vendor_learn') || '{}'); }
+  catch(e){ return {}; }
 }
 function setLearnMap(map){
   localStorage.setItem('denshou_vendor_learn', JSON.stringify(map));
 }
-function findLearnedEntry(rawText){
+function applyLearnedVendor(rawText, guess){
   const map = getLearnMap();
   const lowerText = rawText.toLowerCase();
   for(const key in map){
     if(key && lowerText.includes(key.toLowerCase())){
-      return { key, entry: map[key] };
+      return map[key];
     }
   }
-  return null;
+  return guess;
 }
-// 締め日(closingDateStr)を基準に、monthOffsetヶ月後のwithdrawalDay(第何日)を求め、
-// 非営業日(土日・祝日)であれば翌営業日にずらす
-function computeWithdrawalDate(closingDateStr, withdrawalDay, monthOffset){
-  const base = new Date(closingDateStr);
-  if(isNaN(base) || !withdrawalDay) return '';
-  const targetMonthDate = new Date(base.getFullYear(), base.getMonth() + (monthOffset ?? 1), 1);
-  const daysInTargetMonth = new Date(targetMonthDate.getFullYear(), targetMonthDate.getMonth() + 1, 0).getDate();
-  const day = Math.min(withdrawalDay, daysInTargetMonth);
-  const raw = new Date(targetMonthDate.getFullYear(), targetMonthDate.getMonth(), day);
-  return nextBusinessDay(toDateStr(raw));
-}
-
-function learnFromSave(){
+function learnVendorIfEdited(){
+  const edited = fVendor.value.trim();
   const raw = (lastRawVendor || '').trim();
-  const editedVendor = fVendor.value.trim();
-  if(!raw || !editedVendor) return;
-
+  if(!raw || !edited || raw === edited) return;
   const map = getLearnMap();
-  const existing = map[raw] || { vendor: editedVendor, isStatement: false, withdrawalDay: null, monthOffset: 1 };
-
-  existing.vendor = editedVendor;
-  existing.isStatement = isStatement.checked;
-
-  if(isStatement.checked && fWithdrawal.value){
-    const wd = new Date(fWithdrawal.value);
-    if(!isNaN(wd)){
-      existing.withdrawalDay = wd.getDate();
-      if(fDate.value){
-        const cd = new Date(fDate.value);
-        if(!isNaN(cd)){
-          existing.monthOffset = (wd.getFullYear() - cd.getFullYear()) * 12 + (wd.getMonth() - cd.getMonth());
-        }
-      }
-    }
-  }
-
-  map[raw] = existing;
+  map[raw] = edited;
   setLearnMap(map);
   renderLearnList();
 }
@@ -928,97 +784,12 @@ function renderLearnList(){
   const keys = Object.keys(map);
   learnList.querySelectorAll('.learn-item').forEach(el=>el.remove());
   learnEmpty.style.display = keys.length ? 'none' : 'block';
-
   keys.forEach(rawKey=>{
-    const entry = map[rawKey];
     const row = document.createElement('div');
     row.className = 'learn-item';
-
-    const main = document.createElement('div');
-    main.className = 'learn-main';
-
-    const fromSpan = document.createElement('span');
-    fromSpan.className = 'from';
-    fromSpan.textContent = rawKey;
-
-    const arrow = document.createElement('span');
-    arrow.className = 'arrow';
-    arrow.textContent = '→';
-
-    const vendorInput = document.createElement('input');
-    vendorInput.className = 'learn-edit-input';
-    vendorInput.value = entry.vendor;
-    vendorInput.addEventListener('change', ()=>{
-      const m = getLearnMap();
-      m[rawKey].vendor = vendorInput.value.trim() || m[rawKey].vendor;
-      setLearnMap(m);
-    });
-
-    main.appendChild(fromSpan);
-    main.appendChild(arrow);
-    main.appendChild(vendorInput);
-
-    const optionsRow = document.createElement('div');
-    optionsRow.className = 'learn-options';
-
-    const stmtLabel = document.createElement('label');
-    stmtLabel.className = 'learn-checkbox-label';
-    const stmtCheckbox = document.createElement('input');
-    stmtCheckbox.type = 'checkbox';
-    stmtCheckbox.checked = !!entry.isStatement;
-    const stmtText = document.createElement('span');
-    stmtText.textContent = '明細モード';
-    stmtLabel.appendChild(stmtCheckbox);
-    stmtLabel.appendChild(stmtText);
-
-    const offsetWrap = document.createElement('span');
-    offsetWrap.className = 'learn-offset-wrap';
-    offsetWrap.style.display = entry.isStatement ? 'inline-flex' : 'none';
-
-    const monthSelect = document.createElement('select');
-    monthSelect.className = 'learn-offset-select';
-    [[0,'当月'],[1,'翌月'],[2,'翌々月']].forEach(([val,label])=>{
-      const opt = document.createElement('option');
-      opt.value = val; opt.textContent = label;
-      if((entry.monthOffset ?? 1) === val) opt.selected = true;
-      monthSelect.appendChild(opt);
-    });
-
-    const dayInput = document.createElement('input');
-    dayInput.type = 'number';
-    dayInput.min = '1'; dayInput.max = '31';
-    dayInput.className = 'learn-offset-input';
-    dayInput.value = (entry.withdrawalDay === null || entry.withdrawalDay === undefined) ? '' : entry.withdrawalDay;
-    dayInput.placeholder = '例:27';
-
-    const offsetText = document.createElement('span');
-    offsetText.textContent = '日に引落(非営業日は翌営業日)';
-
-    offsetWrap.appendChild(monthSelect);
-    offsetWrap.appendChild(dayInput);
-    offsetWrap.appendChild(offsetText);
-
-    stmtCheckbox.addEventListener('change', ()=>{
-      const m = getLearnMap();
-      m[rawKey].isStatement = stmtCheckbox.checked;
-      setLearnMap(m);
-      offsetWrap.style.display = stmtCheckbox.checked ? 'inline-flex' : 'none';
-    });
-    dayInput.addEventListener('change', ()=>{
-      const m = getLearnMap();
-      const v = parseInt(dayInput.value, 10);
-      m[rawKey].withdrawalDay = isNaN(v) ? null : Math.min(31, Math.max(1, v));
-      setLearnMap(m);
-    });
-    monthSelect.addEventListener('change', ()=>{
-      const m = getLearnMap();
-      m[rawKey].monthOffset = parseInt(monthSelect.value, 10);
-      setLearnMap(m);
-    });
-
-    optionsRow.appendChild(stmtLabel);
-    optionsRow.appendChild(offsetWrap);
-
+    row.innerHTML = `<span><span class="from"></span><span class="arrow">→</span><span class="to"></span></span>`;
+    row.querySelector('.from').textContent = rawKey;
+    row.querySelector('.to').textContent = map[rawKey];
     const del = document.createElement('button');
     del.className = 'learn-del';
     del.textContent = '✕';
@@ -1028,10 +799,7 @@ function renderLearnList(){
       setLearnMap(m);
       renderLearnList();
     });
-    optionsRow.appendChild(del);
-
-    row.appendChild(main);
-    row.appendChild(optionsRow);
+    row.appendChild(del);
     learnList.appendChild(row);
   });
 }
@@ -1125,10 +893,9 @@ isStatement.addEventListener('change', ()=>{
   fWithdrawal.style.display = isStatement.checked ? '' : 'none';
 
   if(isStatement.checked){
-    fieldLabels[0].textContent = '対象期間の締め日(参考)';
+    fieldLabels[0].textContent = '対象期間の締め日';
     fieldLabels[1].textContent = 'カード会社名';
     fieldLabels[2].textContent = '合計請求額';
-    withdrawalLabel.textContent = '引落日(取引年月日として使用)';
     fAmount.placeholder = '例:合計請求額';
     if(!includeDocType.checked){
       includeDocType.checked = true;
@@ -1145,7 +912,6 @@ isStatement.addEventListener('change', ()=>{
     fWithdrawal.value = '';
   }
   updatePreview();
-  learnFromSave();
 });
 
 function setStatus(msg, spinning){
@@ -1194,22 +960,6 @@ async function handleFile(file){
     fDate.value = parsed.date;
     fVendor.value = parsed.vendor;
     fAmount.value = parsed.amount;
-
-    // 学習済みの明細モード・引落オフセットを自動反映
-    if(parsed.learnedEntry && parsed.learnedEntry.isStatement){
-      if(!isStatement.checked){
-        isStatement.checked = true;
-        isStatement.dispatchEvent(new Event('change'));
-      }
-      if(parsed.learnedEntry.withdrawalDay && parsed.date){
-        fWithdrawal.value = computeWithdrawalDate(parsed.date, parsed.learnedEntry.withdrawalDay, parsed.learnedEntry.monthOffset);
-      }
-    } else if(isStatement.checked){
-      // 前回明細モードだった場合はリセットしておく(誤爆防止)
-      isStatement.checked = false;
-      isStatement.dispatchEvent(new Event('change'));
-    }
-
     updatePreview();
 
     result.classList.add('show');
@@ -1311,15 +1061,12 @@ function parseText(text){
   }
 
   lastRawVendor = vendor;
-  const learned = findLearnedEntry(text);
-  const learnedEntry = learned ? learned.entry : null;
-  if(learnedEntry) vendor = learnedEntry.vendor;
+  vendor = applyLearnedVendor(text, vendor);
 
   return {
     date: date || '不明(手入力してください)',
     amount: amount || '',
-    vendor: vendor || '不明(手入力してください)',
-    learnedEntry
+    vendor: vendor || '不明(手入力してください)'
   };
 }
 
@@ -1367,9 +1114,7 @@ fDocType.addEventListener('change', updatePreview);
 
 function updatePreview(){
   const template = document.querySelector('input[name="namingRule"]:checked').value;
-  // 明細モードでは、複式簿記上「未払金の決済」を表す引落日を取引年月日として扱う
-  const dateSource = (isStatement.checked && fWithdrawal.value) ? fWithdrawal.value : fDate.value;
-  const date = sanitize(dateSource);
+  const date = sanitize(fDate.value);
   const vendor = sanitize(fVendor.value);
   const amount = `${sanitize(fAmount.value)}円`;
 
@@ -1386,11 +1131,7 @@ function updatePreview(){
   }
   filenamePreview.textContent = `${parts.join('_')}.${currentExt}`;
 }
-[fDate, fVendor, fAmount, fWithdrawal].forEach(el=> el.addEventListener('input', updatePreview));
-
-// 体験版では保存ボタンが無効化されているため、フィールドを確定した時点(blur)で学習させる
-fVendor.addEventListener('blur', learnFromSave);
-fWithdrawal.addEventListener('blur', learnFromSave);
+[fDate, fVendor, fAmount].forEach(el=> el.addEventListener('input', updatePreview));
 
 btnReset.addEventListener('click', ()=>{
   result.classList.remove('show');
@@ -1400,7 +1141,7 @@ btnReset.addEventListener('click', ()=>{
 });
 
 btnSave.addEventListener('click', async ()=>{
-  if(!SAVE_ENABLED_FOR_TESTING) return;
+  if(btnSave.disabled) return;
   if(!currentFile) return;
   learnVendorIfEdited();
   const filename = filenamePreview.textContent;
