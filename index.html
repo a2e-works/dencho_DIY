@@ -363,6 +363,111 @@
   }
   .rule-checkbox input{accent-color:var(--stamp);}
 
+  .payment-row{
+    display:flex; gap:8px;
+  }
+  .payment-row select{flex:1;}
+
+  .card-list{display:flex; flex-direction:column; gap:10px; margin-bottom:16px;}
+  .card-item{
+    padding:12px 14px;
+    background:#fff;
+    border:1px solid var(--paper-line);
+    border-radius:2px;
+    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+    font-size:13px;
+  }
+  .card-item input[type=text]{
+    font-family:'Noto Sans JP', sans-serif;
+    font-weight:700;
+    font-size:13.5px;
+    color:var(--ink);
+    border:1px solid transparent;
+    border-bottom:1px dashed var(--paper-line);
+    padding:3px 4px;
+    background:transparent;
+    width:140px;
+  }
+  .card-item input[type=text]:focus{
+    outline:none; border-bottom-color:var(--stamp); background:#FBF9F3;
+  }
+  .card-item .card-rule{
+    display:flex; align-items:center; gap:6px; font-size:12px; color:var(--ink-soft);
+    flex-wrap:wrap;
+  }
+  .card-item input[type=number]{
+    width:46px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    padding:3px 6px;
+    border:1px solid var(--paper-line);
+    border-radius:2px;
+    text-align:center;
+  }
+  .card-item select{
+    font-family:'Noto Sans JP', sans-serif;
+    font-size:12px;
+    padding:3px 4px;
+    border:1px solid var(--paper-line);
+    border-radius:2px;
+    background:#fff;
+  }
+  .card-item .learn-del{margin-left:auto;}
+  .card-empty{font-size:12.5px; color:var(--gray); margin-bottom:14px;}
+
+  .ledger-summary{
+    display:flex; align-items:center; justify-content:space-between; gap:14px;
+    flex-wrap:wrap; margin-bottom:16px;
+  }
+  .ledger-summary #ledgerCount{font-size:13px; color:var(--ink-soft); font-weight:700;}
+  .ledger-actions{display:flex; gap:8px; flex-wrap:wrap;}
+  .dz-btn.danger{color:var(--stamp); border-color:var(--stamp);}
+  .ledger-table-wrap{
+    overflow-x:auto;
+    border:1px solid var(--paper-line);
+    border-radius:2px;
+  }
+  .ledger-table{
+    width:100%; border-collapse:collapse; font-size:12px; white-space:nowrap;
+  }
+  .ledger-table th, .ledger-table td{
+    text-align:left; padding:8px 10px; border-bottom:1px solid var(--paper-line);
+  }
+  .ledger-table th{
+    background:var(--ink); color:var(--paper); font-weight:500; font-size:11px;
+    position:sticky; top:0;
+  }
+  .ledger-table tbody tr:nth-child(even){background:#FBF9F3;}
+  .ledger-empty{
+    padding:20px; text-align:center; font-size:12.5px; color:var(--gray); margin:0;
+  }
+
+  .sync-block{
+    padding:16px 0;
+    border-top:1px dashed var(--paper-line);
+  }
+  .sync-block:first-of-type{border-top:none; padding-top:0;}
+  .sync-block h4{
+    font-family:'Shippori Mincho', serif;
+    font-size:14.5px; margin:0 0 6px 0; color:var(--ink);
+  }
+  .sync-note{font-size:12px; color:var(--gray); margin:0 0 10px 0; line-height:1.7;}
+  .sync-note code{
+    background:#EEE7D6; padding:1px 5px; border-radius:2px; font-size:11px;
+  }
+  .sync-gdrive-setup{display:flex; gap:8px; margin-bottom:10px;}
+  .sync-result{margin-top:12px;}
+  .sync-list{display:flex; flex-direction:column; gap:6px;}
+  .sync-item{
+    padding:8px 12px;
+    border-radius:2px;
+    font-size:12.5px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .sync-item.missing-local{background:#FBF2ED; color:var(--stamp);}
+  .sync-item.missing-ledger{background:#EEF3EC; color:var(--ok);}
+  .sync-ok{font-size:12.5px; color:var(--ok); font-weight:700;}
+
   .statement-toggle{
     margin-top:16px;
     padding-top:14px;
@@ -566,14 +671,27 @@
       </div>
 
       <label class="rule-checkbox">
-        <input type="checkbox" id="includeDocType">
+        <input type="checkbox" id="includeDocType" checked>
         <span>書類の種類をファイル名に含める</span>
       </label>
     </div>
   </section>
 
   <section>
-    <div class="section-title"><span class="no">03</span> 証憑を読み込む</div>
+    <div class="section-title"><span class="no">03</span> 支払いカードを管理する</div>
+    <div class="ledger-card">
+      <p class="rule-desc">
+        引落日は「取引先」ではなく「使ったカード」ごとに決まります。カード名(呼び方)と
+        締め日・支払日だけを登録してください。<b>カード番号・暗証番号・セキュリティコードなどは
+        一切入力・保存しません。</b>
+      </p>
+      <div id="cardList" class="card-list"></div>
+      <button type="button" class="dz-btn ghost" id="btnAddCard">+ カードを新規登録</button>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title"><span class="no">04</span> 証憑を読み込む</div>
     <div class="ledger-card">
 
       <div class="dropzone" id="dropzone">
@@ -609,34 +727,41 @@
 
         <div class="field-grid">
           <div class="field-label">取引年月日</div>
-          <input class="field-input" type="date" id="fDate" placeholder="例:2026-08-20">
+          <input class="field-input" type="text" id="fDate" placeholder="例:2026-08-20">
           <div class="field-label">取引先</div>
           <input class="field-input" id="fVendor" placeholder="例:〇〇商店">
           <div class="field-label">金額</div>
           <input class="field-input" id="fAmount" placeholder="例:1200">
-          <div class="field-label" id="docTypeLabel" style="display:none;">書類種類</div>
-          <select class="field-input" id="fDocType" style="display:none;">
+          <div class="field-label">書類種類</div>
+          <select class="field-input" id="fDocType">
+            <option value="レシート">レシート</option>
             <option value="領収書">領収書</option>
             <option value="請求書">請求書</option>
             <option value="明細書">明細書</option>
             <option value="納品書">納品書</option>
             <option value="その他">その他</option>
           </select>
+          <div class="field-label">支払い方法</div>
+          <div class="payment-row">
+            <select class="field-input" id="fPaymentMethod">
+              <option value="現金">現金</option>
+              <option value="カード">カード</option>
+            </select>
+            <select class="field-input" id="fCardSelect" style="display:none;">
+              <option value="">-- カードを選択 --</option>
+              <option value="__new__">+ 新しいカードを登録</option>
+            </select>
+          </div>
           <div class="field-label" id="withdrawalLabel" style="display:none;">引落(予定)日</div>
-          <input class="field-input" type="date" id="fWithdrawal" style="display:none;" placeholder="例:2026-09-10">
+          <input class="field-input" type="text" id="fWithdrawal" style="display:none;" readonly placeholder="カードを選択すると自動計算されます">
         </div>
-        <p class="edit-hint">↑ 内容は自由に修正できます。取引先を確定(他の欄をクリック等)すると、次回以降その表記・明細モード・引落日数を学習します。</p>
+        <p class="edit-hint">↑ 内容は自由に修正できます。取引先を確定(他の欄をクリック等)すると、次回以降その表記・書類種類・支払い方法を学習します。</p>
 
-        <label class="rule-checkbox statement-toggle">
-          <input type="checkbox" id="isStatement">
-          <span>これはカード明細など、複数の取引をまとめた証憑です</span>
-        </label>
         <p class="statement-note" id="statementNote" style="display:none;">
-          個々のレシート(発生主義の計上根拠)は「購入・サービス利用日」を取引年月日とします。
-          一方、<b>この明細ファイル自体は「未払金の決済(引落)」という取引を表すため、
+          個々のレシート・領収書(発生主義の計上根拠)は「購入・サービス利用日」を取引年月日とします。
+          一方、<b>「明細書」を選んだ場合、そのファイル自体は「未払金の決済(引落)」という取引を表すため、
           複式簿記上は引落日を取引年月日として扱います。</b>
-          引落日は「毎月同日、非営業日なら翌営業日」という一般的なルールに基づき、
-          学習した設定から自動計算されます(04で編集可能)。
+          引落日は、下記で選択した支払いカードに登録された締め日・支払日のルールに基づいて自動計算されます。
           電子帳簿保存法上、この明細ファイル自体は分割せず1ファイルのまま保存するのが原則です。
         </p>
 
@@ -647,7 +772,7 @@
         </div>
 
         <div class="actions">
-          <button id="btnSave">この内容で保存する(正式版で利用可)</button>
+          <button id="btnSave">この内容で確定・台帳に記録する</button>
           <button class="ghost" id="btnReset">別の証憑を読み込む</button>
         </div>
       </div>
@@ -668,7 +793,69 @@
   </section>
 
   <section>
-    <div class="section-title"><span class="no">04</span> 学習した取引先の表記</div>
+    <div class="section-title"><span class="no">05</span> 台帳(Excel管理)</div>
+    <div class="ledger-card">
+      <p class="rule-desc">
+        処理した証憑は自動的にここに記録されます。<b>元のファイル名 → 新しいファイル名</b>の対応も
+        含めて記録されるので、「どれだっけ?」と迷った時に確認できます。CSV形式でダウンロードすれば、
+        そのままExcelで開いて一覧管理・検索ができます。
+      </p>
+      <div class="ledger-summary">
+        <span id="ledgerCount">現在 0 件 記録されています</span>
+        <div class="ledger-actions">
+          <button type="button" class="dz-btn ghost" id="btnExportCSV">📊 CSVでダウンロード(Excelで開けます)</button>
+          <button type="button" class="dz-btn ghost danger" id="btnClearLedger">台帳をクリア</button>
+        </div>
+      </div>
+      <div class="ledger-table-wrap">
+        <table class="ledger-table" id="ledgerTable">
+          <thead>
+            <tr>
+              <th>処理日時</th><th>元のファイル名</th><th>新しいファイル名</th>
+              <th>取引年月日</th><th>取引先</th><th>金額</th><th>書類種類</th><th>支払い方法</th>
+            </tr>
+          </thead>
+          <tbody id="ledgerTbody"></tbody>
+        </table>
+        <p class="ledger-empty" id="ledgerEmpty">まだ記録がありません。証憑を処理すると、ここに自動で追加されます。</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title"><span class="no">06</span> クラウド/ローカルとの同期を確認する</div>
+    <div class="ledger-card">
+      <p class="rule-desc">
+        台帳に記録された「新しいファイル名」の一覧と、実際の保存先(ローカルフォルダ・Googleドライブ)
+        の中身を比較し、差分(未保存・削除済みの可能性があるもの)を確認できます。
+        <b>自動で削除・上書きは行いません。</b>確認のみの機能です。
+      </p>
+
+      <div class="sync-block">
+        <h4>📁 ローカルフォルダとの比較</h4>
+        <p class="sync-note">「01 保存先を設定する」で選んだフォルダを対象に比較します。</p>
+        <button type="button" class="dz-btn ghost" id="btnSyncLocal">ローカルフォルダと比較する</button>
+        <div id="syncLocalResult" class="sync-result"></div>
+      </div>
+
+      <div class="sync-block">
+        <h4>☁️ Googleドライブとの比較</h4>
+        <p class="sync-note">
+          利用にはご自身のGoogle CloudプロジェクトでOAuth Client IDの発行が必要です
+          (<code>drive.file</code>スコープ、機密性の低いスコープのため簡易な設定で利用できます)。
+        </p>
+        <div class="sync-gdrive-setup">
+          <input type="text" id="gdriveClientId" class="field-input" placeholder="Google OAuth Client ID を入力">
+          <button type="button" class="dz-btn ghost" id="btnGdriveSetup">保存</button>
+        </div>
+        <button type="button" class="dz-btn ghost" id="btnGdriveConnect" disabled>Googleにログインして比較する</button>
+        <div id="syncGdriveResult" class="sync-result"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title"><span class="no">07</span> 学習した取引先の表記</div>
     <div class="ledger-card">
       <p class="learn-desc">
         取引先名を修正すると、同じ表記が読み取られた際に自動で正しい名前に置き換えます。
@@ -682,7 +869,7 @@
   </section>
 
   <section>
-    <div class="section-title"><span class="no">05</span> 体験版と正式版の違い</div>
+    <div class="section-title"><span class="no">08</span> 体験版と正式版の違い</div>
     <div class="ledger-card">
       <table class="compare-table">
         <tr><th></th><th class="center">体験版</th><th class="center">正式版(予定)</th></tr>
@@ -694,6 +881,7 @@
         <tr><td>インボイス番号チェック</td><td class="center no-mark">─</td><td class="center ok-mark">○</td></tr>
         <tr><td>Google Drive連携</td><td class="center no-mark">─</td><td class="center ok-mark">○</td></tr>
         <tr><td>保存機能(ローカル/ダウンロード)</td><td class="center no-mark">✕(プレビューのみ)</td><td class="center ok-mark">○(Chrome)</td></tr>
+        <tr><td>台帳への記録・CSV出力</td><td class="center ok-mark">○(無制限)</td><td class="center ok-mark">○</td></tr>
       </table>
     </div>
   </section>
@@ -724,6 +912,8 @@ const limitCard = document.getElementById('limitCard');
 const fDate = document.getElementById('fDate');
 const fVendor = document.getElementById('fVendor');
 const fAmount = document.getElementById('fAmount');
+const fDocType = document.getElementById('fDocType');
+const includeDocType = document.getElementById('includeDocType');
 const filenamePreview = document.getElementById('filenamePreview');
 const btnSave = document.getElementById('btnSave');
 const btnReset = document.getElementById('btnReset');
@@ -929,22 +1119,173 @@ function nextBusinessDay(dateStr){
   return toDateStr(d);
 }
 
-/* ---------- 取引先の学習(表記ゆれ・明細モード・引落日の補正) ---------- */
+/* ---------- 支払いカードの管理(カード番号等は一切扱わない) ---------- */
+function getCardRegistry(){
+  try{ return JSON.parse(localStorage.getItem('denshou_card_registry') || '{}'); }
+  catch(e){ return {}; }
+}
+function setCardRegistry(reg){
+  localStorage.setItem('denshou_card_registry', JSON.stringify(reg));
+}
+
+// 明細形式(複数取引をまとめる)として扱う書類種類
+const STATEMENT_DOC_TYPES = ['明細書'];
+
+// 締め日(closingDateStr)を基準に、monthOffsetヶ月後のpaymentDay(第何日)を求め、
+// 非営業日(土日・祝日)であれば翌営業日にずらす
+function computeWithdrawalDate(closingDateStr, paymentDay, monthOffset){
+  const base = new Date(closingDateStr);
+  if(isNaN(base) || !paymentDay) return '';
+  const targetMonthDate = new Date(base.getFullYear(), base.getMonth() + (monthOffset ?? 1), 1);
+  const daysInTargetMonth = new Date(targetMonthDate.getFullYear(), targetMonthDate.getMonth() + 1, 0).getDate();
+  const day = Math.min(paymentDay, daysInTargetMonth);
+  const raw = new Date(targetMonthDate.getFullYear(), targetMonthDate.getMonth(), day);
+  return nextBusinessDay(toDateStr(raw));
+}
+
+// 個別のレシート・領収書の場合:カードの締め日ルールから、その購入がどの請求サイクルに
+// 属するかを推定し、引落日を算出する
+function computeWithdrawalForReceipt(card, purchaseDateStr){
+  const pd = new Date(purchaseDateStr);
+  if(isNaN(pd) || !card || !card.closingDay || !card.paymentDay) return '';
+  const daysInMonth = new Date(pd.getFullYear(), pd.getMonth()+1, 0).getDate();
+  const closingDayThisMonth = Math.min(card.closingDay, daysInMonth);
+  let closingDate;
+  if(pd.getDate() <= closingDayThisMonth){
+    closingDate = new Date(pd.getFullYear(), pd.getMonth(), closingDayThisMonth);
+  } else {
+    const nm = new Date(pd.getFullYear(), pd.getMonth()+1, 1);
+    const daysInNextMonth = new Date(nm.getFullYear(), nm.getMonth()+1, 0).getDate();
+    closingDate = new Date(nm.getFullYear(), nm.getMonth(), Math.min(card.closingDay, daysInNextMonth));
+  }
+  return computeWithdrawalDate(toDateStr(closingDate), card.paymentDay, card.monthOffset);
+}
+
+const cardList = document.getElementById('cardList');
+const btnAddCard = document.getElementById('btnAddCard');
+
+function renderCardList(){
+  const reg = getCardRegistry();
+  const names = Object.keys(reg);
+  cardList.innerHTML = '';
+  if(!names.length){
+    const empty = document.createElement('div');
+    empty.className = 'card-empty';
+    empty.textContent = 'まだカードが登録されていません。';
+    cardList.appendChild(empty);
+  }
+  names.forEach(name=>{
+    const card = reg[name];
+    const row = document.createElement('div');
+    row.className = 'card-item';
+
+    const nameInput = document.createElement('input');
+    nameInput.type = 'text';
+    nameInput.value = name;
+    nameInput.addEventListener('change', ()=>{
+      const newName = nameInput.value.trim();
+      if(!newName || newName === name) { nameInput.value = name; return; }
+      const r = getCardRegistry();
+      r[newName] = r[name];
+      delete r[name];
+      setCardRegistry(r);
+      renderCardList();
+      refreshCardSelectOptions();
+    });
+
+    const ruleWrap = document.createElement('div');
+    ruleWrap.className = 'card-rule';
+
+    const closingLabel = document.createElement('span');
+    closingLabel.textContent = '締め日:毎月';
+    const closingInput = document.createElement('input');
+    closingInput.type = 'number'; closingInput.min='1'; closingInput.max='31';
+    closingInput.value = card.closingDay ?? '';
+    closingInput.placeholder = '例:15';
+    const closingSuffix = document.createElement('span');
+    closingSuffix.textContent = '日';
+
+    const paymentLabel = document.createElement('span');
+    paymentLabel.textContent = ' / 支払日:';
+    const monthSelect = document.createElement('select');
+    [[0,'締め日と同じ月'],[1,'締め日の1ヶ月後'],[2,'締め日の2ヶ月後']].forEach(([val,label])=>{
+      const o = document.createElement('option');
+      o.value = val; o.textContent = label;
+      if((card.monthOffset ?? 1) === val) o.selected = true;
+      monthSelect.appendChild(o);
+    });
+    const paymentInput = document.createElement('input');
+    paymentInput.type = 'number'; paymentInput.min='1'; paymentInput.max='31';
+    paymentInput.value = card.paymentDay ?? '';
+    paymentInput.placeholder = '例:27';
+    const paymentSuffix = document.createElement('span');
+    paymentSuffix.textContent = '日(非営業日は翌営業日)';
+
+    const save = ()=>{
+      const r = getCardRegistry();
+      r[name] = {
+        closingDay: parseInt(closingInput.value,10) || null,
+        paymentDay: parseInt(paymentInput.value,10) || null,
+        monthOffset: parseInt(monthSelect.value,10)
+      };
+      setCardRegistry(r);
+    };
+    closingInput.addEventListener('change', save);
+    paymentInput.addEventListener('change', save);
+    monthSelect.addEventListener('change', save);
+
+    ruleWrap.appendChild(closingLabel);
+    ruleWrap.appendChild(closingInput);
+    ruleWrap.appendChild(closingSuffix);
+    ruleWrap.appendChild(paymentLabel);
+    ruleWrap.appendChild(monthSelect);
+    ruleWrap.appendChild(paymentInput);
+    ruleWrap.appendChild(paymentSuffix);
+
+    const del = document.createElement('button');
+    del.className = 'learn-del';
+    del.textContent = '✕';
+    del.addEventListener('click', ()=>{
+      const r = getCardRegistry();
+      delete r[name];
+      setCardRegistry(r);
+      renderCardList();
+      refreshCardSelectOptions();
+    });
+
+    row.appendChild(nameInput);
+    row.appendChild(ruleWrap);
+    row.appendChild(del);
+    cardList.appendChild(row);
+  });
+}
+renderCardList();
+
+btnAddCard.addEventListener('click', ()=>{
+  const name = prompt('カードの呼び方を入力してください(例:楽天カード、au PAYカード)');
+  if(!name || !name.trim()) return;
+  const r = getCardRegistry();
+  if(r[name.trim()]){ alert('同じ名前のカードが既に登録されています。'); return; }
+  r[name.trim()] = { closingDay: null, paymentDay: null, monthOffset: 1 };
+  setCardRegistry(r);
+  renderCardList();
+  refreshCardSelectOptions();
+});
+
+/* ---------- 取引先の学習(表記ゆれ・書類種類・支払い方法の補正) ---------- */
 function getLearnMap(){
   try{
     const raw = JSON.parse(localStorage.getItem('denshou_vendor_learn') || '{}');
-    // 旧形式からの移行(文字列 / offsetDays方式 / isStatement方式 → docType方式)
     const migrated = {};
     for(const k in raw){
       const v = raw[k];
       if(typeof v === 'string'){
-        migrated[k] = { vendor: v, docType: '領収書', withdrawalDay: null, monthOffset: 1 };
-      } else if(v && !('docType' in v)){
+        migrated[k] = { vendor: v, docType: 'レシート', paymentMethod: '現金' };
+      } else if(v && !('paymentMethod' in v)){
         migrated[k] = {
           vendor: v.vendor,
-          docType: v.isStatement ? '明細書' : '領収書',
-          withdrawalDay: v.withdrawalDay ?? null,
-          monthOffset: v.monthOffset ?? 1
+          docType: v.docType || (v.isStatement ? '明細書' : 'レシート'),
+          paymentMethod: '現金'
         };
       } else {
         migrated[k] = v;
@@ -966,20 +1307,6 @@ function findLearnedEntry(rawText){
   }
   return null;
 }
-// 明細形式(複数取引をまとめる)として扱う書類種類
-const STATEMENT_DOC_TYPES = ['明細書'];
-
-// 締め日(closingDateStr)を基準に、monthOffsetヶ月後のwithdrawalDay(第何日)を求め、
-// 非営業日(土日・祝日)であれば翌営業日にずらす
-function computeWithdrawalDate(closingDateStr, withdrawalDay, monthOffset){
-  const base = new Date(closingDateStr);
-  if(isNaN(base) || !withdrawalDay) return '';
-  const targetMonthDate = new Date(base.getFullYear(), base.getMonth() + (monthOffset ?? 1), 1);
-  const daysInTargetMonth = new Date(targetMonthDate.getFullYear(), targetMonthDate.getMonth() + 1, 0).getDate();
-  const day = Math.min(withdrawalDay, daysInTargetMonth);
-  const raw = new Date(targetMonthDate.getFullYear(), targetMonthDate.getMonth(), day);
-  return nextBusinessDay(toDateStr(raw));
-}
 
 function learnFromSave(){
   const raw = (lastRawVendor || '').trim();
@@ -987,24 +1314,13 @@ function learnFromSave(){
   if(!raw || !editedVendor) return;
 
   const map = getLearnMap();
-  const currentDocType = includeDocType.checked ? fDocType.value : (isStatement.checked ? '明細書' : '領収書');
-  const existing = map[raw] || { vendor: editedVendor, docType: currentDocType, withdrawalDay: null, monthOffset: 1 };
+  const existing = map[raw] || { vendor: editedVendor, docType: fDocType.value, paymentMethod: '現金' };
 
   existing.vendor = editedVendor;
-  existing.docType = currentDocType;
-
-  if(isStatement.checked && fWithdrawal.value){
-    const wd = new Date(fWithdrawal.value);
-    if(!isNaN(wd)){
-      existing.withdrawalDay = wd.getDate();
-      if(fDate.value){
-        const cd = new Date(fDate.value);
-        if(!isNaN(cd)){
-          existing.monthOffset = (wd.getFullYear() - cd.getFullYear()) * 12 + (wd.getMonth() - cd.getMonth());
-        }
-      }
-    }
-  }
+  existing.docType = fDocType.value;
+  existing.paymentMethod = (fPaymentMethod.value === 'カード' && fCardSelect.value && fCardSelect.value !== '__new__')
+    ? fCardSelect.value
+    : '現金';
 
   map[raw] = existing;
   setLearnMap(map);
@@ -1029,7 +1345,9 @@ function renderLearnList(){
 
     const fromSpan = document.createElement('span');
     fromSpan.className = 'from';
-    fromSpan.textContent = rawKey;
+    const isSuspicious = /^(発行日|締め日|ご利用締め日|お支払い?日|引落日|ご請求金額|合計|明細|請求書|領収書)/.test(rawKey);
+    fromSpan.textContent = isSuspicious ? `⚠ ${rawKey}` : rawKey;
+    if(isSuspicious) fromSpan.title = 'ラベルらしき文字列が取引先として誤って学習された可能性があります。削除をおすすめします。';
 
     const arrow = document.createElement('span');
     arrow.className = 'arrow';
@@ -1057,66 +1375,47 @@ function renderLearnList(){
     docTypeText.textContent = '書類種類:';
     const docTypeSelect = document.createElement('select');
     docTypeSelect.className = 'learn-offset-select';
-    ['領収書','請求書','明細書','納品書','その他'].forEach(opt=>{
+    ['レシート','領収書','請求書','明細書','納品書','その他'].forEach(opt=>{
       const o = document.createElement('option');
       o.value = opt; o.textContent = opt;
-      if((entry.docType || '領収書') === opt) o.selected = true;
+      if((entry.docType || 'レシート') === opt) o.selected = true;
       docTypeSelect.appendChild(o);
     });
     docTypeLabel2.appendChild(docTypeText);
     docTypeLabel2.appendChild(docTypeSelect);
 
-    const offsetWrap = document.createElement('span');
-    offsetWrap.className = 'learn-offset-wrap';
-    offsetWrap.style.display = STATEMENT_DOC_TYPES.includes(entry.docType) ? 'inline-flex' : 'none';
-
-    const offsetPrefix = document.createElement('span');
-    offsetPrefix.textContent = '締め日の';
-
-    const monthSelect = document.createElement('select');
-    monthSelect.className = 'learn-offset-select';
-    [[0,'同月(締め日と同じ月)'],[1,'翌月(1ヶ月後)'],[2,'翌々月(2ヶ月後)']].forEach(([val,label])=>{
-      const opt = document.createElement('option');
-      opt.value = val; opt.textContent = label;
-      if((entry.monthOffset ?? 1) === val) opt.selected = true;
-      monthSelect.appendChild(opt);
+    const payLabel = document.createElement('label');
+    payLabel.className = 'learn-checkbox-label';
+    const payText = document.createElement('span');
+    payText.textContent = '支払い方法:';
+    const paySelect = document.createElement('select');
+    paySelect.className = 'learn-offset-select';
+    const cashOpt = document.createElement('option');
+    cashOpt.value = '現金'; cashOpt.textContent = '現金';
+    paySelect.appendChild(cashOpt);
+    Object.keys(getCardRegistry()).forEach(cn=>{
+      const o = document.createElement('option');
+      o.value = cn; o.textContent = cn;
+      if(entry.paymentMethod === cn) o.selected = true;
+      paySelect.appendChild(o);
     });
-
-    const dayInput = document.createElement('input');
-    dayInput.type = 'number';
-    dayInput.min = '1'; dayInput.max = '31';
-    dayInput.className = 'learn-offset-input';
-    dayInput.value = (entry.withdrawalDay === null || entry.withdrawalDay === undefined) ? '' : entry.withdrawalDay;
-    dayInput.placeholder = '例:27';
-
-    const offsetText = document.createElement('span');
-    offsetText.textContent = '日に引落(非営業日は翌営業日)';
-
-    offsetWrap.appendChild(offsetPrefix);
-    offsetWrap.appendChild(monthSelect);
-    offsetWrap.appendChild(dayInput);
-    offsetWrap.appendChild(offsetText);
+    if(entry.paymentMethod === '現金' || !entry.paymentMethod) cashOpt.selected = true;
+    payLabel.appendChild(payText);
+    payLabel.appendChild(paySelect);
 
     docTypeSelect.addEventListener('change', ()=>{
       const m = getLearnMap();
       m[rawKey].docType = docTypeSelect.value;
       setLearnMap(m);
-      offsetWrap.style.display = STATEMENT_DOC_TYPES.includes(docTypeSelect.value) ? 'inline-flex' : 'none';
     });
-    dayInput.addEventListener('change', ()=>{
+    paySelect.addEventListener('change', ()=>{
       const m = getLearnMap();
-      const v = parseInt(dayInput.value, 10);
-      m[rawKey].withdrawalDay = isNaN(v) ? null : Math.min(31, Math.max(1, v));
-      setLearnMap(m);
-    });
-    monthSelect.addEventListener('change', ()=>{
-      const m = getLearnMap();
-      m[rawKey].monthOffset = parseInt(monthSelect.value, 10);
+      m[rawKey].paymentMethod = paySelect.value;
       setLearnMap(m);
     });
 
     optionsRow.appendChild(docTypeLabel2);
-    optionsRow.appendChild(offsetWrap);
+    optionsRow.appendChild(payLabel);
 
     const del = document.createElement('button');
     del.className = 'learn-del';
@@ -1210,42 +1509,108 @@ btnOpenOriginal.addEventListener('click', ()=>{
   setTimeout(()=> URL.revokeObjectURL(url), 60000);
 });
 
-/* ---------- カード明細モード ---------- */
-const isStatement = document.getElementById('isStatement');
+/* ---------- 書類種類・支払い方法に応じたUI連動 ---------- */
 const statementNote = document.getElementById('statementNote');
 const fieldLabels = document.querySelectorAll('.field-grid .field-label');
 const withdrawalLabel = document.getElementById('withdrawalLabel');
 const fWithdrawal = document.getElementById('fWithdrawal');
-// fieldLabels[0]=取引年月日, [1]=取引先, [2]=金額, [3]=書類種類, [4]=引落(予定)日
+const fPaymentMethod = document.getElementById('fPaymentMethod');
+const fCardSelect = document.getElementById('fCardSelect');
+// fieldLabels[0]=取引年月日, [1]=取引先, [2]=金額, [3]=書類種類, [4]=支払い方法, [5]=引落(予定)日
 
-isStatement.addEventListener('change', ()=>{
-  statementNote.style.display = isStatement.checked ? 'block' : 'none';
-  withdrawalLabel.style.display = isStatement.checked ? '' : 'none';
-  fWithdrawal.style.display = isStatement.checked ? '' : 'none';
+function isStatementDoc(){
+  return STATEMENT_DOC_TYPES.includes(fDocType.value);
+}
 
-  if(isStatement.checked){
-    fieldLabels[0].textContent = '対象期間の締め日(参考)';
-    fieldLabels[1].textContent = 'カード会社名';
-    fieldLabels[2].textContent = '合計請求額';
-    withdrawalLabel.textContent = '引落日(取引年月日として使用)';
-    fAmount.placeholder = '例:合計請求額';
-    if(!includeDocType.checked){
-      includeDocType.checked = true;
-      docTypeLabel.style.display = '';
-      fDocType.style.display = '';
+function refreshCardSelectOptions(){
+  const reg = getCardRegistry();
+  const current = fCardSelect.value;
+  fCardSelect.innerHTML = '';
+  const blank = document.createElement('option');
+  blank.value = ''; blank.textContent = '-- カードを選択 --';
+  fCardSelect.appendChild(blank);
+  Object.keys(reg).forEach(name=>{
+    const o = document.createElement('option');
+    o.value = name; o.textContent = name;
+    fCardSelect.appendChild(o);
+  });
+  const addNew = document.createElement('option');
+  addNew.value = '__new__'; addNew.textContent = '+ 新しいカードを登録';
+  fCardSelect.appendChild(addNew);
+  if(reg[current]) fCardSelect.value = current;
+}
+refreshCardSelectOptions();
+
+function refreshPaymentUI(){
+  const stmt = isStatementDoc();
+
+  statementNote.style.display = stmt ? 'block' : 'none';
+  fieldLabels[0].textContent = stmt ? '対象期間の締め日(参考)' : '取引年月日';
+  fieldLabels[1].textContent = stmt ? 'カード会社名' : '取引先';
+  fAmount.placeholder = stmt ? '例:合計請求額' : '例:1200';
+
+  fCardSelect.style.display = (fPaymentMethod.value === 'カード') ? '' : 'none';
+
+  const reg = getCardRegistry();
+  const cardName = fCardSelect.value;
+  const validCard = fPaymentMethod.value === 'カード' && cardName && cardName !== '__new__' && reg[cardName];
+
+  if(validCard){
+    withdrawalLabel.style.display = '';
+    fWithdrawal.style.display = '';
+    withdrawalLabel.textContent = stmt ? '引落日(取引年月日として使用)' : '引落(予定)日';
+    if(stmt){
+      fWithdrawal.value = fDate.value ? computeWithdrawalDate(fDate.value, reg[cardName].paymentDay, reg[cardName].monthOffset) : '';
+    } else {
+      fWithdrawal.value = fDate.value ? computeWithdrawalForReceipt(reg[cardName], fDate.value) : '';
     }
-    fDocType.value = '明細書';
-    saveNamingSettings();
   } else {
-    fieldLabels[0].textContent = '取引年月日';
-    fieldLabels[1].textContent = '取引先';
-    fieldLabels[2].textContent = '金額';
-    fAmount.placeholder = '例:1200';
+    // 現金、またはカード未選択の場合は引落日欄を非表示にする
+    withdrawalLabel.style.display = 'none';
+    fWithdrawal.style.display = 'none';
     fWithdrawal.value = '';
   }
   updatePreview();
+}
+
+fDocType.addEventListener('change', ()=>{
+  if(isStatementDoc() && !includeDocType.checked){
+    includeDocType.checked = true;
+  }
+  refreshPaymentUI();
   learnFromSave();
 });
+
+fPaymentMethod.addEventListener('change', ()=>{
+  if(fPaymentMethod.value !== 'カード'){
+    fCardSelect.value = '';
+  }
+  refreshPaymentUI();
+  learnFromSave();
+});
+
+fCardSelect.addEventListener('change', ()=>{
+  if(fCardSelect.value === '__new__'){
+    const name = prompt('カードの呼び方を入力してください(例:楽天カード、au PAYカード)');
+    if(name && name.trim()){
+      const r = getCardRegistry();
+      if(!r[name.trim()]){
+        r[name.trim()] = { closingDay: null, paymentDay: null, monthOffset: 1 };
+        setCardRegistry(r);
+        renderCardList();
+      }
+      refreshCardSelectOptions();
+      fCardSelect.value = name.trim();
+      alert('カードを登録しました。「03 支払いカードを管理する」で締め日・支払日を設定してください。');
+    } else {
+      fCardSelect.value = '';
+    }
+  }
+  refreshPaymentUI();
+  learnFromSave();
+});
+
+fDate.addEventListener('change', refreshPaymentUI);
 
 function setStatus(msg, spinning){
   statusText.textContent = msg;
@@ -1294,35 +1659,27 @@ async function handleFile(file){
     fVendor.value = parsed.vendor;
     fAmount.value = parsed.amount;
 
-    // 学習済みの書類種類・引落日設定を自動反映
-    const learnedDocType = parsed.learnedEntry ? (parsed.learnedEntry.docType || '領収書') : null;
-    const shouldBeStatement = learnedDocType ? STATEMENT_DOC_TYPES.includes(learnedDocType) : false;
-
-    if(shouldBeStatement){
-      if(!isStatement.checked){
-        isStatement.checked = true;
-        isStatement.dispatchEvent(new Event('change'));
-      }
-      if(parsed.learnedEntry.withdrawalDay && parsed.date){
-        fWithdrawal.value = computeWithdrawalDate(parsed.date, parsed.learnedEntry.withdrawalDay, parsed.learnedEntry.monthOffset);
-      }
-    } else if(isStatement.checked){
-      // 前回明細モードだった場合はリセットしておく(誤爆防止)
-      isStatement.checked = false;
-      isStatement.dispatchEvent(new Event('change'));
-    }
-
-    // 学習済みの書類種類があれば、ファイル名用の種類欄にも反映(明細以外でも)
-    if(learnedDocType && !shouldBeStatement){
-      if(!includeDocType.checked){
+    // 学習済みの書類種類・支払い方法を自動反映
+    if(parsed.learnedEntry){
+      fDocType.value = parsed.learnedEntry.docType || 'レシート';
+      if(isStatementDoc() && !includeDocType.checked){
         includeDocType.checked = true;
-        docTypeLabel.style.display = '';
-        fDocType.style.display = '';
       }
-      fDocType.value = learnedDocType;
+      const reg = getCardRegistry();
+      if(parsed.learnedEntry.paymentMethod && parsed.learnedEntry.paymentMethod !== '現金' && reg[parsed.learnedEntry.paymentMethod]){
+        fPaymentMethod.value = 'カード';
+        refreshCardSelectOptions();
+        fCardSelect.value = parsed.learnedEntry.paymentMethod;
+      } else {
+        fPaymentMethod.value = '現金';
+        fCardSelect.value = '';
+      }
+    } else {
+      fDocType.value = 'レシート';
+      fPaymentMethod.value = '現金';
+      fCardSelect.value = '';
     }
-
-    updatePreview();
+    refreshPaymentUI();
 
     result.classList.add('show');
     requestAnimationFrame(()=> stampEl.classList.add('pop'));
@@ -1394,19 +1751,22 @@ function parseText(text){
   let amount = '';
   let vendor = '';
 
-  const datePatterns = [
-    /(\d{4})[年\/\-](\d{1,2})[月\/\-](\d{1,2})/,
-    /(令和|平成)(\d{1,2})年(\d{1,2})月(\d{1,2})日/
-  ];
-  for(const p of datePatterns){
-    const m = text.match(p);
+  const datePattern = /(\d{4})[年\/\-](\d{1,2})[月\/\-](\d{1,2})/;
+  const wdatePattern = /(令和|平成)(\d{1,2})年(\d{1,2})月(\d{1,2})日/;
+
+  // 「発行日」「締め日」などのラベルが付いた日付があれば、そちらを優先的に取引年月日とする
+  const labeledDateMatch = text.match(/(発行日|締め日|ご利用締め日)[:：]?\s*(\d{4}[年\/\-]\d{1,2}[月\/\-]\d{1,2})/);
+  if(labeledDateMatch){
+    const dm = labeledDateMatch[2].match(datePattern);
+    if(dm) date = `${dm[1]}-${String(dm[2]).padStart(2,'0')}-${String(dm[3]).padStart(2,'0')}`;
+  }
+  if(!date){
+    const m = text.match(datePattern);
     if(m){
-      if(m.length === 4 && !isNaN(m[1])){
-        date = `${m[1]}-${String(m[2]).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}`;
-      } else {
-        date = m[0];
-      }
-      break;
+      date = `${m[1]}-${String(m[2]).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}`;
+    } else {
+      const wm = text.match(wdatePattern);
+      if(wm) date = wm[0];
     }
   }
 
@@ -1417,10 +1777,15 @@ function parseText(text){
     if(nums.length) amount = String(Math.max(...nums));
   }
 
+  // 取引先の推測:日付・金額・「発行日」等のラベル行は除外し、それらしい行を選ぶ
+  const LABEL_WORDS = /^(発行日|締め日|ご利用締め日|お支払い?日|引落日|ご請求金額|合計|明細|請求書|領収書|No\.?|様)/;
   const lines = text.split('\n').map(l=>l.trim()).filter(Boolean);
-  if(lines.length){
-    vendor = lines[0].slice(0, 20);
-  }
+  const candidateLine = lines.find(l=>
+    !LABEL_WORDS.test(l) &&
+    !datePattern.test(l) &&
+    !/^[¥￥0-9,円\s:：]+$/.test(l)
+  );
+  vendor = (candidateLine || lines[0] || '').slice(0, 20);
 
   lastRawVendor = vendor;
   const learned = findLearnedEntry(text);
@@ -1440,9 +1805,6 @@ function sanitize(s){
 }
 
 /* ---------- 命名ルール設定(電子帳簿保存法の検索要件に準拠) ---------- */
-const docTypeLabel = document.getElementById('docTypeLabel');
-const fDocType = document.getElementById('fDocType');
-const includeDocType = document.getElementById('includeDocType');
 const ruleOptions = document.getElementById('ruleOptions');
 
 function getNamingSettings(){
@@ -1462,16 +1824,12 @@ function saveNamingSettings(){
     const radio = document.querySelector(`input[name="namingRule"][value="${s.template}"]`);
     if(radio) radio.checked = true;
   }
-  if(s.includeType){
-    includeDocType.checked = true;
+  if('includeType' in s){
+    includeDocType.checked = !!s.includeType;
   }
-  docTypeLabel.style.display = includeDocType.checked ? '' : 'none';
-  fDocType.style.display = includeDocType.checked ? '' : 'none';
 })();
 ruleOptions.addEventListener('change', ()=>{ saveNamingSettings(); updatePreview(); });
 includeDocType.addEventListener('change', ()=>{
-  docTypeLabel.style.display = includeDocType.checked ? '' : 'none';
-  fDocType.style.display = includeDocType.checked ? '' : 'none';
   saveNamingSettings();
   updatePreview();
 });
@@ -1480,7 +1838,7 @@ fDocType.addEventListener('change', updatePreview);
 function updatePreview(){
   const template = document.querySelector('input[name="namingRule"]:checked').value;
   // 明細モードでは、複式簿記上「未払金の決済」を表す引落日を取引年月日として扱う
-  const dateSource = (isStatement.checked && fWithdrawal.value) ? fWithdrawal.value : fDate.value;
+  const dateSource = (isStatementDoc() && fWithdrawal.value) ? fWithdrawal.value : fDate.value;
   const date = sanitize(dateSource);
   const vendor = sanitize(fVendor.value);
   const amount = `${sanitize(fAmount.value)}円`;
@@ -1501,6 +1859,18 @@ function updatePreview(){
 [fDate, fVendor, fAmount, fWithdrawal].forEach(el=> el.addEventListener('input', updatePreview));
 
 // 体験版では保存ボタンが無効化されているため、フィールドを確定した時点(blur)で学習させる
+// 自由入力された日付を「YYYY-MM-DD」形式に自動整形する(スラッシュ・全角数字などを許容)
+function normalizeDateInput(el){
+  const raw = el.value.trim();
+  if(!raw) return;
+  const d = new Date(raw.replace(/[年月]/g, '-').replace(/日/g, ''));
+  if(!isNaN(d)){
+    el.value = toDateStr(d);
+  }
+}
+fDate.addEventListener('blur', ()=>{ normalizeDateInput(fDate); updatePreview(); });
+fWithdrawal.addEventListener('blur', ()=>{ normalizeDateInput(fWithdrawal); });
+
 fVendor.addEventListener('blur', learnFromSave);
 fWithdrawal.addEventListener('blur', learnFromSave);
 
@@ -1511,10 +1881,231 @@ btnReset.addEventListener('click', ()=>{
   setStatus('', false);
 });
 
+/* ---------- 台帳(Excel管理)機能 ---------- */
+function getLedger(){
+  try{ return JSON.parse(localStorage.getItem('denshou_ledger') || '[]'); }
+  catch(e){ return []; }
+}
+function setLedger(arr){
+  localStorage.setItem('denshou_ledger', JSON.stringify(arr));
+}
+function formatDateTime(d){
+  const p = n => String(n).padStart(2,'0');
+  return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
+}
+function recordToLedger(){
+  const ledger = getLedger();
+  ledger.push({
+    processedAt: formatDateTime(new Date()),
+    originalFilename: currentFile ? currentFile.name : '',
+    newFilename: filenamePreview.textContent,
+    date: fDate.value,
+    vendor: fVendor.value,
+    amount: fAmount.value,
+    docType: fDocType.value,
+    paymentMethod: (fPaymentMethod.value === 'カード' && fCardSelect.value && fCardSelect.value !== '__new__') ? fCardSelect.value : '現金'
+  });
+  setLedger(ledger);
+  renderLedgerTable();
+}
+
+const ledgerTbody = document.getElementById('ledgerTbody');
+const ledgerEmpty = document.getElementById('ledgerEmpty');
+const ledgerCount = document.getElementById('ledgerCount');
+function renderLedgerTable(){
+  const ledger = getLedger();
+  ledgerCount.textContent = `現在 ${ledger.length} 件 記録されています`;
+  ledgerTbody.innerHTML = '';
+  ledgerEmpty.style.display = ledger.length ? 'none' : 'block';
+  // 新しいものを上に表示
+  [...ledger].reverse().forEach(r=>{
+    const tr = document.createElement('tr');
+    [r.processedAt, r.originalFilename, r.newFilename, r.date, r.vendor, `${r.amount}円`, r.docType, r.paymentMethod]
+      .forEach(v=>{
+        const td = document.createElement('td');
+        td.textContent = v || '';
+        tr.appendChild(td);
+      });
+    ledgerTbody.appendChild(tr);
+  });
+}
+renderLedgerTable();
+
+document.getElementById('btnExportCSV').addEventListener('click', ()=>{
+  const ledger = getLedger();
+  const headers = ['処理日時','元のファイル名','新しいファイル名','取引年月日','取引先','金額','書類種類','支払い方法'];
+  const rows = ledger.map(r=>[r.processedAt, r.originalFilename, r.newFilename, r.date, r.vendor, r.amount, r.docType, r.paymentMethod]);
+  const csvBody = [headers, ...rows]
+    .map(row => row.map(v => `"${String(v ?? '').replace(/"/g,'""')}"`).join(','))
+    .join('\r\n');
+  const bom = '\uFEFF'; // Excelで文字化けしないようBOMを付与
+  const blob = new Blob([bom + csvBody], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `電帳DIY_台帳_${toDateStr(new Date())}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+});
+
+document.getElementById('btnClearLedger').addEventListener('click', ()=>{
+  if(!confirm('台帳の記録をすべて削除します。よろしいですか?(この操作は取り消せません)')) return;
+  setLedger([]);
+  renderLedgerTable();
+});
+
+/* ---------- ローカルフォルダとの同期確認 ---------- */
+function renderSyncDiff(container, folderFilenames, source){
+  const ledger = getLedger();
+  const ledgerFilenames = new Set(ledger.map(r=>r.newFilename).filter(Boolean));
+  const folderSet = new Set(folderFilenames);
+
+  const missingInFolder = [...ledgerFilenames].filter(f=>!folderSet.has(f)); // 台帳にあるがフォルダにない
+  const missingInLedger = [...folderSet].filter(f=>!ledgerFilenames.has(f)); // フォルダにあるが台帳にない
+
+  container.innerHTML = '';
+  if(missingInFolder.length === 0 && missingInLedger.length === 0){
+    container.innerHTML = `<div class="sync-ok">✓ 台帳と${source}の内容は一致しています</div>`;
+    return;
+  }
+  const list = document.createElement('div');
+  list.className = 'sync-list';
+  missingInFolder.forEach(f=>{
+    const div = document.createElement('div');
+    div.className = 'sync-item missing-local';
+    div.textContent = `⚠ 台帳にはあるが${source}に見当たらない: ${f}`;
+    list.appendChild(div);
+  });
+  missingInLedger.forEach(f=>{
+    const div = document.createElement('div');
+    div.className = 'sync-item missing-ledger';
+    div.textContent = `+ ${source}にあるが台帳に記録がない: ${f}`;
+    list.appendChild(div);
+  });
+  container.appendChild(list);
+}
+
+const btnSyncLocal = document.getElementById('btnSyncLocal');
+const syncLocalResult = document.getElementById('syncLocalResult');
+btnSyncLocal.addEventListener('click', async ()=>{
+  if(!savedDirHandle){
+    syncLocalResult.innerHTML = '<div class="sync-item missing-local">先に「01 保存先を設定する」でフォルダを選んでください。</div>';
+    return;
+  }
+  try{
+    const perm = await savedDirHandle.queryPermission({mode:'read'});
+    if(perm !== 'granted'){
+      const req = await savedDirHandle.requestPermission({mode:'read'});
+      if(req !== 'granted'){
+        syncLocalResult.innerHTML = '<div class="sync-item missing-local">フォルダの読み取り許可が得られませんでした。</div>';
+        return;
+      }
+    }
+    const filenames = [];
+    for await (const entry of savedDirHandle.values()){
+      if(entry.kind === 'file') filenames.push(entry.name);
+    }
+    renderSyncDiff(syncLocalResult, filenames, 'ローカルフォルダ');
+  }catch(e){
+    console.error(e);
+    syncLocalResult.innerHTML = '<div class="sync-item missing-local">フォルダの読み取りに失敗しました。</div>';
+  }
+});
+
+/* ---------- Googleドライブとの同期確認 ---------- */
+const GDRIVE_SCOPE = 'https://www.googleapis.com/auth/drive.file';
+let gdriveTokenClient = null;
+let gdriveAccessToken = null;
+
+function getGdriveClientId(){
+  return localStorage.getItem('denshou_gdrive_client_id') || '';
+}
+const gdriveClientIdInput = document.getElementById('gdriveClientId');
+gdriveClientIdInput.value = getGdriveClientId();
+
+const btnGdriveConnect = document.getElementById('btnGdriveConnect');
+btnGdriveConnect.disabled = !getGdriveClientId();
+
+document.getElementById('btnGdriveSetup').addEventListener('click', ()=>{
+  const id = gdriveClientIdInput.value.trim();
+  if(!id){ alert('Client IDを入力してください。'); return; }
+  localStorage.setItem('denshou_gdrive_client_id', id);
+  btnGdriveConnect.disabled = false;
+  alert('保存しました。「Googleにログインして比較する」から実行できます。');
+});
+
+function loadGoogleIdentityScript(){
+  return new Promise((resolve, reject)=>{
+    if(window.google && window.google.accounts && window.google.accounts.oauth2){
+      resolve(); return;
+    }
+    const s = document.createElement('script');
+    s.src = 'https://accounts.google.com/gsi/client';
+    s.onload = resolve;
+    s.onerror = () => reject(new Error('Google Identity Servicesの読み込みに失敗しました。インターネット接続をご確認ください。'));
+    document.head.appendChild(s);
+  });
+}
+
+const syncGdriveResult = document.getElementById('syncGdriveResult');
+
+btnGdriveConnect.addEventListener('click', async ()=>{
+  const clientId = getGdriveClientId();
+  if(!clientId){ alert('先にClient IDを保存してください。'); return; }
+
+  syncGdriveResult.innerHTML = '<div class="sync-item missing-ledger">Googleへの接続を準備しています…</div>';
+  try{
+    await loadGoogleIdentityScript();
+
+    if(!gdriveTokenClient){
+      gdriveTokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: clientId,
+        scope: GDRIVE_SCOPE,
+        callback: async (resp)=>{
+          if(resp.error){
+            syncGdriveResult.innerHTML = `<div class="sync-item missing-local">認証に失敗しました: ${resp.error}</div>`;
+            return;
+          }
+          gdriveAccessToken = resp.access_token;
+          await fetchDriveFilesAndCompare();
+        }
+      });
+    }
+    gdriveTokenClient.requestAccessToken({ prompt: gdriveAccessToken ? '' : 'consent' });
+  }catch(e){
+    console.error(e);
+    syncGdriveResult.innerHTML = `<div class="sync-item missing-local">${e.message}</div>`;
+  }
+});
+
+async function fetchDriveFilesAndCompare(){
+  syncGdriveResult.innerHTML = '<div class="sync-item missing-ledger">ドライブのファイル一覧を取得しています…</div>';
+  try{
+    // drive.fileスコープでは、このアプリ経由で開いた/作成したファイルのみ一覧取得できます
+    const res = await fetch(
+      'https://www.googleapis.com/drive/v3/files?fields=files(id,name)&pageSize=1000',
+      { headers: { Authorization: `Bearer ${gdriveAccessToken}` } }
+    );
+    if(!res.ok) throw new Error(`Drive APIエラー(${res.status})`);
+    const data = await res.json();
+    const filenames = (data.files || []).map(f=>f.name);
+    renderSyncDiff(syncGdriveResult, filenames, 'Googleドライブ');
+  }catch(e){
+    console.error(e);
+    syncGdriveResult.innerHTML = `<div class="sync-item missing-local">取得に失敗しました: ${e.message}</div>`;
+  }
+}
+
 btnSave.addEventListener('click', async ()=>{
-  if(!SAVE_ENABLED_FOR_TESTING) return;
   if(!currentFile) return;
-  learnVendorIfEdited();
+  learnFromSave();
+  recordToLedger();
+  if(!SAVE_ENABLED_FOR_TESTING){
+    setStatus('台帳に記録しました。※ファイル本体の保存は正式版でご利用いただけます。', false);
+    return;
+  }
   const filename = filenamePreview.textContent;
 
   // ①保存先フォルダが設定済みなら、確認なしでそこへ直接保存
@@ -1560,6 +2151,9 @@ btnSave.addEventListener('click', async ()=>{
   URL.revokeObjectURL(url);
   setStatus('ダウンロードフォルダに保存しました。', false);
 });
+
+// 初期状態のUI(書類種類・支払い方法のラベル/表示)を整える
+refreshPaymentUI();
 </script>
 </body>
 </html>
