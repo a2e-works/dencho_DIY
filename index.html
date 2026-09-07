@@ -5,25 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>電帳DIY ─ デモ版(体験版)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper: #F3EEE2;
-    --paper-line: #D9D2C0;
-    --ink: #1F3252;
-    --ink-soft: #4A5A78;
-    --stamp: #B7472A;
-    --stamp-soft: #E8C9BF;
-    --gray: #6B6558;
-    --ok: #3E6B4F;
-    --card: #FBF9F3;
+    --paper: #F5F7F6;
+    --paper-line: #E1E7E4;
+    --ink: #1A2B22;
+    --ink-soft: #4C5B54;
+    --stamp: #00A968;
+    --stamp-soft: #CDEEDD;
+    --gray: #79857F;
+    --ok: #00A968;
+    --card: #FFFFFF;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{
-    background:
-      repeating-linear-gradient(180deg, transparent, transparent 35px, var(--paper-line) 35px, var(--paper-line) 36px),
-      var(--paper);
+    background: var(--paper);
     font-family:'Noto Sans JP', sans-serif;
     color:var(--ink);
     min-height:100vh;
@@ -32,23 +30,24 @@
   .wrap{max-width:760px; margin:0 auto; padding:0 20px;}
 
   header{
-    padding:56px 0 28px 0;
+    padding:40px 0 28px 0;
     position:relative;
   }
   .eyebrow{
-    font-family:'JetBrains Mono', monospace;
+    font-family:'Noto Sans JP', sans-serif;
     font-size:12px;
-    letter-spacing:.14em;
+    letter-spacing:.08em;
     color:var(--stamp);
     font-weight:700;
     margin-bottom:10px;
   }
   h1{
-    font-family:'Shippori Mincho', serif;
-    font-size:clamp(28px, 5vw, 42px);
+    font-family:'Noto Sans JP', sans-serif;
+    font-size:clamp(26px, 5vw, 36px);
     line-height:1.4;
     margin:0 0 14px 0;
     font-weight:700;
+    color:var(--ink);
   }
   .lead{
     font-size:15px;
@@ -61,16 +60,17 @@
     margin-top:26px;
     border:1px solid var(--paper-line);
     background:var(--card);
-    border-radius:2px;
+    border-radius:8px;
     overflow:hidden;
+    box-shadow:0 1px 3px rgba(0,0,0,.04);
   }
   .newsbar-head{
     display:flex; align-items:center; gap:8px;
-    padding:9px 14px;
-    background:var(--ink);
-    color:var(--paper);
+    padding:10px 16px;
+    background:var(--stamp-soft);
+    color:#00532F;
     font-size:12px;
-    letter-spacing:.08em;
+    letter-spacing:.04em;
     font-weight:700;
   }
   .newsbar-head .dot{
@@ -82,8 +82,8 @@
     0%,100%{opacity:1;} 50%{opacity:.25;}
   }
   .news-item{
-    padding:12px 14px;
-    border-top:1px dashed var(--paper-line);
+    padding:12px 16px;
+    border-top:1px solid var(--paper-line);
     font-size:13.5px;
     line-height:1.7;
     color:var(--ink-soft);
@@ -92,51 +92,60 @@
   .news-item b{color:var(--ink); font-weight:700;}
   .news-tag{
     display:inline-block;
-    font-family:'JetBrains Mono', monospace;
+    font-family:'Noto Sans JP', sans-serif;
     font-size:10px;
-    padding:1px 6px;
-    border:1px solid var(--stamp);
-    color:var(--stamp);
-    border-radius:2px;
+    padding:1px 7px;
+    background:var(--stamp);
+    color:#fff;
+    border-radius:10px;
     margin-right:8px;
     vertical-align:1px;
+    font-weight:700;
   }
 
-  section{margin-top:44px;}
+  section{margin-top:40px;}
   .section-title{
-    font-family:'Shippori Mincho', serif;
-    font-size:19px;
+    font-family:'Noto Sans JP', sans-serif;
+    font-size:17px;
     font-weight:700;
-    display:flex; align-items:baseline; gap:10px;
+    display:flex; align-items:center; gap:10px;
     margin-bottom:16px;
+    padding-bottom:10px;
+    border-bottom:2px solid var(--stamp);
   }
   .section-title .no{
-    font-family:'JetBrains Mono', monospace;
+    font-family:'Noto Sans JP', sans-serif;
     font-size:12px;
-    color:var(--stamp);
+    font-weight:700;
+    color:#fff;
+    background:var(--stamp);
+    width:22px; height:22px;
+    border-radius:50%;
+    display:inline-flex; align-items:center; justify-content:center;
+    flex-shrink:0;
   }
 
   .ledger-card{
     background:var(--card);
     border:1px solid var(--paper-line);
-    border-radius:3px;
-    padding:28px;
+    border-radius:8px;
+    padding:26px;
     position:relative;
-    box-shadow:0 1px 0 var(--paper-line);
+    box-shadow:0 1px 3px rgba(0,0,0,.04);
   }
 
   .dropzone{
     border:2px dashed var(--paper-line);
-    border-radius:3px;
+    border-radius:8px;
     padding:40px 20px;
     text-align:center;
     cursor:pointer;
     transition:border-color .2s, background .2s;
-    background:repeating-linear-gradient(180deg, transparent, transparent 27px, #eee7d6 27px, #eee7d6 28px);
+    background:#FAFBFA;
   }
   .dropzone.drag{
     border-color:var(--stamp);
-    background-color:#FBF2ED;
+    background-color:var(--stamp-soft);
   }
   .dropzone .icon{font-size:30px; margin-bottom:10px;}
   .dropzone .main{font-size:14.5px; color:var(--ink); font-weight:500;}
@@ -149,19 +158,19 @@
     font-family:'Noto Sans JP', sans-serif;
     font-size:13px;
     font-weight:700;
-    padding:10px 18px;
-    border-radius:2px;
-    border:1px solid var(--ink);
-    background:var(--ink);
-    color:var(--paper);
+    padding:10px 20px;
+    border-radius:6px;
+    border:1px solid var(--stamp);
+    background:var(--stamp);
+    color:#fff;
     cursor:pointer;
     transition:opacity .15s, transform .1s;
   }
   .dz-btn.ghost{
     background:#fff;
-    color:var(--ink);
+    color:var(--stamp);
   }
-  .dz-btn:hover{opacity:.82;}
+  .dz-btn:hover{opacity:.85;}
   .dz-btn:active{transform:scale(.97);}
   input[type=file]{display:none;}
 
@@ -190,28 +199,28 @@
 
   .stamp{
     position:absolute;
-    top:-14px; right:-6px;
-    width:84px; height:84px;
-    border:3px solid var(--stamp);
+    top:-10px; right:-6px;
+    width:64px; height:64px;
+    border:none;
     border-radius:50%;
-    color:var(--stamp);
+    color:#fff;
     display:flex; align-items:center; justify-content:center;
-    font-family:'Shippori Mincho', serif;
+    font-family:'Noto Sans JP', sans-serif;
     font-weight:700;
-    font-size:15px;
-    transform:rotate(-14deg) scale(0);
+    font-size:13px;
+    transform:scale(0);
     opacity:0;
-    letter-spacing:.1em;
-    background:rgba(255,255,255,.5);
-    mix-blend-mode:multiply;
+    letter-spacing:.05em;
+    background:var(--stamp);
+    box-shadow:0 2px 8px rgba(0,169,104,.35);
   }
   .stamp.pop{
     animation:stampIn .45s cubic-bezier(.2,1.4,.4,1) forwards;
   }
   @keyframes stampIn{
-    0%{transform:rotate(-14deg) scale(2.2); opacity:0;}
-    60%{transform:rotate(-14deg) scale(.92); opacity:1;}
-    100%{transform:rotate(-14deg) scale(1); opacity:1;}
+    0%{transform:scale(0); opacity:0;}
+    60%{transform:scale(1.15); opacity:1;}
+    100%{transform:scale(1); opacity:1;}
   }
 
   .field-grid{
@@ -224,31 +233,33 @@
     font-size:12.5px; color:var(--gray); font-weight:500;
   }
   .field-input{
-    font-family:'JetBrains Mono', monospace;
+    font-family:'Noto Sans JP', sans-serif;
     font-size:14.5px;
-    padding:9px 10px;
+    padding:9px 12px;
     border:1px solid var(--paper-line);
-    border-radius:2px;
+    border-radius:6px;
     background:#fff;
     color:var(--ink);
     width:100%;
   }
-  .field-input:focus{outline:2px solid var(--ink-soft); outline-offset:1px;}
+  .field-input:focus{outline:2px solid var(--stamp); outline-offset:1px;}
 
   .filename-preview{
     margin-top:18px;
     padding:12px 14px;
-    background:#fff;
+    background:var(--stamp-soft);
     border:1px solid var(--paper-line);
-    border-radius:2px;
-    font-family:'JetBrains Mono', monospace;
+    border-radius:6px;
+    font-family:'Noto Sans JP', sans-serif;
+    font-weight:700;
     font-size:13px;
-    color:var(--ink);
+    color:#00532F;
     word-break:break-all;
   }
   .filename-preview .tag{
     display:block;
     font-family:'Noto Sans JP', sans-serif;
+    font-weight:500;
     font-size:11px;
     color:var(--gray);
     margin-bottom:4px;
@@ -262,17 +273,17 @@
     font-family:'Noto Sans JP', sans-serif;
     font-size:13.5px;
     font-weight:700;
-    padding:11px 20px;
-    border-radius:2px;
-    border:1px solid var(--ink);
-    background:var(--ink);
-    color:var(--paper);
+    padding:11px 22px;
+    border-radius:6px;
+    border:1px solid var(--stamp);
+    background:var(--stamp);
+    color:#fff;
     cursor:pointer;
     transition:opacity .15s;
   }
   button.ghost{
-    background:transparent;
-    color:var(--ink);
+    background:#fff;
+    color:var(--stamp);
   }
   button:hover{opacity:.85;}
   button:disabled{opacity:.35; cursor:not-allowed;}
@@ -290,7 +301,7 @@
   }
   .savedir-label{font-size:11.5px; color:var(--gray); margin-bottom:3px;}
   .savedir-path{
-    font-family:'JetBrains Mono', monospace;
+    font-family:'Noto Sans JP', sans-serif;
     font-size:13.5px;
     color:var(--ink);
     word-break:break-all;
@@ -315,7 +326,7 @@
     width:64px; height:84px;
     object-fit:cover;
     border:1px solid var(--paper-line);
-    border-radius:2px;
+    border-radius:6px;
     background:#fff;
     box-shadow:0 1px 3px rgba(0,0,0,.08);
   }
@@ -324,7 +335,7 @@
   }
   .preview-caption span{
     display:block; font-size:11.5px; color:var(--gray); font-weight:500;
-    font-family:'JetBrains Mono', monospace;
+    font-family:'Noto Sans JP', sans-serif;
   }
   .open-link{
     display:inline-block;
@@ -353,7 +364,7 @@
   .rule-radio input{accent-color:var(--stamp);}
   .rule-radio em{
     font-style:normal; color:var(--gray); font-size:12px;
-    font-family:'JetBrains Mono', monospace;
+    font-family:'Noto Sans JP', sans-serif;
   }
   .rule-checkbox{
     display:flex; align-items:center; gap:9px;
@@ -373,7 +384,7 @@
     padding:12px 14px;
     background:#fff;
     border:1px solid var(--paper-line);
-    border-radius:2px;
+    border-radius:6px;
     display:flex; align-items:center; gap:12px; flex-wrap:wrap;
     font-size:13px;
   }
@@ -397,11 +408,11 @@
   }
   .card-item input[type=number]{
     width:46px;
-    font-family:'JetBrains Mono', monospace;
+    font-family:'Noto Sans JP', sans-serif;
     font-size:12.5px;
     padding:3px 6px;
     border:1px solid var(--paper-line);
-    border-radius:2px;
+    border-radius:6px;
     text-align:center;
   }
   .card-item select{
@@ -409,7 +420,7 @@
     font-size:12px;
     padding:3px 4px;
     border:1px solid var(--paper-line);
-    border-radius:2px;
+    border-radius:6px;
     background:#fff;
   }
   .card-item .learn-del{margin-left:auto;}
@@ -425,7 +436,7 @@
   .ledger-table-wrap{
     overflow-x:auto;
     border:1px solid var(--paper-line);
-    border-radius:2px;
+    border-radius:6px;
   }
   .ledger-table{
     width:100%; border-collapse:collapse; font-size:12px; white-space:nowrap;
@@ -434,10 +445,10 @@
     text-align:left; padding:8px 10px; border-bottom:1px solid var(--paper-line);
   }
   .ledger-table th{
-    background:var(--ink); color:var(--paper); font-weight:500; font-size:11px;
+    background:var(--stamp); color:#fff; font-weight:700; font-size:11px;
     position:sticky; top:0;
   }
-  .ledger-table tbody tr:nth-child(even){background:#FBF9F3;}
+  .ledger-table tbody tr:nth-child(even){background:#F5FAF7;}
   .ledger-empty{
     padding:20px; text-align:center; font-size:12.5px; color:var(--gray); margin:0;
   }
@@ -448,19 +459,19 @@
   }
   .sync-block:first-of-type{border-top:none; padding-top:0;}
   .sync-block h4{
-    font-family:'Shippori Mincho', serif;
+    font-family:'Noto Sans JP', sans-serif;
     font-size:14.5px; margin:0 0 6px 0; color:var(--ink);
   }
   .sync-note{font-size:12px; color:var(--gray); margin:0 0 10px 0; line-height:1.7;}
   .sync-note code{
-    background:#EEE7D6; padding:1px 5px; border-radius:2px; font-size:11px;
+    background:#EEE7D6; padding:1px 5px; border-radius:6px; font-size:11px;
   }
   .sync-gdrive-setup{display:flex; gap:8px; margin-bottom:10px;}
   .sync-result{margin-top:12px;}
   .sync-list{display:flex; flex-direction:column; gap:6px;}
   .sync-item{
     padding:8px 12px;
-    border-radius:2px;
+    border-radius:6px;
     font-size:12.5px;
     display:flex; align-items:center; gap:8px;
   }
@@ -478,7 +489,7 @@
     padding:12px 14px;
     background:#FBF2ED;
     border:1px solid var(--stamp-soft);
-    border-radius:2px;
+    border-radius:6px;
     font-size:12px;
     line-height:1.8;
     color:var(--ink-soft);
@@ -494,7 +505,7 @@
     padding:12px 14px;
     background:#fff;
     border:1px solid var(--paper-line);
-    border-radius:2px;
+    border-radius:6px;
     font-size:13px;
   }
   .learn-main{
@@ -502,7 +513,7 @@
     margin-bottom:8px;
   }
   .learn-item .arrow{color:var(--gray);}
-  .learn-item .from{color:var(--gray); font-family:'JetBrains Mono', monospace; font-size:12px;}
+  .learn-item .from{color:var(--gray); font-family:'Noto Sans JP', sans-serif; font-size:12px;}
   .learn-edit-input{
     flex:1; min-width:120px;
     font-family:'Noto Sans JP', sans-serif;
@@ -532,11 +543,11 @@
   }
   .learn-offset-input{
     width:48px;
-    font-family:'JetBrains Mono', monospace;
+    font-family:'Noto Sans JP', sans-serif;
     font-size:12.5px;
     padding:3px 6px;
     border:1px solid var(--paper-line);
-    border-radius:2px;
+    border-radius:6px;
     text-align:center;
   }
   .learn-offset-select{
@@ -544,7 +555,7 @@
     font-size:12px;
     padding:3px 4px;
     border:1px solid var(--paper-line);
-    border-radius:2px;
+    border-radius:6px;
     background:#fff;
   }
   .learn-del{
@@ -563,7 +574,7 @@
   }
   .limit-card.show{display:block;}
   .limit-card h3{
-    font-family:'Shippori Mincho', serif;
+    font-family:'Noto Sans JP', sans-serif;
     font-size:16px;
     margin:0 0 8px 0;
     color:var(--stamp);
@@ -573,7 +584,7 @@
   }
   .price-badge{
     display:inline-flex; align-items:baseline; gap:4px;
-    font-family:'JetBrains Mono', monospace;
+    font-family:'Noto Sans JP', sans-serif;
     font-weight:700;
     color:var(--ink);
   }
@@ -714,7 +725,7 @@
       <div class="quota" id="quotaText"></div>
 
       <div class="result" id="result">
-        <div class="stamp" id="stamp">受理</div>
+        <div class="stamp" id="stamp">✓ 完了</div>
 
         <div class="preview-row">
           <img id="thumbImg" class="thumb-img" alt="読み込んだ証憑のプレビュー">
