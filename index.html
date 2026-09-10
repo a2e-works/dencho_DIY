@@ -56,6 +56,30 @@
     max-width:56ch;
   }
 
+  .law-box{
+    margin-top:22px;
+    border:1px solid var(--stamp-soft);
+    background:#F5FBF8;
+    border-radius:8px;
+    padding:18px 20px;
+  }
+  .law-box-title{
+    font-size:14px; font-weight:700; color:#00532F;
+    margin-bottom:10px;
+  }
+  .law-box-text{
+    font-size:13px; line-height:1.9; color:var(--ink-soft);
+    margin:0 0 8px 0;
+  }
+  .law-box-text:last-child{margin-bottom:0;}
+  .law-box-text b{color:var(--ink);}
+  .law-box-highlight{
+    padding-top:10px;
+    border-top:1px dashed var(--stamp-soft);
+    color:#00532F;
+    font-weight:700;
+  }
+
   .newsbar{
     margin-top:26px;
     border:1px solid var(--paper-line);
@@ -244,6 +268,38 @@
   }
   .field-input:focus{outline:2px solid var(--stamp); outline-offset:1px;}
 
+  .date-field-wrap{
+    position:relative;
+    display:flex; gap:6px; align-items:center;
+  }
+  .date-field-wrap .field-input{flex:1;}
+  .date-pick-btn{
+    flex-shrink:0;
+    width:38px; height:38px;
+    border:1px solid var(--paper-line);
+    background:#fff;
+    border-radius:6px;
+    font-size:16px;
+    cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:border-color .15s;
+  }
+  .date-pick-btn:hover{border-color:var(--stamp);}
+  .date-hidden-input{
+    position:absolute;
+    width:38px; height:38px;
+    right:0; top:0;
+    opacity:0;
+    pointer-events:none;
+  }
+  .field-input.date-missing{
+    border-color:var(--stamp);
+    background:var(--stamp-soft);
+  }
+  .date-missing-hint{
+    font-size:11.5px; color:var(--stamp); margin:6px 0 0 0; font-weight:700;
+  }
+
   .filename-preview{
     margin-top:18px;
     padding:12px 14px;
@@ -425,6 +481,14 @@
   }
   .card-item .learn-del{margin-left:auto;}
   .card-empty{font-size:12.5px; color:var(--gray); margin-bottom:14px;}
+
+  .ledger-warning{
+    font-size:12px; line-height:1.8; color:#946200;
+    background:#FFF6E0; border:1px solid #F0DDA0;
+    border-radius:6px; padding:10px 12px;
+    margin:0 0 16px 0;
+  }
+  .ledger-warning b{color:#7A4E00;}
 
   .ledger-summary{
     display:flex; align-items:center; justify-content:space-between; gap:14px;
@@ -629,6 +693,19 @@
       帳簿に残せる形にファイル名を整えます。
     </p>
 
+    <div class="law-box">
+      <div class="law-box-title">📌 電子帳簿保存法、これだけ押さえればOK</div>
+      <p class="law-box-text">
+        電子データの証憑は、<b>「取引年月日・取引先・金額」で検索できる状態</b>で保存することが
+        法律上求められています。これは高価な専用システムを導入しなくても、
+        <b>ファイル名にこの3項目を含めておくだけ</b>で満たせます。
+      </p>
+      <p class="law-box-text law-box-highlight">
+        本ツールは、まさにこの「正しいファイル名」を証憑を撮る・PDF明細の登録だけで自動生成します。
+        法令を意識して手間をかける必要はもうありません。
+      </p>
+    </div>
+
     <div class="newsbar">
       <div class="newsbar-head"><span class="dot"></span> 制度アップデート</div>
       <div class="news-item">
@@ -738,7 +815,11 @@
 
         <div class="field-grid">
           <div class="field-label">取引年月日</div>
-          <input class="field-input" type="text" id="fDate" placeholder="例:2026-08-20">
+          <div class="date-field-wrap">
+            <input class="field-input" type="text" id="fDate" placeholder="例:2026-08-20">
+            <button type="button" class="date-pick-btn" id="btnPickDate" title="カレンダーから選択">📅</button>
+            <input type="date" id="fDateHidden" class="date-hidden-input">
+          </div>
           <div class="field-label">取引先</div>
           <input class="field-input" id="fVendor" placeholder="例:〇〇商店">
           <div class="field-label">金額</div>
@@ -811,9 +892,16 @@
         含めて記録されるので、「どれだっけ?」と迷った時に確認できます。CSV形式でダウンロードすれば、
         そのままExcelで開いて一覧管理・検索ができます。
       </p>
+      <p class="ledger-warning" id="ledgerWarningText">
+        ⚠ この記録はお使いのブラウザ内にのみ保存されています(サーバーには送信されません)。
+        ブラウザのキャッシュ・サイトデータを削除したり、別のブラウザ・別のPC・スマホで開いたりすると
+        <b>記録は引き継がれません</b>。また、将来のデスクトップ版(Pro)にも自動では移行されません。
+        <b>定期的にCSVでダウンロードして保管しておくことを強くおすすめします。</b>
+      </p>
       <div class="ledger-summary">
         <span id="ledgerCount">現在 0 件 記録されています</span>
         <div class="ledger-actions">
+          <button type="button" class="dz-btn ghost" id="btnDedupLedger">🧹 重複を整理する</button>
           <button type="button" class="dz-btn ghost" id="btnExportCSV">📊 CSVでダウンロード(Excelで開けます)</button>
           <button type="button" class="dz-btn ghost danger" id="btnClearLedger">台帳をクリア</button>
         </div>
@@ -912,6 +1000,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = "lib/pdf.worker.min.js";
 const MAX_FREE = 10;
 const TESTING_MODE = true; // ← テスト中はtrue。公開時はfalseに戻す(10件制限が復活します)
 const SAVE_ENABLED_FOR_TESTING = true; // ← テスト中はtrue。公開時はfalseに戻す(保存機能が無効化されます)
+const LEDGER_AUTO_EXPIRE_ENABLED = false; // ← テスト中はfalse。公開時はtrueにする(台帳が一定時間で自動削除されます)
+const LEDGER_EXPIRE_HOURS = 24; // 公開時、記録からこの時間が経過した台帳データを自動削除
 const dropzone = document.getElementById('dropzone');
 const fileInput = document.getElementById('fileInput');
 const statusText = document.getElementById('statusText');
@@ -1216,10 +1306,41 @@ function renderCardList(){
     const closingSuffix = document.createElement('span');
     closingSuffix.textContent = '日';
 
+    const closingLastDayLabel = document.createElement('label');
+    closingLastDayLabel.className = 'learn-checkbox-label';
+    const closingLastDayCheckbox = document.createElement('input');
+    closingLastDayCheckbox.type = 'checkbox';
+    const closingLastDayText = document.createElement('span');
+    closingLastDayText.textContent = '末日(月末)';
+    closingLastDayLabel.appendChild(closingLastDayCheckbox);
+    closingLastDayLabel.appendChild(closingLastDayText);
+
+    // 末日は内部的には31として扱う(月の日数に応じて28/29/30/31日に自動調整される)
+    const isLastDay = card.closingDay === 31;
+    closingLastDayCheckbox.checked = isLastDay;
+    closingInput.disabled = isLastDay;
+    if(isLastDay) closingInput.value = '';
+    closingInput.placeholder = isLastDay ? '末日' : '例:15';
+
+    closingLastDayCheckbox.addEventListener('change', ()=>{
+      if(closingLastDayCheckbox.checked){
+        closingInput.value = '';
+        closingInput.placeholder = '末日';
+        closingInput.disabled = true;
+        const r = getCardRegistry();
+        r[name].closingDay = 31;
+        setCardRegistry(r);
+      } else {
+        closingInput.disabled = false;
+        closingInput.placeholder = '例:15';
+        closingInput.focus();
+      }
+    });
+
     const paymentLabel = document.createElement('span');
     paymentLabel.textContent = ' / 支払日:';
     const monthSelect = document.createElement('select');
-    [[0,'締め日と同じ月'],[1,'締め日の1ヶ月後'],[2,'締め日の2ヶ月後']].forEach(([val,label])=>{
+    [[0,'当月'],[1,'翌月'],[2,'翌々月']].forEach(([val,label])=>{
       const o = document.createElement('option');
       o.value = val; o.textContent = label;
       if((card.monthOffset ?? 1) === val) o.selected = true;
@@ -1235,7 +1356,7 @@ function renderCardList(){
     const save = ()=>{
       const r = getCardRegistry();
       r[name] = {
-        closingDay: parseInt(closingInput.value,10) || null,
+        closingDay: closingLastDayCheckbox.checked ? 31 : (parseInt(closingInput.value,10) || null),
         paymentDay: parseInt(paymentInput.value,10) || null,
         monthOffset: parseInt(monthSelect.value,10)
       };
@@ -1248,6 +1369,7 @@ function renderCardList(){
     ruleWrap.appendChild(closingLabel);
     ruleWrap.appendChild(closingInput);
     ruleWrap.appendChild(closingSuffix);
+    ruleWrap.appendChild(closingLastDayLabel);
     ruleWrap.appendChild(paymentLabel);
     ruleWrap.appendChild(monthSelect);
     ruleWrap.appendChild(paymentInput);
@@ -1670,6 +1792,12 @@ async function handleFile(file){
     fVendor.value = parsed.vendor;
     fAmount.value = parsed.amount;
 
+    if(parsed.date){
+      clearMissingDateFlag();
+    } else {
+      flagMissingDate();
+    }
+
     // 学習済みの書類種類・支払い方法を自動反映
     if(parsed.learnedEntry){
       fDocType.value = parsed.learnedEntry.docType || 'レシート';
@@ -1885,6 +2013,50 @@ fWithdrawal.addEventListener('blur', ()=>{ normalizeDateInput(fWithdrawal); });
 fVendor.addEventListener('blur', learnFromSave);
 fWithdrawal.addEventListener('blur', learnFromSave);
 
+/* ---------- 取引年月日をカレンダーから選択する ---------- */
+const btnPickDate = document.getElementById('btnPickDate');
+const fDateHidden = document.getElementById('fDateHidden');
+
+btnPickDate.addEventListener('click', ()=>{
+  // 現在の値があれば、カレンダーの初期選択日に反映する
+  if(fDate.value){
+    const d = new Date(fDate.value);
+    if(!isNaN(d)) fDateHidden.value = toDateStr(d);
+  }
+  if(fDateHidden.showPicker){
+    fDateHidden.showPicker();
+  } else {
+    fDateHidden.click();
+  }
+});
+fDateHidden.addEventListener('change', ()=>{
+  if(fDateHidden.value){
+    fDate.value = fDateHidden.value;
+    fDate.classList.remove('date-missing');
+    const hint = document.getElementById('dateMissingHint');
+    if(hint) hint.remove();
+    updatePreview();
+    learnFromSave();
+  }
+});
+
+// 日付が読み取れなかった場合、入力欄を強調しカレンダーを自動で開く
+function flagMissingDate(){
+  fDate.classList.add('date-missing');
+  if(!document.getElementById('dateMissingHint')){
+    const hint = document.createElement('p');
+    hint.id = 'dateMissingHint';
+    hint.className = 'date-missing-hint';
+    hint.textContent = '⚠ 日付を読み取れませんでした。📅ボタンから選択するか、直接入力してください。';
+    document.querySelector('.field-grid').insertAdjacentElement('afterend', hint);
+  }
+}
+function clearMissingDateFlag(){
+  fDate.classList.remove('date-missing');
+  const hint = document.getElementById('dateMissingHint');
+  if(hint) hint.remove();
+}
+
 btnReset.addEventListener('click', ()=>{
   result.classList.remove('show');
   stampEl.classList.remove('pop');
@@ -1904,10 +2076,15 @@ function formatDateTime(d){
   const p = n => String(n).padStart(2,'0');
   return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
 }
+function ledgerDedupKey(r){
+  return [r.newFilename, r.date, r.vendor, r.amount, r.docType, r.paymentMethod].join('|');
+}
 function recordToLedger(){
   const ledger = getLedger();
-  ledger.push({
-    processedAt: formatDateTime(new Date()),
+  const now = new Date();
+  const entry = {
+    processedAt: formatDateTime(now),
+    recordedAtTs: now.getTime(), // 自動削除の判定用(表示形式によらず正確に計算するため)
     originalFilename: currentFile ? currentFile.name : '',
     newFilename: filenamePreview.textContent,
     date: fDate.value,
@@ -1915,9 +2092,30 @@ function recordToLedger(){
     amount: fAmount.value,
     docType: fDocType.value,
     paymentMethod: (fPaymentMethod.value === 'カード' && fCardSelect.value && fCardSelect.value !== '__new__') ? fCardSelect.value : '現金'
-  });
+  };
+
+  // 既に全く同じ内容が台帳にあれば、重複として追加しない
+  const key = ledgerDedupKey(entry);
+  const isDuplicate = ledger.some(r => ledgerDedupKey(r) === key);
+  if(isDuplicate){
+    return false;
+  }
+
+  ledger.push(entry);
   setLedger(ledger);
   renderLedgerTable();
+  return true;
+}
+
+// 公開時(LEDGER_AUTO_EXPIRE_ENABLED=true)、記録から一定時間経過した台帳データを自動削除する
+function pruneExpiredLedgerEntries(){
+  if(!LEDGER_AUTO_EXPIRE_ENABLED) return;
+  const ledger = getLedger();
+  const cutoff = Date.now() - LEDGER_EXPIRE_HOURS * 60 * 60 * 1000;
+  const kept = ledger.filter(r => (r.recordedAtTs ?? 0) >= cutoff);
+  if(kept.length !== ledger.length){
+    setLedger(kept);
+  }
 }
 
 const ledgerTbody = document.getElementById('ledgerTbody');
@@ -1940,7 +2138,17 @@ function renderLedgerTable(){
     ledgerTbody.appendChild(tr);
   });
 }
+pruneExpiredLedgerEntries();
 renderLedgerTable();
+
+// 公開時(自動削除有効時)は注意書きの文言をそちらに合わせて差し替える
+if(LEDGER_AUTO_EXPIRE_ENABLED){
+  const warnEl = document.getElementById('ledgerWarningText');
+  if(warnEl){
+    warnEl.innerHTML = `⚠ 体験版では、この記録は<b>約${LEDGER_EXPIRE_HOURS}時間後に自動的に削除されます</b>(保存機能自体が体験版では無効のため)。
+      継続して管理したい場合は、その都度CSVでダウンロードして保管するか、正式版(Pro)をご利用ください。`;
+  }
+}
 
 document.getElementById('btnExportCSV').addEventListener('click', ()=>{
   const ledger = getLedger();
@@ -1959,6 +2167,28 @@ document.getElementById('btnExportCSV').addEventListener('click', ()=>{
   a.click();
   a.remove();
   URL.revokeObjectURL(url);
+});
+
+document.getElementById('btnDedupLedger').addEventListener('click', ()=>{
+  const ledger = getLedger();
+  const seen = new Set();
+  const deduped = [];
+  ledger.forEach(r=>{
+    const key = ledgerDedupKey(r);
+    if(!seen.has(key)){
+      seen.add(key);
+      deduped.push(r);
+    }
+  });
+  const removedCount = ledger.length - deduped.length;
+  if(removedCount === 0){
+    alert('重複データは見つかりませんでした。');
+    return;
+  }
+  if(!confirm(`完全に同じ内容(ファイル名・日付・取引先・金額・書類種類・支払い方法が一致)の重複が ${removedCount} 件見つかりました。古い方を残して重複分を削除します。よろしいですか?`)) return;
+  setLedger(deduped);
+  renderLedgerTable();
+  alert(`${removedCount} 件の重複を削除しました。`);
 });
 
 document.getElementById('btnClearLedger').addEventListener('click', ()=>{
@@ -2112,9 +2342,11 @@ async function fetchDriveFilesAndCompare(){
 btnSave.addEventListener('click', async ()=>{
   if(!currentFile) return;
   learnFromSave();
-  recordToLedger();
+  const recorded = recordToLedger();
   if(!SAVE_ENABLED_FOR_TESTING){
-    setStatus('台帳に記録しました。※ファイル本体の保存は正式版でご利用いただけます。', false);
+    setStatus(recorded
+      ? '台帳に記録しました。※ファイル本体の保存は正式版でご利用いただけます。'
+      : 'この内容は既に台帳に記録されています(重複のため追加しませんでした)。※ファイル本体の保存は正式版でご利用いただけます。', false);
     return;
   }
   const filename = filenamePreview.textContent;
@@ -2128,7 +2360,7 @@ btnSave.addEventListener('click', async ()=>{
         const writable = await fh.createWritable();
         await writable.write(currentFile);
         await writable.close();
-        setStatus(`「${savedDirHandle.name}」フォルダへ保存しました。`, false);
+        setStatus(`「${savedDirHandle.name}」フォルダへ保存しました。${recorded ? '' : '(台帳は重複のため未追加)'}`, false);
         return;
       }
     }catch(e){
@@ -2144,7 +2376,7 @@ btnSave.addEventListener('click', async ()=>{
       const writable = await handle.createWritable();
       await writable.write(currentFile);
       await writable.close();
-      setStatus('ローカルフォルダへ保存しました。', false);
+      setStatus(`ローカルフォルダへ保存しました。${recorded ? '' : '(台帳は重複のため未追加)'}`, false);
       return;
     }catch(e){
       if(e.name === 'AbortError') return;
@@ -2160,7 +2392,7 @@ btnSave.addEventListener('click', async ()=>{
   a.click();
   a.remove();
   URL.revokeObjectURL(url);
-  setStatus('ダウンロードフォルダに保存しました。', false);
+  setStatus(`ダウンロードフォルダに保存しました。${recorded ? '' : '(台帳は重複のため未追加)'}`, false);
 });
 
 // 初期状態のUI(書類種類・支払い方法のラベル/表示)を整える
