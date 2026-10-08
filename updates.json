@@ -1,0 +1,21 @@
+{
+  "version": "1",
+  "updatedAt": "2026-10-08",
+  "news": [
+    {
+      "date": "2026-10-08",
+      "tag": "2026.10〜",
+      "title": "2割特例は2026年9月30日で終了予定です。",
+      "body": "個人事業主向けの3割特例が新設される見込みで、免税事業者からの仕入に対する控除割合も段階的に縮小されます。記帳・証憑保存の重要性は今後さらに増していきます。",
+      "url": "https://www.nta.go.jp/law/joho-zeikaishaku/sonota/jirei/tokusetsu/index.htm"
+    },
+    {
+      "date": "2026-10-08",
+      "tag": "国税庁",
+      "title": "電子帳簿保存法一問一答【電子取引関係】(令和8年7月版)が公開されています。",
+      "body": "検索機能の確保(ファイル名への記載の例など)や、ダウンロードの求めへの対応が示されています。",
+      "url": "https://www.nta.go.jp/law/joho-zeikaishaku/sonota/jirei/pdf/0026007-006_05.pdf"
+    }
+  ],
+  "cards": []
+}

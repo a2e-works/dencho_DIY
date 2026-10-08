@@ -463,7 +463,7 @@
     flex-wrap:wrap;
   }
   .card-item input[type=number]{
-    width:46px;
+    width:64px;
     font-family:'Noto Sans JP', sans-serif;
     font-size:12.5px;
     padding:3px 6px;
@@ -504,6 +504,11 @@
   .card-preset-item:hover{border-color:var(--stamp); background:var(--stamp-soft);}
   .card-preset-item .cp-name{font-size:13.5px; font-weight:700; color:var(--ink);}
   .card-preset-item .cp-note{font-size:11.5px; color:var(--gray);}
+  .cp-search{width:100%; padding:9px 12px; border:1px solid var(--paper-line); border-radius:8px; font-size:14px; font-family:inherit; margin-bottom:4px;}
+  .cp-group{font-size:12px; font-weight:700; color:var(--stamp); margin:8px 0 0; letter-spacing:.04em;}
+  .cp-badge{display:inline-block; margin-left:8px; padding:1px 7px; border-radius:999px; background:var(--stamp-soft); color:var(--stamp); font-size:10.5px; font-weight:700; vertical-align:middle;}
+  .card-toggle{display:flex; align-items:center; justify-content:space-between; width:100%; padding:12px 14px; border:1px solid var(--paper-line); border-radius:8px; background:var(--paper); font-family:inherit; font-size:14px; font-weight:700; color:var(--ink); cursor:pointer;}
+  .card-toggle:hover{border-color:var(--stamp);}
 
   .kitei-preview{
     white-space:pre-wrap; font-size:12px; line-height:1.8; color:var(--ink);
@@ -546,6 +551,52 @@
   .plan-list{max-height:220px; overflow-y:auto; border:1px solid var(--paper-line); border-radius:6px; padding:6px 8px; background:var(--paper); font-size:11.5px; line-height:1.7; margin:8px 0;}
   .plan-list div{white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
   .plan-actions{display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;}
+  .rv-overlay{position:fixed; inset:0; background:rgba(20,30,25,.55); z-index:1000; overflow:auto; padding:18px 10px;}
+  .rv-card{max-width:1080px; margin:0 auto; background:#fff; border-radius:12px; padding:16px; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:16px; box-shadow:0 10px 40px rgba(0,0,0,.3);}
+  .rv-card.batch{display:block;}
+  @media (max-width:820px){ .rv-card{grid-template-columns:1fr;} }
+  .rv-file{font-size:12px; color:var(--ink-soft); word-break:break-all; margin-bottom:6px;}
+  .rv-preview{border:1px solid var(--paper-line); border-radius:8px; background:#EEF1EF; max-height:60vh; overflow:auto; text-align:center; font-size:12px; color:var(--ink-soft); padding:6px;}
+  .rv-preview img,.rv-preview canvas{max-width:100%; height:auto;}
+  .rv-text{margin-top:8px; font-size:12px;}
+  .rv-text pre{white-space:pre-wrap; word-break:break-all; max-height:200px; overflow:auto; background:var(--paper); padding:8px; border-radius:6px; font-size:11px;}
+  .rv-head{font-weight:700; font-size:15px; margin-bottom:8px;}
+  .rv-banner{font-size:12.5px; line-height:1.7; padding:8px 10px; border-radius:8px; margin-bottom:10px;}
+  .rv-banner.ok{background:#E3F6EC; color:#065F3D;}
+  .rv-banner.warn{background:#FEF3C7; color:#92400E;}
+  .rv-banner.new{background:#EAF2FF; color:#1E3A8A;}
+  .rv-field{margin-bottom:10px;}
+  .rv-field label{display:block; font-size:12px; font-weight:700; margin-bottom:3px;}
+  .rv-in{width:100%; box-sizing:border-box; padding:8px 10px; border:1px solid #C9D3CE; border-radius:8px; font-size:14px; font-family:inherit; background:#fff;}
+  .rv-row2{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  .rv-chips{display:flex; flex-wrap:wrap; gap:5px; margin-top:5px;}
+  .rv-chip{font-weight:400; font-size:11.5px; padding:3px 9px; border:1px solid var(--stamp-soft); background:#F1FAF5; color:#065F3D; border-radius:999px; cursor:pointer; font-family:inherit;}
+  .rv-chip.warn{background:#FEF3C7; border-color:#F5D58A; color:#92400E;}
+  .rv-chip:hover{filter:brightness(.96);}
+  .rv-fn-wrap{background:#F1FAF5; border:1px solid var(--stamp-soft); border-radius:8px; padding:8px 10px; margin:6px 0 10px;}
+  .rv-fn-label{font-size:11px; color:var(--ink-soft);}
+  .rv-due{font-size:12px; color:#065F3D; margin:-4px 0 8px; min-height:4px; white-space:pre-line;}
+  .rv-dup-box:empty{display:none;}
+  .rv-dup-box{background:#FEE2E2; border:1px solid #FCA5A5; color:#7F1D1D; border-radius:8px; padding:8px 10px; margin-bottom:10px; font-size:12.5px; line-height:1.7;}
+  .rv-dup-title{font-weight:700;}
+  .rv-btn.danger{background:#B91C1C; color:#fff; border-color:#B91C1C;}
+  .rv-fn{font-weight:700; font-size:13px; word-break:break-all;}
+  .rv-remember{display:flex; gap:8px; align-items:flex-start; font-size:12px; line-height:1.6; margin-bottom:8px; cursor:pointer;}
+  .rv-err{color:#B91C1C; font-size:12.5px; min-height:18px;}
+  .rv-actions{display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;}
+  .rv-btn{padding:10px 16px; border-radius:8px; border:1px solid #9FB3A9; background:#fff; color:var(--ink); font-size:13.5px; font-weight:700; cursor:pointer; font-family:inherit; line-height:1.4;}
+  .rv-btn.primary{background:var(--stamp); color:#fff; border-color:var(--stamp);}
+  .rv-btn.ghost{background:#fff; color:var(--ink-soft);}
+  .rv-btn.small{padding:4px 10px; font-size:12px; font-weight:400;}
+  .rv-tablewrap{overflow:auto; max-height:55vh; border:1px solid var(--paper-line); border-radius:8px; margin:10px 0;}
+  .rv-table{border-collapse:collapse; width:100%; font-size:12px;}
+  .rv-table th,.rv-table td{padding:6px 8px; border-bottom:1px solid var(--paper-line); text-align:left; white-space:nowrap;}
+  .rv-table td.nm{max-width:240px; overflow:hidden; text-overflow:ellipsis;}
+  .rv-table td.num{text-align:right;}
+  .rv-table td.rule{color:#065F3D;}
+  .rv-table td.dupcell{color:#B91C1C; font-weight:700;}
+  .rv-table td.okcell{color:#6B7B73;}
+  .rv-table tr.dup td{opacity:.55;}
   .cta-box{border:1px solid var(--stamp); background:var(--stamp-soft); border-radius:8px; padding:12px 14px; font-size:12.5px; line-height:1.8; margin-top:12px;}
   .bulk-queue{display:flex; flex-direction:column; gap:8px; margin:12px 0;}
   .bulk-item{
@@ -764,33 +815,38 @@
     <div class="eyebrow">DEMO · 体験版 · 処理はすべてブラウザ内で完結</div>
     <h1>電帳DIY</h1>
     <p class="lead">
-      レシート・請求書・払込用紙を、撮る・貼るだけで。日付と取引先、金額を読み取り、
+      レシート・請求書・カード明細を、撮る・貼るだけで。日付と取引先、金額を読み取り、
       帳簿に残せる形にファイル名を整えます。
     </p>
+    <div class="law-box" style="border-width:2px;">
+      <div class="law-box-title">🧾 税務調査での提示・ダウンロードの求めに備える</div>
+      <p class="law-box-text">
+        <b>① 検索システム(HTML)を自動で作成</b>:日付・金額の範囲と取引先で検索できる画面を、フォルダにそのまま作ります。<br>
+        <b>② 一覧CSVをワンクリックで出力</b>:ダウンロードの求めに、検索結果をそのままCSVで提出できます。<br>
+        <b>③ 訂正・削除の履歴と、事務処理規程のひな形</b>も出力できます。<br>
+        ※青色・白色・法人を問わず、<b>電子データはあるが検索できる状態になっていない</b>方向けです(法令への適合を保証するものではありません)。
+      </p>
+    </div>
 
     <div class="law-box">
-      <div class="law-box-title">📌 電子帳簿保存法、これだけ押さえればOK</div>
+      <div class="law-box-title">📌 電子帳簿保存法の「検索」について</div>
       <p class="law-box-text">
-        電子データの証憑は、<b>「取引年月日・取引先・金額」で検索できる状態</b>で保存することが
-        法律上求められています。これは高価な専用システムを導入しなくても、
-        <b>ファイル名にこの3項目を含めておくだけ</b>で満たせます。
+        電子取引で受け取った請求書・領収書などのデータは、<b>「取引年月日・取引金額・取引先」で検索できる状態</b>で保存する必要があります
+        (国税庁:<a href="https://www.nta.go.jp/law/joho-zeikaishaku/sonota/jirei/tokusetsu/index.htm" target="_blank" rel="noopener">電子帳簿保存法 特設サイト</a>)。
+        検索機能の確保には、ファイル名に規則性をもって内容を表示する方法などが、国税庁の一問一答に例として示されています。
       </p>
       <p class="law-box-text law-box-highlight">
-        本ツールは、まさにこの「正しいファイル名」を証憑を撮る・PDF明細の登録だけで自動生成します。
-        法令を意識して手間をかける必要はもうありません。
+        本ツールは、この3項目をファイル名と台帳に記録し、検索・一覧出力を助けるためのものです。
+        個々の事業者の方が要件を満たすかどうかを保証するものではありません。制度の詳細は国税庁の資料と、税務署・税理士にご確認ください。
       </p>
     </div>
 
     <div class="newsbar">
-      <div class="newsbar-head"><span class="dot"></span> 制度アップデート</div>
-      <div class="news-item">
-        <span class="news-tag">2026.10〜</span>
-        <b>2割特例が今年9月末で終了予定。</b>個人事業主向けの3割特例が新設される見込みで、免税事業者からの仕入に対する控除割合も段階的に縮小されます。記帳・証憑保存の重要性は今後さらに増していきます。
+      <div class="newsbar-head"><span class="dot"></span> 制度アップデート
+        <button type="button" class="dz-btn ghost" id="btnUpdate" style="margin-left:auto;padding:3px 10px;font-size:12px;">🔄 最新化</button>
       </div>
-      <div class="news-item">
-        <span class="news-tag">継続対応</span>
-        制度改正のたびに、判定ロジックや対応フォーマットを見直しています。本ツールは正式版でアップデートを継続提供する予定です。
-      </div>
+      <div id="newsList"></div>
+      <div class="news-item" style="font-size:11.5px;color:var(--gray);" id="updateStatus"></div>
     </div>
   </header>
 
@@ -843,14 +899,17 @@
   <section>
     <div class="section-title"><span class="no">03</span> 支払いカードを管理する</div>
     <div class="ledger-card">
+      <button type="button" class="card-toggle" id="btnToggleCards" aria-expanded="false"><span id="cardToggleLabel">▶ 支払いカードの設定を開く</span><span class="cp-note" id="cardToggleCount"></span></button>
+      <div id="cardBody" style="display:none; margin-top:14px;">
       <p class="rule-desc">
-        引落日は「取引先」ではなく「使ったカード」ごとに決まります。楽天カード・三井住友カード・
-        JCBカード・MUFGカード・Amazonカード・dカード・イオンカード・au PAYカードは、
+        引落日は「取引先」ではなく「使ったカード」ごとに決まります。主要なクレジットカード(楽天・三井住友・JCB・MUFG・dカード・au PAY・PayPay・イオン・エポス・セゾン・ビュー・オリコ・ライフ・ジャックス・ダイナース・Amazon・ANA/JALなど約40パターン)は、
         締め日・支払日をワンタップで自動入力できます(その他のカードも手入力で登録可能)。
+        日程は各社の公式ページの案内(2026年10月確認)をもとにした標準設定で、契約内容により異なる場合があります。
         <b>カード番号・暗証番号・セキュリティコードなどは一切入力・保存しません。</b>
       </p>
       <div id="cardList" class="card-list"></div>
-      <button type="button" class="dz-btn ghost" id="btnAddCard">+ カードを新規登録</button>
+      <button type="button" class="dz-btn ghost" id="btnAddCard">+ カードを新規登録(カード名で探す)</button>
+      </div>
     </div>
   </section>
 
@@ -868,8 +927,8 @@
     <div class="ledger-card">
       <p class="rule-desc">
         電子帳簿保存法では、保存した証憑データの「訂正・削除の防止」も求められています。
-        これは①認定タイムスタンプを付与する、②訂正削除の履歴が残るシステムを使う、
-        ③<b>「訂正削除の防止に関する事務処理規程」を整備して運用する</b>、のいずれかで満たせます。
+        対応方法として、①タイムスタンプを付与する、②訂正削除の履歴が残る(または訂正削除ができない)システムを使う、
+        ③<b>「訂正削除の防止に関する事務処理規程」を整備して運用する</b>、などがあります(詳細は国税庁の資料をご確認ください)。
         個人事業主の場合は③が最も手軽です。屋号・施行日を入力すると、
         国税庁が公開している個人事業者向けひな形の構成を参考にした規程文書を生成します。
       </p>
@@ -951,7 +1010,8 @@
             <option value="レシート">レシート</option>
             <option value="領収書">領収書</option>
             <option value="請求書">請求書</option>
-            <option value="明細書">明細書</option>
+            <option value="明細書">明細書(事業者の利用明細・請求明細)</option>
+            <option value="カード利用明細">カード利用明細(カード会社の明細)</option>
             <option value="納品書">納品書</option>
             <option value="その他">その他</option>
           </select>
@@ -982,11 +1042,11 @@
         <p class="edit-hint">↑ 内容は自由に修正できます。取引先を確定(他の欄をクリック等)すると、次回以降その表記・書類種類・支払い方法を学習します。</p>
 
         <p class="statement-note" id="statementNote" style="display:none;">
-          個々のレシート・領収書(発生主義の計上根拠)は「購入・サービス利用日」を取引年月日とします。
-          一方、<b>「明細書」を選んだ場合、そのファイル自体は「未払金の決済(引落)」という取引を表すため、
-          複式簿記上は引落日を取引年月日として扱います。</b>
+          <b>カード会社が発行する「カード利用明細」</b>は、「未払金の決済(引落)」という取引を表す書類のため、<b>引落日を取引年月日</b>として扱います。
           引落日は、下記で選択した支払いカードに登録された締め日・支払日のルールに基づいて自動計算されます。
           電子帳簿保存法上、この明細ファイル自体は分割せず1ファイルのまま保存するのが原則です。
+          なお、レシート・領収書・請求書・事業者の明細書(例:通信会社の利用明細)は、その書類に記載された日付(購入日・請求日・利用月末など)を取引年月日とし、
+          カード払いの引落(予定)日は台帳に「支払予定日」として別に記録します。
         </p>
 
         <div class="filename-preview">
@@ -1069,6 +1129,9 @@
         <div class="ledger-actions">
           <button type="button" class="dz-btn ghost" id="btnDedupLedger">🧹 重複を整理する</button>
           <button type="button" class="dz-btn ghost" id="btnExportCSV">📊 CSVでダウンロード(Excelで開けます)</button>
+          <button type="button" class="dz-btn ghost" id="btnExportInspect">🧾 税務調査用の一覧(期間指定CSV)</button>
+          <button type="button" class="dz-btn ghost" id="btnExportHistory">📝 訂正・削除履歴CSV</button>
+          <button type="button" class="dz-btn ghost" id="btnPolicyTemplate">📄 事務処理規程のひな形</button>
           <button type="button" class="dz-btn ghost" id="btnCheckGaps">📅 月の抜けをチェック</button>
           <button type="button" class="dz-btn ghost" id="btnShowAudit">🕵️ 削除履歴(監査ログ)を見る</button>
           <button type="button" class="dz-btn ghost danger" id="btnClearLedger">台帳をクリア</button>
@@ -1081,7 +1144,7 @@
             <tr>
               <th>処理日時</th><th>元のファイル名</th><th>新しいファイル名</th>
               <th>取引年月日</th><th>取引先</th><th>金額</th><th>書類種類</th><th>支払い方法</th>
-              <th>勘定科目</th><th>インボイス番号</th><th>履歴</th><th>操作</th>
+              <th>勘定科目</th><th>インボイス番号</th><th>支払予定日</th><th>履歴</th><th>操作</th>
             </tr>
           </thead>
           <tbody id="ledgerTbody"></tbody>
@@ -1134,6 +1197,8 @@
       <div id="learnList" class="learn-list">
         <div class="learn-empty" id="learnEmpty">まだ学習した表記はありません。</div>
       </div>
+      <p class="learn-desc" style="margin-top:18px;"><b>書類ルール</b>(確認画面で登録したもの):取引先・書類種類・「日付と金額がどこに書かれているか」を記憶し、同じ書式の書類に当てはめます。当てはめた結果は必ず確認画面で確認します。</p>
+      <div id="docRuleList" class="learn-list"></div>
     </div>
   </section>
 
@@ -1149,7 +1214,7 @@
         <tr><td>勘定科目の自動サジェスト</td><td class="center ok-mark">○(簡易辞書)</td><td class="center ok-mark">○(辞書拡張・編集可)</td></tr>
         <tr><td>インボイス番号チェック</td><td class="center ok-mark">○(形式チェック)</td><td class="center ok-mark">○</td></tr>
         <tr><td>事務処理規程の自動生成</td><td class="center ok-mark">○</td><td class="center ok-mark">○(業種別ひな形追加)</td></tr>
-        <tr><td>電帳ダッシュボード(検索・ドラッグ&ドロップ追記・カメラ)</td><td class="center ok-mark">○(プレビューのみ)</td><td class="center ok-mark">○(フォルダ先頭に自動作成・更新)</td></tr>
+        <tr><td>税務調査用の検索システム(HTML:日付・金額の範囲+取引先)と一覧CSV出力・ドラッグ&ドロップ追記・カメラ</td><td class="center ok-mark">○(プレビューのみ)</td><td class="center ok-mark">○(フォルダ先頭に自動作成・更新)</td></tr>
         <tr><td>処理レポート(読み取り漏れ・月の抜け通知)</td><td class="center ok-mark">○</td><td class="center ok-mark">○</td></tr>
         <tr><td>台帳の編集・削除履歴</td><td class="center ok-mark">○</td><td class="center ok-mark">○</td></tr>
         <tr><td>過去ファイルの一括整理モード</td><td class="center ok-mark">○(振り分けプレビュー+台帳記録)</td><td class="center ok-mark">○(年月フォルダへ書き出し)</td></tr>
@@ -1163,7 +1228,8 @@
   <div class="toast-box" id="toastBox"></div>
 
   <footer>
-    本デモはサンプルです。画像・PDFの解析処理はすべてお使いのブラウザ内で完結し、<b>証憑データが外部サーバーへ送信されることはありません。</b>
+    本ツールは法令への適合を保証するものではありません。制度の詳細は国税庁の資料と税務署・税理士にご確認ください。<br>
+    本デモはサンプルです。画像・PDFの解析処理はすべてお使いのブラウザ内で完結し、<b>証憑データが外部サーバーへ送信されることはありません。</b>(「最新化」時のみ、更新情報のファイルを取得します。)
     読み取り精度は体験版仕様のため、正式版より低く設定しています。ご相談・お問い合わせはサービスページのメッセージ機能よりお願いいたします。
   </footer>
 
@@ -1213,6 +1279,14 @@ a{color:#0B6E4F;}
 .msg{font-size:12.5px;line-height:1.7;padding:5px 10px;border-left:4px solid var(--gray);background:var(--bg);border-radius:4px;}
 .msg.ok{border-left-color:var(--g);}
 .msg.warn{border-left-color:var(--warn);background:#FFF8EB;}
+.vo #addCard,.vo .editbtn{display:none !important;}
+.audit{border:2px solid var(--g);background:var(--gs);border-radius:10px;padding:14px 16px;margin-bottom:14px;}
+.audit h2{margin:0 0 6px;font-size:16px;}
+.audit p{margin:4px 0;font-size:13px;line-height:1.8;}
+.audit ul{margin:6px 0 0 18px;padding:0;font-size:12.5px;line-height:1.9;}
+.audit a{color:inherit;}
+.row2{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px;font-size:12.5px;}
+.row2 input{max-width:150px;}
 .cta{border:1px solid var(--g);background:var(--gs);border-radius:8px;padding:14px 16px;font-size:13px;line-height:1.9;}
 .cta ul{margin:6px 0 6px 18px;padding:0;}
 @media (max-width:640px){th:nth-child(n+6),td:nth-child(n+6){display:none;}}
@@ -1220,7 +1294,7 @@ a{color:#0B6E4F;}
 </head>
 <body>
 <header>
-  <h1>📊 電帳ダッシュボード</h1>
+  <h1>📋 電子取引データ 検索・一覧</h1>
   <p id="sub"></p>
 </header>
 <main>
@@ -1229,7 +1303,7 @@ a{color:#0B6E4F;}
     正式版では、追記した証憑がフォルダに自動で保存され、このダッシュボードも自動で更新されます。
   </div>
 
-  <div class="card">
+  <div class="card" id="addCard">
     <h2>📥 証憑を追加する(ドラッグ&ドロップ / カメラ)</h2>
     <div class="drop" id="drop">
       <div class="t">ここに画像・PDFをドラッグ&ドロップ</div>
@@ -1244,13 +1318,32 @@ a{color:#0B6E4F;}
     <div class="msgs" id="msgs" style="margin-top:12px;"></div>
   </div>
 
+  <div class="audit">
+    <h2>🧾 検索・一覧出力について</h2>
+    <p>電子取引データは<b>「取引年月日・取引金額・取引先」</b>で検索できる状態での保存が求められます。この画面では、<b>日付・金額の範囲指定と取引先の組合せ検索</b>ができ、結果を<b>一覧CSV</b>として保存できます。原本のファイルは、各行のリンク先(保存フォルダ内)にあります。</p>
+    <label class="small" style="display:inline-flex;gap:6px;align-items:center;margin-top:6px;"><input type="checkbox" id="viewOnly"> 閲覧モード(証憑の追加・修正の操作を隠す)</label>
+    <ul>
+      <li><a href="https://www.nta.go.jp/law/joho-zeikaishaku/sonota/jirei/tokusetsu/index.htm" target="_blank" rel="noopener">国税庁:電子帳簿保存法 特設サイト</a></li>
+      <li><a href="https://www.nta.go.jp/law/joho-zeikaishaku/sonota/jirei/pdf/0026007-006_05.pdf" target="_blank" rel="noopener">電子帳簿保存法一問一答【電子取引関係】(PDF)</a></li>
+      <li><a href="https://www.nta.go.jp/law/joho-zeikaishaku/sonota/jirei/pdf/0021010-200.pdf" target="_blank" rel="noopener">「ダウンロードの求め」に応じる場合の取扱い(PDF)</a></li>
+      <li><a href="https://www.nta.go.jp/law/joho-zeikaishaku/sonota/jirei/0021006-031.htm" target="_blank" rel="noopener">事務処理規程などのサンプル</a></li>
+    </ul>
+    <p class="small">※リンク先は国税庁の公開資料です。制度の詳細・最新の取扱いは各ページと、税務署・税理士にご確認ください。</p>
+  </div>
+
   <div class="card">
     <h2>🔎 検索</h2>
+    <div class="row2">
+      <span>取引年月日</span><input type="date" id="fFrom"> 〜 <input type="date" id="fTo">
+      <span>金額</span><input type="number" id="fMin" placeholder="下限(円)"> 〜 <input type="number" id="fMax" placeholder="上限(円)">
+      <span>取引先</span><input type="text" id="fVendor" placeholder="例:ENEOS" style="max-width:180px;">
+    </div>
     <div class="row">
       <input type="text" id="q" placeholder="取引先・日付・金額・ファイル名などで検索(例:ENEOS 2026-06 3200)">
       <select id="fMonth"><option value="">すべての月</option></select>
       <select id="fAccount"><option value="">すべての勘定科目</option></select>
       <button type="button" class="ghost" id="btnReset">リセット</button>
+      <button type="button" id="btnCsv">📄 この結果を一覧CSVで保存</button>
     </div>
     <div class="months" id="months"></div>
     <div class="stats" id="stats"></div>
@@ -1272,6 +1365,7 @@ a{color:#0B6E4F;}
     </ul>
     ご購入・ご相談は、ご案内元のサービスページ(メッセージ機能)からお願いします。
   </div>
+  <p class="small" style="margin-top:14px;">この画面は、保存した電子取引データの検索・一覧出力用です。法令への適合を保証するものではありません。制度の詳細は国税庁の資料と税務署・税理士にご確認ください。</p>
   <p class="small" style="margin-top:14px;">証憑の読み取りはすべてお使いのブラウザ内で行われ、外部サーバーには送信されません(読み取りエンジンの読み込みのみ通信します)。</p>
 </main>
 <script>
@@ -1342,10 +1436,17 @@ function render(){
   const list = rows.filter(r => {
     if (m && !(r.date || '').startsWith(m)) return false;
     if (a && r.account !== a) return false;
-    const hay = norm([r.date, r.vendor, r.amount, r.docType, r.account, r.invoiceNo, r.newFilename, r.originalFilename, r.folder].join(' '));
+    const fr = $('fFrom').value, to = $('fTo').value, mn = $('fMin').value, mx = $('fMax').value, vq = norm($('fVendor').value).trim();
+    if (fr && (r.date || '') < fr) return false;
+    if (to && (r.date || '') > to) return false;
+    if (mn !== '' && !(Number(r.amount) >= Number(mn))) return false;
+    if (mx !== '' && !(Number(r.amount) <= Number(mx))) return false;
+    if (vq && !norm([r.vendor, r.companyName].join(' ')).includes(vq)) return false;
+    const hay = norm([r.date, r.vendor, r.companyName, r.amount, r.docType, r.paymentMethod, r.account, r.invoiceNo, r.newFilename, r.originalFilename, r.folder].join(' '));
     return q.every(t => hay.includes(t));
   }).sort((x, y) => (y.date || '').localeCompare(x.date || ''));
 
+  window.__list = list;
   const total = list.reduce((s, r) => s + (Number(r.amount) || 0), 0);
   $('stats').textContent = list.length + ' 件 / 合計 ' + total.toLocaleString('ja-JP') + '円(全 ' + rows.length + ' 件中)';
   $('empty').style.display = list.length ? 'none' : 'block';
@@ -1377,7 +1478,7 @@ function render(){
     tr.appendChild(tdf);
     const tde = document.createElement('td');
     if (r.added) {
-      const b = document.createElement('button'); b.className = 'ghost'; b.textContent = '✎修正';
+      const b = document.createElement('button'); b.className = 'ghost editbtn'; b.textContent = '✎修正';
       b.onclick = () => editRow(r);
       tde.appendChild(b);
     }
@@ -1385,8 +1486,20 @@ function render(){
     tb.appendChild(tr);
   });
 }
-['q', 'fMonth', 'fAccount'].forEach(id => $(id).addEventListener('input', render));
-$('btnReset').onclick = () => { $('q').value = ''; $('fMonth').value = ''; $('fAccount').value = ''; render(); };
+['q', 'fMonth', 'fAccount', 'fFrom', 'fTo', 'fMin', 'fMax', 'fVendor'].forEach(id => $(id).addEventListener('input', render));
+$('btnReset').onclick = () => { ['q', 'fMonth', 'fAccount', 'fFrom', 'fTo', 'fMin', 'fMax', 'fVendor'].forEach(id => { $(id).value = ''; }); render(); };
+$('viewOnly').addEventListener('change', () => { document.body.classList.toggle('vo', $('viewOnly').checked); });
+$('btnCsv').onclick = () => {
+  const list = (window.__list || []).slice().sort((x, y) => (x.date || '').localeCompare(y.date || ''));
+  if (!list.length) { alert('出力する行がありません。'); return; }
+  const head = ['取引年月日', '取引先', '取引金額', '書類種類', '支払い方法', '会社名(正式)', 'インボイス番号', 'ファイル名', '保存フォルダ', '元のファイル名', '支払予定日'];
+  const body = list.map(r => [r.date, r.vendor, r.amount, r.docType, r.paymentMethod, r.companyName, r.invoiceNo, r.newFilename || r.originalFilename, r.folder, r.originalFilename, r.dueDate]);
+  const csv = '\uFEFF' + [head, ...body].map(row => row.map(v => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"').join(',')).join('\r\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], {type: 'text/csv;charset=utf-8;'}));
+  a.download = '電帳_一覧_' + new Date().toISOString().slice(0, 10) + '.csv';
+  document.body.appendChild(a); a.click(); a.remove();
+};
 
 /* ---------- 追記(ドラッグ&ドロップ・カメラ) ---------- */
 function loadScript(url){
@@ -1406,7 +1519,7 @@ async function pdfText(file){
     await loadScript('https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/legacy/build/pdf.min.js');
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/legacy/build/pdf.worker.min.js';
   }
-  const pdf = await pdfjsLib.getDocument({data: await file.arrayBuffer()}).promise;
+  const pdf = await pdfjsLib.getDocument({data: await file.arrayBuffer(), cMapUrl:'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/cmaps/', cMapPacked:true}).promise;
   const page = await pdf.getPage(1);
   const tc = await page.getTextContent();
   const text = tc.items.map(i => i.str).join('\n');
@@ -1547,6 +1660,10 @@ const btnSave = document.getElementById('btnSave');
 const btnReset = document.getElementById('btnReset');
 
 let currentFile = null;
+let currentText = '';
+let currentHash = '';
+let currentCompany = '';
+let dupAck = false;
 let currentExt = 'txt';
 let lastRawVendor = '';
 let savedDirHandle = null;
@@ -1757,7 +1874,14 @@ function setCardRegistry(reg){
 }
 
 // 明細形式(複数取引をまとめる)として扱う書類種類
-const STATEMENT_DOC_TYPES = ['明細書'];
+// 引落日を取引年月日にするのは「カード会社が発行する利用明細」だけ。事業者の明細書・請求書は、その書類の日付を使う
+const STATEMENT_DOC_TYPES = ['カード利用明細'];
+// カード利用明細の支払い方法:明細そのものは「そのカードの引落」なので、個別のカードを選ばせず「明細準拠」とする
+const PM_STMT = 'カード支払に準拠';
+function normPM(pm, docType){
+  if(STATEMENT_DOC_TYPES.includes(docType)) return (!pm || pm === '現金' || pm === 'その他') ? PM_STMT : pm;
+  return pm === PM_STMT ? '現金' : (pm || '現金');
+}
 
 // 締め日(closingDateStr)を基準に、monthOffsetヶ月後のpaymentDay(第何日)を求め、
 // 非営業日(土日・祝日)であれば翌営業日にずらす
@@ -1791,11 +1915,19 @@ function computeWithdrawalForReceipt(card, purchaseDateStr){
 
 const cardList = document.getElementById('cardList');
 const btnAddCard = document.getElementById('btnAddCard');
+document.getElementById('btnToggleCards').addEventListener('click', ()=>{
+  const body = document.getElementById('cardBody');
+  const open = body.style.display === 'none';
+  body.style.display = open ? '' : 'none';
+  document.getElementById('cardToggleLabel').textContent = open ? '▼ 支払いカードの設定を閉じる' : '▶ 支払いカードの設定を開く';
+  document.getElementById('btnToggleCards').setAttribute('aria-expanded', String(open));
+});
 
 function renderCardList(){
   const reg = getCardRegistry();
   const names = Object.keys(reg);
   cardList.innerHTML = '';
+  try{ document.getElementById('cardToggleCount').textContent = names.length ? `登録 ${names.length} 件(${names.slice(0, 3).join('・')}${names.length > 3 ? ' ほか' : ''})` : 'まだ登録なし'; }catch(e){}
   if(!names.length){
     const empty = document.createElement('div');
     empty.className = 'card-empty';
@@ -2017,17 +2149,132 @@ document.getElementById('btnPrintKitei').addEventListener('click', ()=>{
 //   実際の締め日・支払日はカードの契約内容により異なる場合がありますので、
 //   最終的にはご自身の会員サイト・利用明細でご確認ください。
 const CARD_PRESETS = [
-  { label:'楽天カード', closingDay:31, paymentDay:27, monthOffset:1, note:'月末締め・翌月27日払い' },
-  { label:'三井住友カード(15日締め)', closingDay:15, paymentDay:10, monthOffset:1, note:'15日締め・翌月10日払い' },
-  { label:'三井住友カード(月末締め)', closingDay:31, paymentDay:26, monthOffset:1, note:'月末締め・翌月26日払い' },
-  { label:'JCBカード', closingDay:15, paymentDay:10, monthOffset:1, note:'15日締め・翌月10日払い' },
-  { label:'MUFGカード(三菱UFJニコス)', closingDay:15, paymentDay:10, monthOffset:1, note:'15日締め・翌月10日払い' },
-  { label:'Amazonカード(三井住友カード発行)', closingDay:31, paymentDay:26, monthOffset:1, note:'月末締め・翌月26日払い' },
-  { label:'dカード', closingDay:15, paymentDay:10, monthOffset:1, note:'15日締め・翌月10日払い' },
-  { label:'イオンカード', closingDay:10, paymentDay:2, monthOffset:1, note:'10日締め・翌月2日払い(最も標準的な設定)' },
-  { label:'au PAYカード', closingDay:10, paymentDay:4, monthOffset:1, note:'10日締め・翌月4日払い(標準的な設定の一例)' },
-  { label:'自分で入力する(その他のカード)', closingDay:null, paymentDay:null, monthOffset:1, note:'締め日・支払日を後から手入力します' },
+  { group:'主要カード', name:'楽天カード', label:'楽天カード', closingDay:31, paymentDay:27, monthOffset:1, note:'月末締め・翌月27日払い(楽天市場・楽天ペイ・楽天トラベルの利用分は25日締めの扱いがあります)', freee:true },
+  { group:'主要カード', name:'三井住友カード', label:'三井住友カード(15日締め)', closingDay:15, paymentDay:10, monthOffset:1, note:'15日締め・翌月10日払い(支払日はどちらかを選べるカードです)', freee:true },
+  { group:'主要カード', name:'三井住友カード', label:'三井住友カード(月末締め)', closingDay:31, paymentDay:26, monthOffset:1, note:'月末締め・翌月26日払い', freee:true },
+  { group:'主要カード', name:'Olive(クレジット)', label:'Olive クレジットモード(三井住友)', closingDay:31, paymentDay:26, monthOffset:1, note:'月末締め・翌月26日払い(固定)', freee:true },
+  { group:'主要カード', name:'JCBカード', label:'JCBカード', closingDay:15, paymentDay:10, monthOffset:1, note:'15日締め・翌月10日払い(ETCカードのみ月末締め・翌々月10日)', freee:true },
+  { group:'主要カード', name:'MUFGカード', label:'MUFGカード(三菱UFJニコス)', closingDay:15, paymentDay:10, monthOffset:1, note:'15日締め・翌月10日払い', freee:true },
+  { group:'主要カード', name:'DCカード', label:'DCカード(三菱UFJニコス)', closingDay:15, paymentDay:10, monthOffset:1, note:'15日締め・翌月10日払い', freee:true },
+  { group:'主要カード', name:'三菱UFJ-VISAカード', label:'三菱UFJ-VISAカード', closingDay:15, paymentDay:10, monthOffset:1, note:'15日締め・翌月10日払い', freee:false },
+  { group:'主要カード', name:'NICOSカード', label:'NICOSカード(5日締め・当月27日払い)', closingDay:5, paymentDay:27, monthOffset:0, note:'5日締め・当月27日払い(旧カード・JA CARDなど。契約により異なります)', freee:true },
+  { group:'主要カード', name:'dカード', label:'dカード', closingDay:15, paymentDay:10, monthOffset:1, note:'15日締め・翌月10日払い', freee:true },
+  { group:'主要カード', name:'au PAYカード', label:'au PAYカード(管理番号が9始まり)', closingDay:15, paymentDay:10, monthOffset:1, note:'15日締め・翌月10日払い。※管理番号の先頭の数字で日程が異なります', freee:false },
+  { group:'主要カード', name:'au PAYカード', label:'au PAYカード(管理番号が5始まり)', closingDay:10, paymentDay:4, monthOffset:1, note:'10日締め・翌月4日払い。※管理番号の先頭の数字で日程が異なります', freee:false },
+  { group:'主要カード', name:'PayPayカード', label:'PayPayカード', closingDay:31, paymentDay:27, monthOffset:1, note:'月末締め・翌月27日払い', freee:true },
+  { group:'主要カード', name:'イオンカード', label:'イオンカード', closingDay:10, paymentDay:2, monthOffset:1, note:'10日締め・翌月2日払い(変更不可)', freee:true },
+  { group:'主要カード', name:'エポスカード', label:'エポスカード(27日払い)', closingDay:27, paymentDay:27, monthOffset:1, note:'27日締め・翌月27日払い', freee:true },
+  { group:'主要カード', name:'エポスカード', label:'エポスカード(4日払い)', closingDay:4, paymentDay:4, monthOffset:1, note:'4日締め・翌月4日払い', freee:true },
+  { group:'主要カード', name:'セゾンカード', label:'セゾンカード', closingDay:10, paymentDay:4, monthOffset:1, note:'10日締め・翌月4日払い(ショッピング)', freee:true },
+  { group:'主要カード', name:'ビューカード', label:'ビューカード', closingDay:5, paymentDay:4, monthOffset:1, note:'5日締め・翌月4日払い', freee:true },
+  { group:'主要カード', name:'オリコカード', label:'オリコカード', closingDay:31, paymentDay:27, monthOffset:1, note:'月末締め・翌月27日払い', freee:true },
+  { group:'主要カード', name:'ライフカード', label:'ライフカード(27日払い)', closingDay:5, paymentDay:27, monthOffset:0, note:'5日締め・当月27日払い(口座の金融機関により27日か3日になります)', freee:true },
+  { group:'主要カード', name:'ライフカード', label:'ライフカード(3日払い)', closingDay:5, paymentDay:3, monthOffset:1, note:'5日締め・翌月3日払い(口座の金融機関により27日か3日になります)', freee:true },
+  { group:'主要カード', name:'ジャックスカード', label:'ジャックスカード', closingDay:31, paymentDay:27, monthOffset:1, note:'月末締め・翌月27日払い', freee:true },
+  { group:'主要カード', name:'ダイナースクラブ', label:'ダイナースクラブ', closingDay:15, paymentDay:10, monthOffset:1, note:'15日締め・翌月10日払い', freee:true },
+  { group:'流通・ポイント系', name:'セブンカード・プラス', label:'セブンカード・プラス', closingDay:15, paymentDay:10, monthOffset:1, note:'15日締め・翌月10日払い', freee:true },
+  { group:'流通・ポイント系', name:'Amazonカード', label:'Amazon Mastercard(三井住友カード発行)', closingDay:31, paymentDay:26, monthOffset:1, note:'月末締め・翌月26日払い(固定)', freee:true },
+  { group:'流通・ポイント系', name:'ビックカメラSuicaカード', label:'ビックカメラSuicaカード(ビューカード)', closingDay:5, paymentDay:4, monthOffset:1, note:'5日締め・翌月4日払い(ビューカード共通の案内)', freee:false },
+  { group:'流通・ポイント系', name:'ENEOSカード', label:'ENEOSカード', closingDay:31, paymentDay:27, monthOffset:1, note:'月末締め・翌月27日払い', freee:false },
+  { group:'流通・ポイント系', name:'TS CUBICカード', label:'TS CUBICカード(5日締め)', closingDay:5, paymentDay:2, monthOffset:1, note:'5日締め・翌月2日払い(契約により5日締めか20日締めか決まります)', freee:false },
+  { group:'流通・ポイント系', name:'TS CUBICカード', label:'TS CUBICカード(20日締め)', closingDay:20, paymentDay:17, monthOffset:1, note:'20日締め・翌月17日払い(契約により5日締めか20日締めか決まります)', freee:false },
+  { group:'提携カード・銀行系', name:'ANAカード(三井住友)', label:'ANAカード(三井住友)', closingDay:15, paymentDay:10, monthOffset:1, note:'15日締め・翌月10日払い(変更不可)', freee:false },
+  { group:'提携カード・銀行系', name:'ANAカード(JCB)', label:'ANAカード(JCB)', closingDay:15, paymentDay:10, monthOffset:1, note:'15日締め・翌月10日払い', freee:false },
+  { group:'提携カード・銀行系', name:'JALカード', label:'JALカード', closingDay:15, paymentDay:10, monthOffset:1, note:'15日締め・翌月10日払い', freee:false },
+  { group:'提携カード・銀行系', name:'JALカードSuica', label:'JALカードSuica', closingDay:5, paymentDay:4, monthOffset:1, note:'5日締め・翌月4日払い', freee:false },
+  { group:'提携カード・銀行系', name:'JP BANKカード', label:'JP BANKカード(Visa/Mastercard)', closingDay:31, paymentDay:26, monthOffset:1, note:'月末締め・翌月26日払い', freee:false },
+  { group:'確認して入力するカード', name:'UCカード', label:'UCカード', closingDay:null, paymentDay:null, monthOffset:1, note:'締め日・支払日をカード会社の会員サイトでご確認のうえ、入力してください', freee:true },
+  { group:'確認して入力するカード', name:'アプラスカード', label:'アプラスカード', closingDay:null, paymentDay:null, monthOffset:1, note:'締め日・支払日をカード会社の会員サイトでご確認のうえ、入力してください', freee:false },
+  { group:'確認して入力するカード', name:'出光カード', label:'出光カード', closingDay:null, paymentDay:null, monthOffset:1, note:'締め日・支払日をカード会社の会員サイトでご確認のうえ、入力してください', freee:true },
+  { group:'確認して入力するカード', name:'アメリカン・エキスプレス', label:'アメリカン・エキスプレス', closingDay:null, paymentDay:null, monthOffset:1, note:'締め日・支払日は会員ごとに異なります(マイアカウントでご確認ください)', freee:true },
+  { group:'確認して入力するカード', name:'ヤマダ・ヨドバシ等の提携カード', label:'ヤマダ・ヨドバシ等の提携カード', closingDay:null, paymentDay:null, monthOffset:1, note:'締め日・支払日を会員サイトでご確認のうえ、入力してください', freee:false },
+  { group:'確認して入力するカード', name:'自分で入力するカード', label:'自分で入力する(その他のカード)', closingDay:null, paymentDay:null, monthOffset:1, note:'締め日・支払日を後から手入力します', freee:false },
 ];
+
+/* ---------- 制度アップデート(ニュース)と設定の最新化 ----------
+   「🔄 最新化」を押す(または起動時にオンラインなら自動)と、公開している updates.json を取得し、
+   ニュースと、カードの標準設定(締め日・支払日)の追加・修正を反映します。
+   送信されるのはファイルの取得リクエストのみで、証憑データ・台帳は一切送信しません。 */
+const UPDATES_URL = 'https://raw.githubusercontent.com/a2e-works/dencho_DIY/main/updates.json';
+const UPDATES_CACHE_KEY = 'denshou_updates';
+const NEWS_BASE = [
+  { date: '2026-10-08', tag: '2026.10〜', title: '2割特例は2026年9月30日で終了予定です。',
+    body: '個人事業主向けの3割特例が新設される見込みで、免税事業者からの仕入に対する控除割合も段階的に縮小されます。記帳・証憑保存の重要性は今後さらに増していきます。',
+    url: 'https://www.nta.go.jp/law/joho-zeikaishaku/sonota/jirei/tokusetsu/index.htm' },
+  { date: '2026-10-08', tag: '国税庁', title: '電子帳簿保存法一問一答【電子取引関係】(令和8年7月版)が公開されています。',
+    body: '検索機能の確保(ファイル名への記載の例など)や、ダウンロードの求めへの対応が示されています。',
+    url: 'https://www.nta.go.jp/law/joho-zeikaishaku/sonota/jirei/pdf/0026007-006_05.pdf' },
+];
+function safeUrl(u){ try{ const x = new URL(u); return x.protocol === 'https:' ? x.href : ''; }catch(e){ return ''; } }
+function loadUpdatesCache(){ try{ return JSON.parse(localStorage.getItem(UPDATES_CACHE_KEY) || 'null'); }catch(e){ return null; } }
+function applyCardUpdates(cards){
+  if(!Array.isArray(cards)) return 0;
+  let n = 0;
+  cards.forEach(c=>{
+    if(!c || typeof c.label !== 'string' || typeof c.name !== 'string') return;
+    const ok = v => v === null || (Number.isInteger(v) && v >= 1 && v <= 31);
+    if(!ok(c.closingDay) || !ok(c.paymentDay) || ![0, 1, 2].includes(c.monthOffset)) return;
+    const p = { group: String(c.group || '追加・更新されたカード').slice(0, 30), name: c.name.slice(0, 40), label: c.label.slice(0, 60),
+      closingDay: c.closingDay, paymentDay: c.paymentDay, monthOffset: c.monthOffset, note: String(c.note || '').slice(0, 200), freee: !!c.freee };
+    const i = CARD_PRESETS.findIndex(x => x.label === p.label);
+    if(i >= 0) CARD_PRESETS[i] = p; else CARD_PRESETS.push(p);
+    n++;
+  });
+  return n;
+}
+function renderNews(){
+  const box = document.getElementById('newsList'); if(!box) return;
+  const cache = loadUpdatesCache();
+  const list = (cache && Array.isArray(cache.data && cache.data.news) && cache.data.news.length) ? cache.data.news : NEWS_BASE;
+  box.innerHTML = '';
+  list.slice(0, 8).forEach(n=>{
+    const d = document.createElement('div'); d.className = 'news-item';
+    const tag = document.createElement('span'); tag.className = 'news-tag'; tag.textContent = String(n.tag || n.date || '').slice(0, 20);
+    const b = document.createElement('b'); b.textContent = String(n.title || '').slice(0, 120);
+    d.appendChild(tag); d.appendChild(b);
+    if(n.body) d.appendChild(document.createTextNode(' ' + String(n.body).slice(0, 300)));
+    const u = safeUrl(n.url);
+    if(u){ const a = document.createElement('a'); a.href = u; a.target = '_blank'; a.rel = 'noopener'; a.textContent = ' 詳細(リンク先)'; d.appendChild(a); }
+    box.appendChild(d);
+  });
+  const st = document.getElementById('updateStatus');
+  if(st) st.textContent = cache && cache.fetchedAt ? `最終確認:${cache.fetchedAt}(情報の日付:${(cache.data && cache.data.updatedAt) || '不明'})。制度の最新の取扱いは国税庁のホームページでご確認ください。` : `標準搭載の情報(2026-10-08時点)を表示しています。「最新化」で更新を確認できます。`;
+}
+async function fetchUpdates(manual){
+  const st = document.getElementById('updateStatus'), btn = document.getElementById('btnUpdate');
+  if(btn) btn.disabled = true;
+  if(manual && st) st.textContent = '更新を確認しています…';
+  try{
+    const ctl = new AbortController(); const t = setTimeout(()=>ctl.abort(), 8000);
+    const res = await fetch(UPDATES_URL + '?t=' + Date.now(), { cache: 'no-store', signal: ctl.signal });
+    clearTimeout(t);
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    if(!data || typeof data !== 'object') throw new Error('形式が不正です');
+    const prev = loadUpdatesCache();
+    localStorage.setItem(UPDATES_CACHE_KEY, JSON.stringify({ fetchedAt: formatDateTime(new Date()), data: { version: data.version || '', updatedAt: data.updatedAt || '', news: Array.isArray(data.news) ? data.news : [], cards: Array.isArray(data.cards) ? data.cards : [] } }));
+    const nc = applyCardUpdates(data.cards);
+    renderNews();
+    if(manual){
+      const same = prev && prev.data && prev.data.updatedAt === (data.updatedAt || '');
+      if(st) st.textContent += (same ? ' 新しい更新はありません。' : ' 更新を反映しました。') + (nc ? `(カードの標準設定 ${nc} 件を反映)` : '');
+    }
+  }catch(e){
+    if(manual && st) st.textContent = '最新情報を取得できませんでした(オフライン、または更新ファイルが未公開の可能性があります)。標準搭載の情報を表示しています。';
+    console.warn('updates', e);
+  }finally{ if(btn) btn.disabled = false; }
+}
+(function initUpdates(){
+  const c = loadUpdatesCache();
+  if(c && c.data) applyCardUpdates(c.data.cards);
+  renderNews();
+  document.getElementById('btnUpdate').addEventListener('click', ()=>fetchUpdates(true));
+  if(navigator.onLine){
+    const last = c && c.fetchedAt ? Date.parse(c.fetchedAt.replace(/-/g, '/')) : 0;
+    if(!last || Date.now() - last > 12 * 3600 * 1000) fetchUpdates(false);   // 起動時は12時間に1回まで自動確認
+  }
+})();
+
 
 const cardPresetOverlay = document.getElementById('cardPresetOverlay');
 const cardPresetList = document.getElementById('cardPresetList');
@@ -2042,7 +2289,7 @@ cardPresetOverlay.addEventListener('click', (e)=>{
 });
 
 function addCardFromPreset(preset){
-  let baseName = preset.label.replace(/\(.*?\)/g, '').trim() || 'カード';
+  let baseName = preset.name || preset.label.replace(/\(.*?\)/g, '').trim() || 'カード';
   const r = getCardRegistry();
   let name = baseName;
   let i = 2;
@@ -2055,23 +2302,37 @@ function addCardFromPreset(preset){
 
 function openCardPresetModal(){
   cardPresetList.innerHTML = '';
+  const search = document.createElement('input');
+  search.type = 'search'; search.placeholder = 'カード名で絞り込み(例:楽天、JAL、ライフ)';
+  search.className = 'cp-search';
+  cardPresetList.appendChild(search);
+  const items = [];
+  let lastGroup = '';
   CARD_PRESETS.forEach(preset=>{
+    if(preset.group !== lastGroup){
+      lastGroup = preset.group;
+      const gh = document.createElement('div'); gh.className = 'cp-group'; gh.textContent = preset.group; cardPresetList.appendChild(gh);
+      items.push({ el: gh, group: true, text: '' });
+    }
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'card-preset-item';
     const nm = document.createElement('span');
     nm.className = 'cp-name';
     nm.textContent = preset.label;
+    if(preset.freee){ const b = document.createElement('span'); b.className = 'cp-badge'; b.textContent = 'freee連携対応'; nm.appendChild(b); }
     const note = document.createElement('span');
     note.className = 'cp-note';
     note.textContent = preset.note;
     btn.appendChild(nm);
     btn.appendChild(note);
+    items.push({ el: btn, group: false, text: (preset.label + ' ' + preset.name + ' ' + preset.note).normalize('NFKC').toLowerCase() });
     btn.addEventListener('click', ()=>{
       closeCardPresetModal();
       if(preset.closingDay === null && preset.paymentDay === null){
         // 自分で入力
-        const name = prompt('カードの呼び方を入力してください(例:〇〇カード)');
+        const isMan = preset.label.startsWith('自分で入力');
+        const name = prompt('カードの呼び方を入力してください(例:〇〇カード)', isMan ? '' : preset.name);
         if(!name || !name.trim()) return;
         const r = getCardRegistry();
         if(r[name.trim()]){ alert('同じ名前のカードが既に登録されています。'); return; }
@@ -2085,9 +2346,20 @@ function openCardPresetModal(){
     });
     cardPresetList.appendChild(btn);
   });
+  search.addEventListener('input', ()=>{
+    const q = search.value.normalize('NFKC').toLowerCase().trim();
+    let showGroup = null;
+    items.forEach(it=>{ if(!it.group) it.el.style.display = (!q || it.text.includes(q)) ? '' : 'none'; });
+    // グループ見出しは、配下に表示中の項目があるときだけ表示
+    for(let i = 0; i < items.length; i++){
+      if(!items[i].group) continue;
+      let any = false;
+      for(let j = i + 1; j < items.length && !items[j].group; j++){ if(items[j].el.style.display !== 'none') any = true; }
+      items[i].el.style.display = any ? '' : 'none';
+    }
+  });
   cardPresetOverlay.style.display = 'flex';
 }
-
 btnAddCard.addEventListener('click', openCardPresetModal);
 
 /* ---------- 取引先の学習(表記ゆれ・書類種類・支払い方法の補正) ---------- */
@@ -2102,7 +2374,7 @@ function getLearnMap(){
       } else if(v && !('paymentMethod' in v)){
         migrated[k] = {
           vendor: v.vendor,
-          docType: v.docType || (v.isStatement ? '明細書' : 'レシート'),
+          docType: v.docType || (v.isStatement ? 'カード利用明細' : 'レシート'),
           paymentMethod: '現金'
         };
       } else {
@@ -2194,7 +2466,7 @@ function renderLearnList(){
     docTypeText.textContent = '書類種類:';
     const docTypeSelect = document.createElement('select');
     docTypeSelect.className = 'learn-offset-select';
-    ['レシート','領収書','請求書','明細書','納品書','その他'].forEach(opt=>{
+    ['レシート','領収書','請求書','明細書','カード利用明細','納品書','その他'].forEach(opt=>{
       const o = document.createElement('option');
       o.value = opt; o.textContent = opt;
       if((entry.docType || 'レシート') === opt) o.selected = true;
@@ -2440,7 +2712,7 @@ async function renderThumbnail(file){
   const thumbImg = document.getElementById('thumbImg');
   if(file.type === 'application/pdf'){
     const buf = await file.arrayBuffer();
-    const pdf = await pdfjsLib.getDocument({data: buf}).promise;
+    const pdf = await pdfjsLib.getDocument({data: buf, cMapUrl:'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/cmaps/', cMapPacked:true}).promise;
     const page = await pdf.getPage(1);
     const viewport = page.getViewport({scale: 0.4});
     const canvas = document.createElement('canvas');
@@ -2473,7 +2745,22 @@ async function handleFile(file){
     }
     await renderThumbnail(file);
     document.getElementById('thumbFilename').textContent = file.name;
-    const parsed = parseText(text);
+    const parsed = parseText(text, file.name);
+    currentText = text;
+    currentHash = await fileSha256(file);
+    currentCompany = '';
+    dupAck = false;
+    btnSave.textContent = 'この内容で確定・台帳に記録する';
+    {
+      const rmatch = findRuleFor(text, file.name);
+      if(rmatch && rmatch.ready){
+        parsed.date = rmatch.date; parsed.amount = rmatch.amount; parsed.vendor = rmatch.rule.vendor; parsed.dateNote = '';
+        if(rmatch.invoiceNo) parsed.invoiceNo = rmatch.invoiceNo;
+        parsed.learnedEntry = Object.assign({}, parsed.learnedEntry || {}, { vendor: rmatch.rule.vendor, docType: rmatch.rule.docType, paymentMethod: rmatch.rule.paymentMethod || '現金', account: rmatch.rule.account || '' });
+        notify('info', `${file.name}:登録済みの「${rmatch.rule.name}」を適用しました。内容をご確認ください。`, {toast:false});
+        try{ const rs = getDocRules(); const rr = rs.find(x => x.id === rmatch.rule.id); if(rr){ rr.uses = (rr.uses || 0) + 1; rr.lastUsed = Date.now(); setDocRules(rs); } }catch(e){}
+      }
+    }
     fDate.value = parsed.date;
     fVendor.value = parsed.vendor;
     fAmount.value = parsed.amount;
@@ -2481,6 +2768,10 @@ async function handleFile(file){
     checkInvoiceFormat(fInvoiceNo.value);
     fAccount.value = (parsed.learnedEntry && parsed.learnedEntry.account) ? parsed.learnedEntry.account : '';
     renderAccountSuggestions(`${parsed.vendor} ${text}`);
+    try{
+      const dups = findLedgerDuplicates({date: parsed.date, vendor: parsed.vendor, amount: parsed.amount, docType: parsed.docKind || 'レシート'}, file.name, currentHash, []);
+      if(dups.length) notify('warn', `${file.name}:既に台帳にある書類の可能性があります。\n${describeDup(dups[0])}`);
+    }catch(e){}
 
     if(parsed.date){
       clearMissingDateFlag();
@@ -2515,9 +2806,27 @@ async function handleFile(file){
         fCardSelect.value = '';
       }
     } else {
-      fDocType.value = 'レシート';
+      fDocType.value = parsed.docKind || 'レシート';
+      if(parsed.docKind && !includeDocType.checked) includeDocType.checked = true;
       fPaymentMethod.value = '現金';
       fCardSelect.value = '';
+    }
+    if(parsed.dateNote){
+      notify('info', `${file.name}:日付は「${parsed.dateNote}」しました。内容をご確認ください。`, {toast:false});
+    }
+    if(isStatementDoc() && fDate.value){
+      try{
+        const cc = extractCandidates(text, file.name);
+        const ck = cardKeyFor(cc.issuer) || cardKeyFor(fVendor.value) || (fCardSelect.value && getCardRegistry()[fCardSelect.value] ? fCardSelect.value : '');
+        if(ck){
+          const card = getCardRegistry()[ck];
+          fPaymentMethod.value = 'カード'; refreshCardSelectOptions(); fCardSelect.value = ck;
+          currentCompany = cardCompanyFor(ck).full || cc.company || '';
+          fVendor.value = cardVendorLabel(ck);
+          const cl = closingDateForPayment(card, fDate.value);   // 「対象期間の締め日(参考)」欄には締め日を入れ、引落日は自動計算させる
+          if(cl) fDate.value = cl;
+        }
+      }catch(e){ console.warn(e); }
     }
     refreshPaymentUI();
 
@@ -2537,7 +2846,7 @@ async function handleFile(file){
 async function extractFromPdf(file){
   setStatus('PDFを解析しています…(テキスト情報を確認中)', true);
   const buf = await file.arrayBuffer();
-  const pdf = await pdfjsLib.getDocument({data: buf}).promise;
+  const pdf = await pdfjsLib.getDocument({data: buf, cMapUrl:'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/cmaps/', cMapPacked:true}).promise;
   const page = await pdf.getPage(1);
   const content = await page.getTextContent();
   const text = content.items.map(it=>it.str).join('\n');
@@ -2567,11 +2876,41 @@ async function extractFromImage(file){
   });
   const img = new Image();
   await new Promise(res=>{ img.onload = res; img.src = dataUrl; });
-  const canvas = document.createElement('canvas');
-  canvas.width = img.width;
-  canvas.height = img.height;
-  canvas.getContext('2d').drawImage(img, 0, 0);
+  const canvas = preprocessForOcr(img);
   return await ocrCanvas(canvas);
+}
+
+// 小さい・薄い画像でも読めるよう、拡大+グレースケール+コントラスト補正してからOCRにかける
+function preprocessForOcr(img){
+  const longEdge = Math.max(img.width, img.height);
+  const scale = longEdge < 1600 ? Math.min(3, 1600 / longEdge) : (longEdge > 3200 ? 3200 / longEdge : 1);
+  const w = Math.max(1, Math.round(img.width * scale)), h = Math.max(1, Math.round(img.height * scale));
+  const canvas = document.createElement('canvas');
+  canvas.width = w; canvas.height = h;
+  const ctx = canvas.getContext('2d', {willReadFrequently:true});
+  ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, w, h);
+  ctx.drawImage(img, 0, 0, w, h);
+  try{
+    const id = ctx.getImageData(0, 0, w, h), d = id.data;
+    const hist = new Uint32Array(256);
+    for(let i=0;i<d.length;i+=4){
+      const g = (d[i]*299 + d[i+1]*587 + d[i+2]*114) / 1000 | 0;
+      d[i]=d[i+1]=d[i+2]=g; hist[g]++;
+    }
+    const total = w*h; let lo=0, hi=255, acc=0;
+    for(let i=0;i<256;i++){ acc+=hist[i]; if(acc > total*0.01){ lo=i; break; } }
+    acc=0;
+    for(let i=255;i>=0;i--){ acc+=hist[i]; if(acc > total*0.01){ hi=i; break; } }
+    if(hi - lo > 20){
+      const k = 255 / (hi - lo);
+      for(let i=0;i<d.length;i+=4){
+        const v = Math.max(0, Math.min(255, (d[i]-lo)*k)) | 0;
+        d[i]=d[i+1]=d[i+2]=v;
+      }
+    }
+    ctx.putImageData(id, 0, 0);
+  }catch(e){ console.warn('preprocess skipped', e); }
+  return canvas;
 }
 
 async function ocrCanvas(canvas){
@@ -2585,62 +2924,184 @@ async function ocrCanvas(canvas){
   return data.text;
 }
 
-function parseText(text){
-  // デモ版:簡易な正規表現ベースの抽出(本番版は判定ロジックを強化)
-  let date = '';
-  let amount = '';
-  let vendor = '';
-
-  const datePattern = /(\d{4})[年\/\-](\d{1,2})[月\/\-](\d{1,2})/;
-  const wdatePattern = /(令和|平成)(\d{1,2})年(\d{1,2})月(\d{1,2})日/;
-
-  // 「発行日」「締め日」などのラベルが付いた日付があれば、そちらを優先的に取引年月日とする
-  const labeledDateMatch = text.match(/(発行日|締め日|ご利用締め日)[:：]?\s*(\d{4}[年\/\-]\d{1,2}[月\/\-]\d{1,2})/);
-  if(labeledDateMatch){
-    const dm = labeledDateMatch[2].match(datePattern);
-    if(dm) date = `${dm[1]}-${String(dm[2]).padStart(2,'0')}-${String(dm[3]).padStart(2,'0')}`;
+// ---- 読み取り補助(カード明細対応) ----
+// 全角→半角、OCRが入れる日本語文字間の空白を詰める
+function normText(text){
+  return (text||'').normalize('NFKC')
+    .replace(/([぀-ヿ㐀-鿿])[ \t]+(?=[぀-ヿ㐀-鿿])/g, '$1');
+}
+// カード会社・請求元の判定(明細書の取引先に使う)
+const CARD_ISSUERS = [
+  [/d\s?カード|ｄカード/i, 'dカード'],
+  [/au\s?PAY\s?カード/i, 'au PAYカード'],
+  [/TS\s?CUBIC|トヨタファイナンス|TOYOTA\s?FINANCE/i, 'TS CUBICカード'],
+  [/楽天カード/, '楽天カード'],
+  [/三井住友カード|Vpass/i, '三井住友カード'],
+  [/JCB\s?カード|JCB\s?CARD/i, 'JCBカード'],
+  [/イオンカード/, 'イオンカード'],
+  [/MUFGカード|三菱UFJニコス/, 'MUFGカード'],
+  [/Amazon\s?Mastercard/i, 'Amazonカード'],
+  [/エポスカード/, 'エポスカード'],
+  [/セゾンカード|セゾン\s?アメリカン/, 'セゾンカード'],
+  [/ビューカード|VIEW\s?CARD/i, 'ビューカード'],
+  [/オリコカード|Oricoカード/i, 'オリコカード'],
+  [/PayPay\s?カード/i, 'PayPayカード'],
+  [/ライフカード/, 'ライフカード'],
+  [/ジャックス|JACCS/i, 'ジャックスカード'],
+  [/ダイナース/, 'ダイナースクラブ'],
+  [/セブンカード/, 'セブンカード・プラス'],
+  [/JAL\s?カード/i, 'JALカード'],
+  [/ANA\s?カード/i, 'ANAカード'],
+  [/ENEOS\s?カード/i, 'ENEOSカード'],
+  [/アメリカン[・\s]?エキスプレス|American\s?Express/i, 'アメリカン・エキスプレス'],
+  [/Olive|オリーブ/i, 'Olive(クレジット)'],
+];
+// カード名 → 発行会社(正式名)。一般に知られている名称(要・実物の明細での確認)。台帳には正式名、ファイル名/取引先には短い形を使う
+const CARD_COMPANIES = [
+  [/au\s?PAY/i, 'auフィナンシャルサービス株式会社'],
+  [/^d\s?カード|^ｄカード/i, '株式会社NTTドコモ'],
+  [/楽天カード/, '楽天カード株式会社'],
+  [/三井住友カード|Vpass|Amazon/i, '三井住友カード株式会社'],
+  [/JCB/i, '株式会社ジェーシービー'],
+  [/イオンカード/, 'イオンフィナンシャルサービス株式会社'],
+  [/MUFG|三菱UFJニコス/, '三菱UFJニコス株式会社'],
+  [/エポス/, '株式会社エポスカード'],
+  [/セゾン/, '株式会社クレディセゾン'],
+  [/ビューカード|VIEW/i, '株式会社ビューカード'],
+  [/オリコ|Orico/i, '株式会社オリエントコーポレーション'],
+  [/PayPay/i, 'PayPayカード株式会社'],
+  [/TS\s?CUBIC|トヨタファイナンス/i, 'トヨタファイナンス株式会社'],
+  [/ライフカード/, 'ライフカード株式会社'],
+  [/ジャックス/, '株式会社ジャックス'],
+  [/ダイナース/, '三井住友トラストクラブ株式会社'],
+  [/セブンカード/, '株式会社セブン・カードサービス'],
+  [/ENEOSカード/i, 'ENEOSフィナンシャルサービス株式会社'],
+  [/アメリカン|Express/i, 'アメリカン・エキスプレス・インターナショナル, Inc.'],
+];
+function cardCompanyFor(cardName){
+  const n = cardName || '';
+  for(const [re, full] of CARD_COMPANIES){ if(re.test(n)) return { full, short: full.replace(/株式会社/g, '').trim() }; }
+  return { full: '', short: '' };
+}
+// カード明細の取引先 = カード名(発行会社の略称)。どちらの名前でも検索できる
+function cardVendorLabel(cardName){
+  const c = cardCompanyFor(cardName);
+  return (c.short && !cardName.includes(c.short)) ? `${cardName}(${c.short})` : cardName;
+}
+const STATEMENT_HINT = /(ご?利用(内訳)?明細|利用代金明細|お支払い?(金額)?明細|ご請求(額|金額)?(のご案内|明細)|カード.{0,6}明細|meisai|statement|ご利用代金|お支払い?予定)/i;
+function detectDocKind(t, fileName){
+  const nm = (fileName||'');
+  const isStmt = STATEMENT_HINT.test(t) || /meisai|明細|内訳|statement/i.test(nm);
+  if(!isStmt){
+    if(/ご?請求書|請求明細|ご?請求金額|invoice/i.test(t) && !/領収書|レシート/.test(t)) return { kind:'請求書', issuer:'' };
+    return { kind:'', issuer:'' };
   }
-  if(!date){
-    const m = text.match(datePattern);
-    if(m){
-      date = `${m[1]}-${String(m[2]).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}`;
-    } else {
-      const wm = text.match(wdatePattern);
-      if(wm) date = wm[0];
+  // カード会社名は、書類の冒頭(タイトル付近)かファイル名にあるときだけ「カード会社の明細」とみなす
+  // (事業者の明細の本文中に「au PAYカードで支払い」等と出てきても、カード明細とは判定しない)
+  const headRaw = t.split('\n').slice(0, 14).join(' ');
+  const head = headRaw + ' ' + headRaw.replace(/\s+/g, '');
+  let issuer = '';
+  for(const [re, name] of CARD_ISSUERS){ if(re.test(head) || re.test(nm)){ issuer = name; break; } }
+  return { kind: issuer ? 'カード利用明細' : '明細書', issuer };
+}
+function lastDayOfMonth(y, m){ return new Date(y, m, 0).getDate(); }
+const pad2 = n => String(n).padStart(2,'0');
+
+// 日付の探索。戻り値 {date, note}。noteが付く場合は「補完した日付」
+function findDateSmart(t, isStmt, fileName, ymOk){
+  const full = /(\d{4})\s?[年\/\-.]\s?(\d{1,2})\s?[月\/\-.]\s?(\d{1,2})\s?日?/;
+  const toIso = m => `${m[1]}-${pad2(m[2])}-${pad2(m[3])}`;
+  const labelFull = t.match(/(発行日|締め日|ご利用締め日|取引日|ご利用日|お取引日|日付)\s?[:：]?\s*(\d{4}\s?[年\/\-.]\s?\d{1,2}\s?[月\/\-.]\s?\d{1,2})/);
+  if(labelFull){ const m = labelFull[2].match(full); if(m) return { date: toIso(m), note:'' }; }
+  if(isStmt){
+    // 支払日・引落日(年月日つき)
+    const pay = t.match(/(お支払い?日|支払期日|お引落し?日|引落日|口座振替日|お支払期日)\s?[:：]?\s*(\d{4}\s?[年\/\-.]\s?\d{1,2}\s?[月\/\-.]\s?\d{1,2})/);
+    if(pay){ const m = pay[2].match(full); if(m) return { date: toIso(m), note:'支払日を取引日として使用' }; }
+  }
+  const m0 = t.match(full);
+  if(m0 && +m0[2]>=1 && +m0[2]<=12 && +m0[3]>=1 && +m0[3]<=31) return { date: toIso(m0), note:'' };
+  const wm = t.match(/(令和|平成)\s?(\d{1,2})\s?年\s?(\d{1,2})\s?月\s?(\d{1,2})\s?日/);
+  if(wm){
+    const y = (wm[1]==='令和' ? 2018 : 1988) + (+wm[2]);
+    return { date: `${y}-${pad2(wm[3])}-${pad2(wm[4])}`, note:'' };
+  }
+  if(isStmt || ymOk){
+    // 年月のみ(「2026年1月分」「ご利用年月 2026/01」「請求年月」)→ 末日で補完
+    const ym = t.match(/(請求年月|ご?利用年月|ご?請求月|お支払い?月|対象年月)?\s?[:：]?\s*(20\d{2})\s?[年\/\-.]\s?(0?[1-9]|1[0-2])\s?(?:月分|月|(?=\s|$))(?!\s?\d)/);
+    if(ym){
+      const y = +ym[2], mo = +ym[3];
+      return { date: `${y}-${pad2(mo)}-${pad2(lastDayOfMonth(y, mo))}`, note:'請求年月から補完(月末日)' };
+    }
+    const wy = t.match(/(令和|平成)\s?(\d{1,2})\s?年\s?(\d{1,2})\s?月/);
+    if(wy){
+      const y = (wy[1]==='令和' ? 2018 : 1988) + (+wy[2]), mo = +wy[3];
+      return { date: `${y}-${pad2(mo)}-${pad2(lastDayOfMonth(y, mo))}`, note:'請求年月から補完(月末日)' };
+    }
+    if(!isStmt) return { date:'', note:'' };
+    // ファイル名の年月(YYYYMM[DD] / YYMM…)
+    const fn = (fileName||'').replace(/\.[^.]+$/, '');
+    let fm = fn.match(/(?<!\d)(20\d{2})(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])?/);
+    if(fm){
+      const y = +fm[1], mo = +fm[2];
+      const d = fm[3] ? +fm[3] : lastDayOfMonth(y, mo);
+      return { date: `${y}-${pad2(mo)}-${pad2(d)}`, note:'ファイル名の年月から補完' };
+    }
+    fm = fn.match(/(?<!\d)(2\d)(0[1-9]|1[0-2])\d{0,3}(?!\d)/);
+    if(fm){
+      const y = 2000 + (+fm[1]), mo = +fm[2];
+      return { date: `${y}-${pad2(mo)}-${pad2(lastDayOfMonth(y, mo))}`, note:'ファイル名の年月から補完(月末日)' };
     }
   }
+  return { date:'', note:'' };
+}
 
-  const amountMatches = [...text.matchAll(/[¥￥]\s?([0-9][0-9,]{2,})/g)]
-    .concat([...text.matchAll(/([0-9][0-9,]{2,})\s?円/g)]);
-  if(amountMatches.length){
-    const nums = amountMatches.map(m=>parseInt(m[1].replace(/,/g,''),10)).filter(n=>!isNaN(n));
-    if(nums.length) amount = String(Math.max(...nums));
-  }
+// 金額の探索:ラベル付き(ご請求金額など)を優先し、無ければ ¥/円 付きの最大値
+function findAmountSmart(t){
+  const flat = t.replace(/\s+/g, ' ');
+  const labelRe = /(ご請求(?:金額|額)|お支払い?(?:金額|総額|額)|今回(?:の)?(?:お支払い?|ご請求)(?:金額|額)?|ご利用合計(?:金額)?|請求金額|合計(?:金額)?|総額|税込合計|お買上げ?(?:合計|金額)?|領収金額)\s?[:：]?\s?[¥￥]?\s?([0-9][0-9,]*)\s?円?/g;
+  const labeled = [...flat.matchAll(labelRe)].map(m=>parseInt(m[2].replace(/,/g,''),10)).filter(n=>!isNaN(n) && n>0);
+  if(labeled.length) return String(Math.max(...labeled));
+  const nums = [...flat.matchAll(/[¥￥]\s?([0-9][0-9,]{1,})/g)].map(m=>m[1])
+    .concat([...flat.matchAll(/([0-9][0-9,]{1,})\s?円/g)].map(m=>m[1]))
+    .map(x=>parseInt(x.replace(/,/g,''),10)).filter(n=>!isNaN(n) && n>0);
+  return nums.length ? String(Math.max(...nums)) : '';
+}
 
-  // 取引先の推測:日付・金額・「発行日」等のラベル行は除外し、それらしい行を選ぶ
-  const LABEL_WORDS = /^(発行日|締め日|ご利用締め日|お支払い?日|引落日|ご請求金額|合計|明細|請求書|領収書|No\.?|様)/;
-  const lines = text.split('\n').map(l=>l.trim()).filter(Boolean);
-  const candidateLine = lines.find(l=>
-    !LABEL_WORDS.test(l) &&
-    !datePattern.test(l) &&
-    !/^[¥￥0-9,円\s:：]+$/.test(l)
-  );
-  vendor = (candidateLine || lines[0] || '').slice(0, 20);
+const VENDOR_NG = /(明細|内訳|ご利用|ご請求|お支払|お客様|会員|様$|御中|領収|請求書|発行日|締め日|合計|No\.?|ページ|^ご$|^お$)/;
+function isBadVendorLine(l){
+  if(l.length < 2) return true;
+  if(/^[ぁ-ん]{1,2}$/.test(l)) return true;               // 「ご」「お」など
+  if(/^[ご御お][ぁ-ん一-龥]{0,3}$/.test(l)) return true;      // 「ご利用」等の項目名
+  if(VENDOR_NG.test(l)) return true;
+  if(/登録番号|^T\d{10,}|^円|税込|税抜|^\d+\s?%|^[\(（\)）\s]+$/.test(l)) return true;
+  if(/〒|@|https?:|www\.|電話|TEL|FAX|Email|\d{2,4}-\d{2,4}-\d{3,4}|[都道府県].{1,6}[市区町村郡]/i.test(l)) return true;
+  if(/[¥￥]|金額|\d{1,3},\d{3}|\d{4,}円/.test(l)) return true;
+  return false;
+}
+
+function parseText(text, fileName){
+  const t = normText(text);
+  const cand = extractCandidates(text, fileName);
+  const date = cand.dates[0] ? cand.dates[0].value : '';
+  const dateNote = cand.dates[0] ? cand.dates[0].note : '';
+  const amount = cand.amounts[0] ? cand.amounts[0].value : '';
+  let vendor = cand.vendors[0] ? cand.vendors[0].value : '';
 
   lastRawVendor = vendor;
-  const learned = findLearnedEntry(text);
+  const learned = findLearnedEntry(text) || findLearnedEntry(t);
   const learnedEntry = learned ? learned.entry : null;
   if(learnedEntry) vendor = learnedEntry.vendor;
 
-  // インボイス登録番号(T+13桁)の抽出
-  const invoiceMatch = text.match(/T\s?\d{3}\s?\d{4}\s?\d{4}\s?\d{2}|T\d{13}/);
+  const invoiceMatch = t.match(/T\s?\d{3}\s?\d{4}\s?\d{4}\s?\d{2}|T\d{13}/);
   const invoiceNo = invoiceMatch ? invoiceMatch[0].replace(/\s/g,'') : '';
 
   return {
     date: date || '',
+    dateNote,
     amount: amount || '',
     vendor: vendor || '不明(手入力してください)',
     invoiceNo,
+    docKind: cand.kind,
     learnedEntry
   };
 }
@@ -2883,7 +3344,10 @@ function recordToLedger(){
     vendor: fVendor.value,
     amount: fAmount.value,
     docType: fDocType.value,
-    paymentMethod: (fPaymentMethod.value === 'カード' && fCardSelect.value && fCardSelect.value !== '__new__') ? fCardSelect.value : '現金',
+    paymentMethod: STATEMENT_DOC_TYPES.includes(fDocType.value) ? PM_STMT : ((fPaymentMethod.value === 'カード' && fCardSelect.value && fCardSelect.value !== '__new__') ? fCardSelect.value : '現金'),
+    dueDate: STATEMENT_DOC_TYPES.includes(fDocType.value) ? fWithdrawal.value || fDate.value : ((fPaymentMethod.value === 'カード' && fWithdrawal.value) ? fWithdrawal.value : ''),
+    fileHash: currentHash || '',
+    companyName: STATEMENT_DOC_TYPES.includes(fDocType.value) ? currentCompany : '',
     account: fAccount.value || '',
     invoiceNo: fInvoiceNo.value || '',
     folder: '',
@@ -2906,7 +3370,7 @@ function recordToLedger(){
 const LEDGER_EDIT_FIELDS = [
   ['date','取引年月日'], ['vendor','取引先'], ['amount','金額'],
   ['docType','書類種類'], ['paymentMethod','支払い方法'],
-  ['account','勘定科目'], ['invoiceNo','インボイス番号']
+  ['account','勘定科目'], ['invoiceNo','インボイス番号'], ['dueDate','支払予定日']
 ];
 
 function updateLedgerEntry(id, newValues){
@@ -2972,7 +3436,7 @@ function renderLedgerTable(){
   // 新しいものを上に表示
   [...ledger].reverse().forEach(r=>{
     const tr = document.createElement('tr');
-    [r.processedAt, r.originalFilename, r.newFilename, r.date, r.vendor, `${r.amount}円`, r.docType, r.paymentMethod, r.account, r.invoiceNo]
+    [r.processedAt, r.originalFilename, r.newFilename, r.date, r.vendor, `${r.amount}円`, r.docType, r.paymentMethod, r.account, r.invoiceNo, r.dueDate]
       .forEach(v=>{
         const td = document.createElement('td');
         td.textContent = v || '';
@@ -3027,8 +3491,8 @@ function renderLedgerTable(){
 // 台帳の行をその場で編集可能にする(保存すると差分が履歴として記録される)
 function startLedgerRowEdit(tr, entry){
   const cells = tr.querySelectorAll('td');
-  // 列構成:0処理日時 1元ファイル名 2新ファイル名 3日付 4取引先 5金額 6書類種類 7支払い方法 8勘定科目 9インボイス番号 10履歴 11操作
-  const editableIdx = { date:3, vendor:4, amount:5, docType:6, paymentMethod:7, account:8, invoiceNo:9 };
+  // 列構成:0処理日時 1元ファイル名 2新ファイル名 3日付 4取引先 5金額 6書類種類 7支払い方法 8勘定科目 9インボイス番号 10支払予定日 11履歴 12操作
+  const editableIdx = { date:3, vendor:4, amount:5, docType:6, paymentMethod:7, account:8, invoiceNo:9, dueDate:10 };
   const inputs = {};
   Object.entries(editableIdx).forEach(([key, idx])=>{
     const td = cells[idx];
@@ -3042,7 +3506,7 @@ function startLedgerRowEdit(tr, entry){
     td.appendChild(input);
     inputs[key] = input;
   });
-  const opTd = cells[11];
+  const opTd = cells[12];
   opTd.innerHTML = '';
   const saveBtn = document.createElement('button');
   saveBtn.type = 'button';
@@ -3076,8 +3540,8 @@ if(LEDGER_AUTO_EXPIRE_ENABLED){
 
 document.getElementById('btnExportCSV').addEventListener('click', ()=>{
   const ledger = getLedger();
-  const headers = ['処理日時','元のファイル名','新しいファイル名','取引年月日','取引先','金額','書類種類','支払い方法','勘定科目','インボイス番号'];
-  const rows = ledger.map(r=>[r.processedAt, r.originalFilename, r.newFilename, r.date, r.vendor, r.amount, r.docType, r.paymentMethod, r.account||'', r.invoiceNo||'']);
+  const headers = ['処理日時','元のファイル名','新しいファイル名','取引年月日','取引先','金額','書類種類','支払い方法','勘定科目','インボイス番号','支払予定日','会社名(正式)'];
+  const rows = ledger.map(r=>[r.processedAt, r.originalFilename, r.newFilename, r.date, r.vendor, r.amount, r.docType, r.paymentMethod, r.account||'', r.invoiceNo||'', r.dueDate||'', r.companyName||'']);
   const csvBody = [headers, ...rows]
     .map(row => row.map(v => `"${String(v ?? '').replace(/"/g,'""')}"`).join(','))
     .join('\r\n');
@@ -3091,6 +3555,83 @@ document.getElementById('btnExportCSV').addEventListener('click', ()=>{
   a.click();
   a.remove();
   URL.revokeObjectURL(url);
+});
+
+
+// ---- 税務調査対応:ダウンロードの求めに応じられる一覧 / 訂正削除履歴 / 事務処理規程ひな形 ----
+function downloadText(name, text, type){
+  const blob = new Blob([text], {type: type || 'text/plain;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = name;
+  document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+}
+function csvOf(rows){ return '﻿' + rows.map(row => row.map(v => `"${String(v ?? '').replace(/"/g,'""')}"`).join(',')).join('\r\n'); }
+document.getElementById('btnExportInspect').addEventListener('click', ()=>{
+  const ledger = getLedger().slice().sort((a, b) => (a.date || '').localeCompare(b.date || '') || (a.vendor || '').localeCompare(b.vendor || '') );
+  if(!ledger.length){ alert('台帳に記録がありません。'); return; }
+  const dates = ledger.map(r => r.date).filter(Boolean);
+  const from = prompt('開始日(例:2026-01-01)。空欄で全期間', dates[0] || '');
+  if(from === null) return;
+  const to = prompt('終了日(例:2026-12-31)。空欄で全期間', dates[dates.length - 1] || '');
+  if(to === null) return;
+  const rows = ledger.filter(r => (!from || (r.date || '') >= from.trim()) && (!to || (r.date || '') <= to.trim()));
+  if(!rows.length){ alert('その期間の記録はありません。'); return; }
+  const head = ['取引年月日','取引先','取引金額','書類種類','支払い方法','会社名(正式)','インボイス番号','ファイル名','保存フォルダ','元のファイル名','支払予定日','記録日時'];
+  const body = rows.map(r => [r.date, r.vendor, r.amount, r.docType, r.paymentMethod, r.companyName || '', r.invoiceNo || '', r.newFilename, r.folder || '', r.originalFilename, r.dueDate || '', r.processedAt]);
+  downloadText(`電帳DIY_税務調査用一覧_${(from || '全期間').trim()}_${(to || '').trim()}.csv`, csvOf([head, ...body]), 'text/csv;charset=utf-8;');
+});
+document.getElementById('btnExportHistory').addEventListener('click', ()=>{
+  const out = [];
+  getLedger().forEach(r => (Array.isArray(r.history) ? r.history : []).forEach(hh => {
+    Object.keys(hh.changes || {}).forEach(k => out.push([hh.ts, '訂正', r.newFilename, k, hh.changes[k].from, hh.changes[k].to]));
+  }));
+  getLedgerAudit().forEach(x => out.push([x.ts, x.action, '', '', '', typeof x.detail === 'string' ? x.detail : JSON.stringify(x.detail)]));
+  if(!out.length){ alert('訂正・削除の履歴はまだありません。'); return; }
+  out.sort((a, b) => String(a[0]).localeCompare(String(b[0])));
+  downloadText(`電帳DIY_訂正削除履歴_${toDateStr(new Date())}.csv`, csvOf([['日時','操作','対象ファイル','項目','変更前','変更後/内容'], ...out]), 'text/csv;charset=utf-8;');
+});
+document.getElementById('btnPolicyTemplate').addEventListener('click', ()=>{
+  const t = `電子取引データの訂正及び削除の防止に関する事務処理規程(ひな形)
+
+※このひな形は一般的な記載例です。内容は事業の実態に合わせて修正してください。
+  国税庁が各種規程等のサンプルを公開しています:
+  https://www.nta.go.jp/law/joho-zeikaishaku/sonota/jirei/0021006-031.htm
+
+第1条(目的)
+この規程は、電子取引により授受した取引情報(請求書・領収書・カード利用明細等のデータ)の保存について、
+電子帳簿保存法に沿った取扱いを定めることを目的とする。
+
+第2条(適用範囲)
+電子メール・ウェブサイト・クラウドサービス等で授受した取引情報のデータに適用する。
+
+第3条(責任者)
+取引情報の保存・管理の責任者は、【氏名または屋号】とする。
+
+第4条(保存の方法)
+1 受領した取引情報のデータは、ファイル名に「取引年月日_取引先_金額円_書類種類」を記載して保存する。
+  (例:2026-10-13_au PAYカード(auフィナンシャルサービス)_4436円_カード利用明細.pdf)
+2 保存の記録として、電帳DIYの台帳(取引年月日・取引先・金額・ファイル名等)を作成し、定期的にCSVで保管する。
+3 カード利用明細は、取引年月日を当該カードの引落日として記録する。
+
+第5条(訂正及び削除の防止)
+1 保存した取引情報のデータは、原則として訂正・削除しない。
+2 やむを得ず訂正・削除する場合は、責任者の承認を得て、その日時・内容・理由を記録する。
+3 台帳の訂正・削除の履歴は、電帳DIYの履歴機能により残す。
+
+第6条(検索機能)
+保存データは、取引年月日・取引金額・取引先で検索できるようにする。
+税務職員から電磁的記録のダウンロードの求めがあったときは、電帳DIYで出力した一覧(CSV)と原本ファイルを、
+通常出力できる形式で提示又は提出する。
+
+第7条(備付け)
+保存データを確認できるよう、パソコン・ディスプレイ・プリンタ及び操作説明書を備え付ける。
+
+第8条(保存期間)
+法定の保存期間(原則7年。欠損金の繰越控除を受ける場合は10年)保存する。
+
+附則 この規程は【制定日】から施行する。
+`;
+  downloadText('電子取引データ_事務処理規程_ひな形.txt', t);
 });
 
 document.getElementById('btnDedupLedger').addEventListener('click', ()=>{
@@ -3246,7 +3787,7 @@ async function writeCopyPath(root, segs, filename, file){
   return finalName;
 }
 
-const SUSPICIOUS_VENDOR = /^(発行日|締め日|ご利用締め日|お支払い?日|引落日|ご請求金額|合計|明細|請求書|領収書|No\.?|様)/;
+const SUSPICIOUS_VENDOR = /^(発行日|締め日|ご利用締め日|お支払い?日|引落日|ご請求金額|合計|明細|請求書|領収書|No\.?|様)|^[ぁ-ん]{1,2}$|^[ご御お][ぁ-ん一-龥]{0,3}$|(明細|内訳|ご利用|ご請求|お客様)/;
 
 // ファイル名に「日付・取引先・金額」がすでに入っていれば、検索できる名前とみなす
 function nameAlreadySearchable(name, parsed){
@@ -3274,37 +3815,753 @@ async function scanFolder(dirHandle, relSegs = [], out = [], stat = {skipped:0},
   return {items: out, stat};
 }
 
-// 1件を読み取り、整理後の名前・振り分け先・問題点を判定する(この段階ではファイルを書き出さない)
+// =====================================================================
+// 書類ルール:初回は「読み取り→確認→登録」、2回目以降は「登録済みルールを適用→確認だけ」
+//   ・確認なしで登録されることはありません(必ず確認画面を通ります)
+//   ・確認時に「どこに書いてある日付/金額を使ったか」を記憶し、同じ書式の書類に適用します
+// =====================================================================
+const DOC_RULES_KEY = 'denshou_doc_rules';
+function getDocRules(){ try{ const a = JSON.parse(localStorage.getItem(DOC_RULES_KEY) || '[]'); return Array.isArray(a) ? a : []; }catch(e){ return []; } }
+function setDocRules(a){ try{ localStorage.setItem(DOC_RULES_KEY, JSON.stringify(a)); }catch(e){} }
+// 空白を詰める(ただし数字と数字の間の空白は残す:「2026/09/13 17:01」が「1317」にならないように)
+const compactKeep = s => s.replace(/\s+/g, ' ').replace(/(?<!\d) | (?!\d)/g, '');
+const compactText = t => compactKeep(normText(t));
+const escRe = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+function fnPattern(name){ return (name || '').replace(/\.[^.]+$/, '').replace(/[0-9]/g, '#'); }
+function fnPatternUsable(p){
+  if(!p) return false;
+  if((p.match(/[A-Za-z぀-ヿ㐀-鿿]/g) || []).length < 3) return false;
+  if(/^(IMG|DSC|PXL|image|scan|photo|screenshot|スクリーンショット|CCI|P)[_\-#\s]/i.test(p) || /^(IMG|DSC|PXL)/i.test(p)) return false;
+  return true;
+}
+// ---- カード利用明細:登録済みカードの「引落日ルール」で日付を決める ----
+const cardNameNorm = x => (x || '').normalize('NFKC').toLowerCase().replace(/[\s\-_・()（）]/g, '').replace(/カード/g, '');
+function cardKeyFor(name){
+  const n = cardNameNorm(name); if(!n) return '';
+  const reg = getCardRegistry();
+  for(const k of Object.keys(reg)){ if(cardNameNorm(k) === n) return k; }
+  if(n.length < 2) return '';
+  for(const k of Object.keys(reg)){
+    const kn = cardNameNorm(k);
+    if(kn.length >= 2 && (kn.includes(n) || n.includes(kn))) return k;
+  }
+  return '';
+}
+// 引落月(書類に印字されたお支払日の月、無ければ発行日から推定)の「支払日」を、土日祝なら翌営業日にずらして返す
+function ruleDueDate(card, payYm, issueDate){
+  if(!card || !card.paymentDay) return '';
+  let y, m;
+  if(payYm){ [y, m] = payYm.split('-').map(Number); }
+  else if(issueDate){
+    const d = new Date(issueDate + 'T00:00:00'); if(isNaN(d)) return '';
+    y = d.getFullYear(); m = d.getMonth() + 1;
+    if(d.getDate() > Math.min(card.paymentDay, lastDayOfMonth(y, m))){ m++; if(m > 12){ m = 1; y++; } }
+  } else return '';
+  const day = Math.min(card.paymentDay, lastDayOfMonth(y, m));
+  return nextBusinessDay(`${y}-${pad2(m)}-${pad2(day)}`);
+}
+// 引落日から、そのカードの「締め日」を逆算(1ファイル取り込み画面の「対象期間の締め日」欄用)
+function closingDateForPayment(card, payDateStr){
+  const pd = new Date(payDateStr + 'T00:00:00');
+  if(isNaN(pd) || !card || !card.closingDay) return '';
+  const off = card.monthOffset ?? 1;
+  const cm = new Date(pd.getFullYear(), pd.getMonth() - off, 1);
+  const day = Math.min(card.closingDay, lastDayOfMonth(cm.getFullYear(), cm.getMonth() + 1));
+  return toDateStr(new Date(cm.getFullYear(), cm.getMonth(), day));
+}
+// 支払予定日:カード払いの場合の引落(予定)日。カード利用明細は、その日付自体が引落日
+function computeDueDate(pm, docType, date){
+  try{
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(date || '')) return '';
+    if(docType === 'カード利用明細') return date;
+    if(!pm || pm === '現金' || pm === 'その他') return '';
+    const reg = getCardRegistry();
+    return reg[pm] ? (computeWithdrawalForReceipt(reg[pm], date) || '') : '';
+  }catch(e){ return ''; }
+}
+function monthEnd(y, m){ return `${y}-${pad2(m)}-${pad2(lastDayOfMonth(+y, +m))}`; }
+
+// ファイル名から年月日(補助)
+function filenameDates(fileName){
+  const out = [];
+  const fn = (fileName || '').replace(/\.[^.]+$/, '');
+  let m = fn.match(/(?<!\d)(20\d{2})(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])?/);
+  if(m){
+    out.push({ value: m[3] ? `${m[1]}-${m[2]}-${m[3]}` : monthEnd(m[1], m[2]), sub: m[3] ? 'yyyymmdd' : 'yyyymm' });
+  } else {
+    m = fn.match(/(?<!\d)(2\d)(0[1-9]|1[0-2])\d{0,3}(?!\d)/);
+    if(m) out.push({ value: monthEnd(2000 + (+m[1]), m[2]), sub: 'yymm' });
+  }
+  return out;
+}
+function filenameDateBySub(fileName, sub){
+  const f = filenameDates(fileName).find(x => x.sub === sub);
+  return f ? f.value : '';
+}
+
+// 位置 str の先頭から日付を読む
+function parseDateAt(str, kind){
+  let m;
+  if(kind === 'ymd'){
+    m = str.match(/^(20\d{2})(?:年(\d{1,2})月(\d{1,2})日|[\/.\-](\d{1,2})[\/.\-](\d{1,2})(?![\d,]))/);
+    if(m){ const mo = +(m[2] || m[4]), d = +(m[3] || m[5]); if(mo >= 1 && mo <= 12 && d >= 1 && d <= 31) return `${m[1]}-${pad2(mo)}-${pad2(d)}`; }
+    return '';
+  }
+  if(kind === 'wymd'){
+    m = str.match(/^(令和|平成)(\d{1,2})年(\d{1,2})月(\d{1,2})日/);
+    if(m){ const y = (m[1] === '令和' ? 2018 : 1988) + (+m[2]); return `${y}-${pad2(m[3])}-${pad2(m[4])}`; }
+    return '';
+  }
+  if(kind === 'ymEnd'){
+    m = str.match(/^(20\d{2})[年\/.\-](\d{1,2})(?:月|(?!\d))/);
+    if(m && +m[2] >= 1 && +m[2] <= 12) return monthEnd(m[1], m[2]);
+    m = str.match(/^(令和|平成)(\d{1,2})年(\d{1,2})月/);
+    if(m && +m[3] >= 1 && +m[3] <= 12){ const y = (m[1] === '令和' ? 2018 : 1988) + (+m[2]); return monthEnd(y, m[3]); }
+    return '';
+  }
+  return '';
+}
+
+// ---- 候補の抽出(日付・金額・取引先を「候補の一覧」として出す) ----
+function extractCandidates(text, fileName){
+  const t = normText(text);
+  const c = compactKeep(t);
+  const dates = [], amounts = [], vendors = [];
+  const before = idx => c.slice(Math.max(0, idx - 10), idx);
+  const kindInfo = detectDocKind(t, fileName);
+  const isStmt = kindInfo.kind === '明細書' || kindInfo.kind === '請求書' || kindInfo.kind === 'カード利用明細';
+  let m;
+
+  // 日付:年月日
+  const DATE_LABEL = /(発行日|請求日|取引日|ご?利用日|お?取引日|日付|領収日|決済日|お?買上日)[:：]?$/;
+  const PAY_LABEL = /(お?支払い?日|支払期日|口座振替日|お?引落し?日|引落日)[:：]?$/;
+  const isCardStmt = kindInfo.kind === 'カード利用明細';
+  const pushDate = (value, bf, after, isTime) => {
+    const pay = PAY_LABEL.test(bf), labeled = DATE_LABEL.test(bf);
+    // カード利用明細の取引年月日は「引落日(お支払日)」。それ以外の書類では支払期日などより、発行日・取引日などを優先
+    const score = pay ? (isCardStmt ? 13 : 5) : (labeled ? (isCardStmt ? 6 : 10) : (isTime ? 4 : 6));
+    const lab = (bf.match(pay ? PAY_LABEL : DATE_LABEL) || ['', ''])[1] || '';
+    dates.push({
+      value, kind: 'ymd', before: bf, score, time: isTime, pay,
+      label: pay ? `「${lab}」(引落日)` : (labeled ? `「${lab}」の日付` : (isTime ? '時刻つきの日付(印刷日時のことも)' : '書類内の日付')),
+      note: isTime ? '時刻つきの日付です。印刷日時の場合は取引日ではないのでご注意ください' : ''
+    });
+  };
+  const reYmd = /(20\d{2})(?:年(\d{1,2})月(\d{1,2})日|[\/.\-](\d{1,2})[\/.\-](\d{1,2})(?![\d,]))/g;
+  while((m = reYmd.exec(c))){
+    const mo = +(m[2] || m[4]), d = +(m[3] || m[5]);
+    if(mo < 1 || mo > 12 || d < 1 || d > 31) continue;
+    const after = c.slice(m.index + m[0].length, m.index + m[0].length + 6);
+    pushDate(`${m[1]}-${pad2(mo)}-${pad2(d)}`, before(m.index), after, /^\s?\(?\d{1,2}:\d{2}/.test(after));
+  }
+  // 字間が空いて「2 0 2 6 年 1 0 月 1 3 日」のように読み取られる場合(年月日つきの形式だけ、空白を詰めて再探索)
+  {
+    const c2 = t.replace(/\s+/g, '');
+    const reK = /(20\d{2})年(\d{1,2})月(\d{1,2})日/g;
+    while((m = reK.exec(c2))){
+      const mo = +m[2], d = +m[3];
+      if(mo < 1 || mo > 12 || d < 1 || d > 31) continue;
+      pushDate(`${m[1]}-${pad2(mo)}-${pad2(d)}`, c2.slice(Math.max(0, m.index - 10), m.index), '', false);
+    }
+  }
+  // カード利用明細:登録済みカードの引落日ルール(毎月N日・土日祝は翌営業日)を最優先の候補にする
+  let cardKey = '';
+  let dueMismatch = null;
+  if(isCardStmt){
+    cardKey = cardKeyFor(kindInfo.issuer);
+    if(cardKey){
+      const card = getCardRegistry()[cardKey];
+      const printedPay = dates.find(d => d.pay && d.kind === 'ymd');
+      const issue = dates.find(d => !d.pay && /発行日/.test(d.label));
+      const val = ruleDueDate(card, printedPay ? printedPay.value.slice(0, 7) : '', issue ? issue.value : '');
+      if(val && printedPay && printedPay.value !== val) dueMismatch = { printed: printedPay.value, computed: val };
+      if(val){
+        dates.push({ value: val, kind: 'ruleDue', before: '', score: 14, pay: true,
+          label: `登録済み「${cardKey}」の引落日(毎月${card.paymentDay >= 31 ? '末' : card.paymentDay}日・土日祝は翌営業日)`,
+          note: '「03 支払いカード」に登録した支払日のルールで算出しました' });
+      }
+    }
+  }
+  // 日付:和暦
+  const reW = /(令和|平成)(\d{1,2})年(\d{1,2})月(\d{1,2})日/g;
+  while((m = reW.exec(c))){
+    const y = (m[1] === '令和' ? 2018 : 1988) + (+m[2]);
+    dates.push({ value: `${y}-${pad2(m[3])}-${pad2(m[4])}`, kind: 'wymd', before: before(m.index), score: 6, label: '書類内の日付(和暦)', note: '' });
+  }
+  // 日付:年月のみ → 月末日
+  const reYm = /(20\d{2})年(\d{1,2})月(?!\d{1,2}日)/g;
+  while((m = reYm.exec(c))){
+    const mo = +m[2]; if(mo < 1 || mo > 12) continue;
+    const bf = before(m.index);
+    const after = c.slice(m.index + m[0].length, m.index + m[0].length + 8);
+    const strong = /(請求年月|利用年月|ご利用|請求月|対象|お支払)$/.test(bf) || /^(分|の利用|のご利用|のご請求|ご請求)/.test(after);
+    dates.push({
+      value: monthEnd(m[1], mo), kind: 'ymEnd', before: bf,
+      score: strong ? (isStmt ? 7 : 5) : 2,
+      label: `${m[1]}年${mo}月 → 月末日`, note: '年月のみ記載のため月末日で補完'
+    });
+  }
+  // ファイル名
+  filenameDates(fileName).forEach(f=>{
+    dates.push({ value: f.value, kind: 'fn', sub: f.sub, before: '', score: isStmt ? 3 : 1, label: 'ファイル名の年月', note: 'ファイル名の年月から補完' });
+  });
+  // 重複する値は高いスコアを残す
+  const seenD = new Map();
+  dates.sort((a, b) => b.score - a.score);
+  const datesU = dates.filter(d => { if(seenD.has(d.value)) return false; seenD.set(d.value, 1); return true; });
+
+  // 金額
+  const addAmt = (val, bf0, af, score, label) => {
+    if(!(val > 0) || val > 99999999) return;
+    const bf = cleanBefore(bf0);
+    let s = score;
+    if(/(税込|合計|請求金額|請求額|お支払|ご利用金額|領収|お買上|総額)/.test(bf)) s += 3;
+    if(/(税抜|小計|消費税|税額|内税|割引|値引|ポイント|送料)/.test(bf)) s -= 4;
+    if(/^[\(（]?税込/.test(af) && !/税抜/.test(bf)) s += 2;
+    amounts.push({ value: String(val), before: bf, score: s, label: bf ? `「${bf.slice(-8)}」の金額` : '書類内の金額' });
+  };
+  const reAmt = /([¥￥]?)(\d{1,3}(?:,\d{3})+|\d{3,7})(円?)/g;
+  while((m = reAmt.exec(c))){
+    const hasYen = !!(m[1] || m[3]); const hasComma = m[2].indexOf(',') >= 0;
+    if(!hasYen && !hasComma) continue;
+    const prev = c[m.index - 1] || '';
+    if(/[0-9]/.test(prev)) continue;
+    addAmt(parseInt(m[2].replace(/,/g, ''), 10), before(m.index), c.slice(m.index + m[0].length, m.index + m[0].length + 5), hasYen ? 1 : 0);
+  }
+  const reLab = /(合計|税込|ご?請求(?:金額|額)|お支払い?(?:金額|額)|ご利用(?:金額|合計)|領収金額|お買上げ?(?:金額|合計)?)(?:\(税込\))?[:：]?[¥￥]?(\d{1,3}(?:,\d{3})+|\d{1,7})(?!\d)/g;
+  while((m = reLab.exec(c))){
+    addAmt(parseInt(m[2].replace(/,/g, ''), 10), before(m.index) + m[0].slice(0, m[0].length - m[2].length), '', 1, '');
+  }
+  amounts.sort((a, b) => b.score - a.score || (+b.value) - (+a.value));
+  const seenA = new Map();
+  const amountsU = amounts.filter(a => { if(seenA.has(a.value)) return false; seenA.set(a.value, 1); return true; });
+
+  // 取引先
+  const addV = (v, label, score) => {
+    v = (v || '').trim().slice(0, 40);
+    if(v.length < 2 || vendors.some(x => x.value === v)) return;
+    vendors.push({ value: v, label, score });
+  };
+  const lines = t.split('\n').map(l => l.trim()).filter(Boolean);
+  lines.forEach(l=>{
+    if(l.length <= 30 && /(株式会社|有限会社|合同会社|\(株\)|㈱)/.test(l) && !/様/.test(l)) addV(l.replace(/\s+/g, ' '), '会社名', 9);
+  });
+  if(isCardStmt && (cardKey || kindInfo.issuer)){
+    const cn = cardKey || kindInfo.issuer;
+    addV(cardVendorLabel(cn), 'カード名(発行会社)', 21);
+    addV(cn, 'カード名のみ', 20);
+  }
+  if(kindInfo.issuer) addV(kindInfo.issuer, 'カード名(カード明細の取引先)', isCardStmt ? 19 : 8);
+  lines.slice(0, 12).forEach(l=>{ if(/^[A-Za-z][A-Za-z0-9&.\- ]{2,20}$/.test(l) && !/^(PDF|TEL|FAX|URL|No)$/i.test(l)) addV(l, '英字表記', 5); });
+  lines.slice(0, 15).forEach(l=>{ if(!isBadVendorLine(l) && !/(20\d{2}[\/年.\-])/.test(l) && !/^[¥￥0-9,円\s:：.\-]+$/.test(l) && vendors.length < 8) addV(l, '先頭付近の行', 3); });
+  ((fileName || '').replace(/\.[^.]+$/, '').match(/[A-Za-z][A-Za-z]{3,}/g) || []).slice(0, 2).forEach(w => addV(w.toUpperCase() === w ? w : w, 'ファイル名', 2));
+  vendors.sort((a, b) => b.score - a.score);
+  const companyC = isCardStmt ? (cardCompanyFor(cardKey || kindInfo.issuer).full || (vendors.find(x => x.label === '会社名' && /(カード|フィナンシャル|ファイナンス|クレジット|信販|ニコス|JCB|ジェーシービー)/i.test(x.value)) || {}).value || '') : '';
+
+  return { company: companyC, dates: datesU, amounts: amountsU, vendors: vendors.slice(0, 8), kind: kindInfo.kind, issuer: kindInfo.issuer, cardKey, dueMismatch };
+}
+
+// ---- ルールの学習・適用 ----
+function cleanBefore(b){ return (b || '').replace(/^.*[0-9,:\/]/, ''); }
+function buildRule(v, text, fileName){
+  const c = compactText(text).toLowerCase();
+  const cand = extractCandidates(text, fileName);
+  let key = '', keyKind = '';
+  if(v.invoiceNo && c.includes(v.invoiceNo.toLowerCase())){ key = v.invoiceNo.toLowerCase(); keyKind = 'invoice'; }
+  if(!key){
+    const vn = compactText(v.vendor).toLowerCase();
+    if(vn.length >= 3 && c.includes(vn)){ key = vn; keyKind = 'vendor'; }
+  }
+  if(!key){
+    for(const vc of cand.vendors){
+      const vn = compactText(vc.value).toLowerCase();
+      if(vn.length >= 4 && c.includes(vn)){ key = vn; keyKind = 'text'; break; }
+    }
+  }
+  const fp = fnPattern(fileName);
+  const fnKey = fnPatternUsable(fp) ? fp : '';
+
+  let dateAnchor = null;
+  const dc = cand.dates.find(d => d.value === v.date);
+  if(dc){
+    if(dc.kind === 'fn') dateAnchor = { kind: 'fn', sub: dc.sub, before: '', weak: false };
+    else if(dc.kind === 'ruleDue') dateAnchor = { kind: 'ruleDue', before: '', weak: false };
+    else { const b = cleanBefore(dc.before); dateAnchor = { kind: dc.kind, before: b, weak: b.length < 2 }; }
+  }
+  let amountAnchor = null;
+  const ac = cand.amounts.find(a => a.value === String(v.amount));
+  if(ac){ const b = cleanBefore(ac.before); amountAnchor = { before: b, weak: b.length < 2 }; }
+
+  if(!key && !fnKey) return null;
+  return {
+    id: 'r' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+    name: `${v.vendor}(${v.docType})`,
+    key, keyKind, fnKey,
+    vendor: v.vendor, docType: v.docType, paymentMethod: v.paymentMethod || '現金', account: v.account || '',
+    dateAnchor, amountAnchor,
+    createdAt: Date.now(), uses: 0
+  };
+}
+function upsertDocRule(rule){
+  if(!rule) return;
+  const rules = getDocRules();
+  const same = r => r.key === rule.key && r.fnKey === rule.fnKey && r.docType === rule.docType &&
+    JSON.stringify(r.amountAnchor || null) === JSON.stringify(rule.amountAnchor || null) &&
+    JSON.stringify(r.dateAnchor || null) === JSON.stringify(rule.dateAnchor || null);
+  const i = rules.findIndex(same);
+  if(i >= 0){ rule.uses = rules[i].uses || 0; rule.id = rules[i].id; rules[i] = rule; } else rules.push(rule);
+  setDocRules(rules);
+  if(typeof renderDocRules === 'function') renderDocRules();
+}
+function resolveDateAnchor(anc, c, fileName, c2){
+  if(!anc) return '';
+  if(c2 && c2 !== c){ const r1 = resolveDateAnchor(anc, c, fileName); if(r1) return r1; return resolveDateAnchor(anc, c2, fileName); }
+  if(anc.kind === 'fn') return filenameDateBySub(fileName, anc.sub);
+  const kinds = anc.kind === 'ymd' ? ['ymd'] : anc.kind === 'wymd' ? ['wymd'] : ['ymEnd'];
+  if(anc.before){
+    let from = 0, idx;
+    while((idx = c.indexOf(anc.before.toLowerCase(), from)) >= 0){
+      const rest = c.slice(idx + anc.before.length);
+      for(const k of kinds){ const d = parseDateAt(rest, k); if(d) return d; }
+      from = idx + 1;
+    }
+    return '';
+  }
+  for(let i = 0; i < c.length; i++){
+    const ch = c[i]; if(ch !== '2' && ch !== '令' && ch !== '平') continue;
+    for(const k of kinds){ const d = parseDateAt(c.slice(i), k); if(d) return d; }
+  }
+  return '';
+}
+function resolveAmountAnchor(anc, c){
+  if(!anc) return '';
+  const re = /^[¥￥]?(\d{1,3}(?:,\d{3})+|\d{1,7})/;
+  if(anc.before){
+    let from = 0, idx;
+    while((idx = c.indexOf(anc.before.toLowerCase(), from)) >= 0){
+      const m = c.slice(idx + anc.before.length).match(re);
+      if(m){ const n = parseInt(m[1].replace(/,/g, ''), 10); if(n > 0) return String(n); }
+      from = idx + 1;
+    }
+  }
+  return '';
+}
+// 登録済みルールのうち、この書類に合うものを探して適用する
+function findRuleFor(text, fileName){
+  const cl = compactText(text);
+  const c = cl.toLowerCase();
+  const fp = fnPattern(fileName);
+  let best = null;
+  for(const r of getDocRules()){
+    let matched = false, len = 0;
+    if(r.key && c.includes(r.key)){ matched = true; len = 1000 + r.key.length; }
+    else if(!r.key && r.fnKey && r.fnKey === fp){ matched = true; len = r.fnKey.length; }
+    if(!matched) continue;
+    const date = (r.dateAnchor && r.dateAnchor.kind === 'ruleDue')
+      ? ((extractCandidates(text, fileName).dates.find(d => d.kind === 'ruleDue') || {}).value || '')
+      : resolveDateAnchor(r.dateAnchor, c, fileName, normText(text).replace(/\s+/g, '').toLowerCase());
+    const amount = resolveAmountAnchor(r.amountAnchor, c);
+    const weak = !!((r.dateAnchor && r.dateAnchor.weak) || (r.amountAnchor && r.amountAnchor.weak));
+    const ready = !!(date && amount && !weak && r.vendor);
+    const inv = (normText(text).match(/T\s?\d{3}\s?\d{4}\s?\d{4}\s?\d{2}|T\d{13}/) || [''])[0].replace(/\s/g, '');
+    const cur = { rule: r, date, amount, ready, invoiceNo: inv, score: len + (ready ? 100000 : 0) + (date ? 10 : 0) + (amount ? 10 : 0) };
+    if(!best || cur.score > best.score) best = cur;
+  }
+  return best;
+}
+
+// ---- 解析(ファイルを読み取り、候補とルール適用結果を作る。まだ何も登録しない) ----
+function initialValuesFor(a){
+  const cand = a.cands;
+  const parsed = parseText(a.text, a.file.name);
+  const rm = a.ruleMatch;
+  const v = {
+    date: (cand.dates[0] && cand.dates[0].value) || '',
+    vendor: (cand.vendors[0] && cand.vendors[0].value) || '',
+    amount: (cand.amounts[0] && cand.amounts[0].value) || '',
+    docType: cand.kind || 'レシート',
+    paymentMethod: normPM('現金', cand.kind || 'レシート'),
+    account: cand.kind === 'カード利用明細' ? '' : (suggestAccounts(`${(cand.vendors[0] && cand.vendors[0].value) || ''} ${a.text}`)[0] || ''),
+    invoiceNo: parsed.invoiceNo || '',
+    company: (cand.kind === 'カード利用明細' && cand.company) || ''
+  };
+  if(rm){
+    const r = rm.rule;
+    v.vendor = r.vendor; v.docType = r.docType; v.paymentMethod = normPM(r.paymentMethod, r.docType);
+    if(r.account) v.account = r.account;
+    if(rm.date) v.date = rm.date;
+    if(rm.amount) v.amount = rm.amount;
+    if(rm.invoiceNo) v.invoiceNo = rm.invoiceNo;
+  }
+  return v;
+}
 async function analyzeBulkItem(item){
   const { file, relSegs } = item;
   const ext = (file.name.split('.').pop() || 'txt').toLowerCase();
   const text = (file.type === 'application/pdf' || ext === 'pdf') ? await extractFromPdf(file) : await extractFromImage(file);
-  const parsed = parseText(text);
-  const isoDate = /^\d{4}-\d{2}-\d{2}$/.test(parsed.date);
-  const hasVendor = !!parsed.vendor && parsed.vendor !== '不明(手入力してください)';
-  const suspiciousVendor = hasVendor && SUSPICIOUS_VENDOR.test(parsed.vendor);
-  const problems = [];
-  if(!text.replace(/\s/g,'')) problems.push('文字がほとんど読み取れませんでした(画像が不鮮明・白紙の可能性)');
-  else {
-    if(!parsed.date) problems.push('取引年月日が読み取れませんでした');
-    else if(!isoDate) problems.push(`取引年月日「${parsed.date}」を年月に変換できませんでした(和暦など)`);
-    if(!parsed.amount) problems.push('金額が読み取れませんでした');
-    if(!hasVendor) problems.push('取引先が読み取れませんでした');
-    else if(suspiciousVendor) problems.push(`取引先が「${parsed.vendor}」と読まれました(項目名の誤読の可能性)`);
-  }
-  const confident = problems.length === 0;
-  const a = { file, relSegs, ext, text, parsed, problems, confident };
-  if(confident){
-    a.docType = (parsed.learnedEntry && parsed.learnedEntry.docType) || 'レシート';
-    a.sub = parsed.date.slice(0, 7);
-    a.alreadyOk = nameAlreadySearchable(file.name, parsed);
-    a.newFilename = a.alreadyOk ? file.name : computeFilenameParts(parsed.date, parsed.vendor, parsed.amount, a.docType, ext);
-    a.account = (parsed.learnedEntry && parsed.learnedEntry.account) || suggestAccounts(`${parsed.vendor} ${text}`)[0] || '';
-    const probe = { newFilename:a.newFilename, date:parsed.date, vendor:parsed.vendor, amount:parsed.amount, docType:a.docType, paymentMethod:'現金' };
-    a.isDup = getLedger().some(r => ledgerDedupKey(r) === ledgerDedupKey(probe));
-  }
+  const a = { file, relSegs, ext, text, cands: extractCandidates(text, file.name), reviewed: false, skipped: false, excluded: false, hash: await fileSha256(file) };
+  a.ruleMatch = findRuleFor(text, file.name);
+  a.ruleReady = !!(a.ruleMatch && a.ruleMatch.ready);
+  a.values = initialValuesFor(a);
   return a;
 }
+function reevalRule(a){
+  a.ruleMatch = findRuleFor(a.text, a.file.name);
+  a.ruleReady = !!(a.ruleMatch && a.ruleMatch.ready);
+  a.values = initialValuesFor(a);
+}
+
+// ---- 確認画面(DOM) ----
+// ---- 重複チェック(同じ書類を二重に登録しない) ----
+let _batchConfirmed = [];   // 今回の処理で確認済みの書類(同じ回の中の重複検出用)
+async function fileSha256(file){
+  try{ const d = await crypto.subtle.digest('SHA-256', await file.arrayBuffer()); return [...new Uint8Array(d)].map(b => b.toString(16).padStart(2, '0')).join(''); }
+  catch(e){ return ''; }
+}
+const vendorNorm = v => (v || '').normalize('NFKC').toLowerCase().replace(/株式会社|有限会社|合同会社|\(株\)|㈱|\s+/g, '');
+function vendorSimilar(a, b){
+  a = vendorNorm(a); b = vendorNorm(b);
+  if(!a || !b) return false;
+  return a === b || (a.length >= 3 && b.includes(a)) || (b.length >= 3 && a.includes(b));
+}
+function dayDiff(d1, d2){ return Math.abs(new Date(d1 + 'T00:00:00') - new Date(d2 + 'T00:00:00')) / 86400000; }
+// 台帳(と今回処理済みの分)に、同じ書類らしきものがあるか。
+//  level 3=同一ファイル / 2=日付・取引先・金額がすべて同じ(ほぼ確実) / 1=要確認(同じ書類の訂正かもしれない・別の書類かもしれない)
+//  ※毎月同額の請求は多いので、「金額が同じ」だけでは重複とみなさず、必ず日付も見る
+function findLedgerDuplicates(v, fileName, hash, extra){
+  const list = getLedger().concat(extra || []);
+  const out = [];
+  for(const r of list){
+    let reason = '', level = 0, kind = '';
+    if(hash && r.fileHash && r.fileHash === hash){ reason = '同じファイル(内容が完全に一致)'; level = 3; kind = 'same-file'; }
+    else {
+      const bothHash = !!(hash && r.fileHash);
+      const nameSame = !!r.originalFilename && r.originalFilename === fileName;
+      const hasAmt = !!v.amount && !!r.amount;
+      const amtSame = hasAmt && String(r.amount) === String(v.amount);
+      const dateSame = !!v.date && r.date === v.date;
+      const venSim = vendorSimilar(r.vendor, v.vendor);
+      if(dateSame && amtSame && venSim){ reason = '日付・取引先・金額がすべて同じ'; level = 2; kind = 'same-values'; }
+      else if(dateSame && venSim && hasAmt && !amtSame){ reason = '日付・取引先は同じで、金額だけ違う(金額の訂正かもしれません)'; level = 1; kind = 'amount-diff'; }
+      else if(!bothHash && nameSame && amtSame && !dateSame){ reason = '同じファイル名・同じ金額で、日付だけ違う(日付の訂正かもしれません)'; level = 1; kind = 'date-diff'; }
+      else if(amtSame && venSim && !dateSame && r.docType === v.docType && r.date && v.date && dayDiff(r.date, v.date) <= 20){ reason = '取引先・金額が同じで、日付が近い'; level = 1; kind = 'near'; }
+    }
+    if(level) out.push({ entry: r, reason, level, kind });
+  }
+  return out.sort((a, b) => b.level - a.level);
+}
+const dupPseudo = (a, v) => ({ originalFilename: a.file.name, newFilename: '(今回の処理で登録予定)', date: v.date, vendor: v.vendor, amount: v.amount, docType: v.docType, fileHash: a.hash || '', processedAt: '今回の処理' });
+function describeDup(d){
+  const e = d.entry;
+  return `${d.level >= 2 ? '⚠' : '△'} ${d.reason}:${e.newFilename || e.originalFilename}(${e.date || '日付なし'} / ${Number(e.amount || 0).toLocaleString()}円 / 登録:${e.processedAt || ''})`;
+}
+
+function h(tag, attrs, ...kids){
+  const e = document.createElement(tag);
+  for(const k in (attrs || {})){
+    if(k === 'class') e.className = attrs[k];
+    else if(k === 'text') e.textContent = attrs[k];
+    else if(k.startsWith('on')) e.addEventListener(k.slice(2), attrs[k]);
+    else e.setAttribute(k, attrs[k]);
+  }
+  kids.flat().forEach(x=>{ if(x == null) return; e.appendChild(typeof x === 'string' ? document.createTextNode(x) : x); });
+  return e;
+}
+function lockScroll(on){ try{ document.body.style.overflow = on ? 'hidden' : ''; }catch(e){} }
+async function fillPreview(box, file){
+  try{
+    if(file.type === 'application/pdf' || /\.pdf$/i.test(file.name)){
+      const buf = await file.arrayBuffer();
+      const pdf = await pdfjsLib.getDocument({data: buf, cMapUrl:'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/cmaps/', cMapPacked:true}).promise;
+      const page = await pdf.getPage(1);
+      const vp = page.getViewport({scale: 1.4});
+      const cv = document.createElement('canvas'); cv.width = vp.width; cv.height = vp.height;
+      await page.render({canvasContext: cv.getContext('2d'), viewport: vp}).promise;
+      box.textContent = ''; box.appendChild(cv);
+    } else {
+      const img = document.createElement('img'); img.alt = file.name; img.src = URL.createObjectURL(file);
+      box.textContent = ''; box.appendChild(img);
+    }
+  }catch(e){ box.textContent = 'プレビューを表示できませんでした(読み取った文字は下に表示します)'; }
+}
+function chipRow(items, onPick){
+  const row = h('div', {class:'rv-chips'});
+  items.forEach(it=>{
+    row.appendChild(h('button', {type:'button', class:'rv-chip' + (it.warn ? ' warn' : ''), title: it.title || '', onclick: ()=> onPick(it)}, it.text));
+  });
+  return row;
+}
+
+// 1件ずつの確認画面。resolve: {action:'ok'|'skip'|'abort', values, remember}
+function openReview(a, pos, total){
+  return new Promise(resolve=>{
+    const v = Object.assign({}, a.values);
+    const rm = a.ruleMatch;
+    const ov = h('div', {class:'rv-overlay'});
+    const card = h('div', {class:'rv-card'});
+    ov.appendChild(card);
+    const prevBox = h('div', {class:'rv-preview'}, '読み込み中…');
+    fillPreview(prevBox, a.file);
+    const left = h('div', {class:'rv-left'},
+      h('div', {class:'rv-file', text: segPath(a.relSegs, a.file.name)}), prevBox,
+      h('details', {class:'rv-text'}, h('summary', {text:'読み取った文字を見る(取引先・日付・金額が見つからないとき)'}), h('pre', {text: (a.text || '(文字が読み取れませんでした)').slice(0, 3000)})));
+
+    const err = h('div', {class:'rv-err'});
+    const dupBox = h('div', {class:'rv-dup-box'});
+    let curDups = [];
+    const inDate = h('input', {class:'rv-in', value: v.date, placeholder:'例:2026-08-31', inputmode:'numeric'});
+    const inVendor = h('input', {class:'rv-in', value: v.vendor, placeholder:'取引先'});
+    const inAmount = h('input', {class:'rv-in', value: v.amount, placeholder:'例:4436', inputmode:'numeric'});
+    const selType = h('select', {class:'rv-in'}); ['レシート','領収書','請求書','明細書','カード利用明細','納品書','その他'].forEach(o=>{ const op = h('option', {value:o, text:o}); if(o === v.docType) op.selected = true; selType.appendChild(op); });
+    const selPay = h('select', {class:'rv-in'});
+    const payOpts = ['現金', PM_STMT, ...Object.keys(getCardRegistry()), 'その他'];
+    if(v.paymentMethod && !payOpts.includes(v.paymentMethod)) payOpts.splice(1, 0, v.paymentMethod);
+    payOpts.forEach(o=>{ const op = h('option', {value:o, text:o}); if(o === v.paymentMethod) op.selected = true; selPay.appendChild(op); });
+    const inAccount = h('input', {class:'rv-in', value: v.account, placeholder:'例:通信費(任意)'});
+    const inCompany = h('input', {class:'rv-in', value: v.company || '', placeholder:'例:auフィナンシャルサービス株式会社'});
+    const inInvoice = h('input', {class:'rv-in', value: v.invoiceNo, placeholder:'T+13桁(任意)'});
+    const remember = h('input', {type:'checkbox', checked:'checked'});
+    const fnPrev = h('div', {class:'rv-fn'});
+    const dueEl = h('div', {class:'rv-due'});
+    const renderDup = () => {
+      dupBox.textContent = '';
+      if(curDups.length){
+        const top = curDups[0];
+        dupBox.appendChild(h('div', {class:'rv-dup-title', text: top.level >= 2 ? '♻ この書類は、既に台帳にある可能性が高いです' : '♻ 似た記録が台帳にあります(同じ書類か別の書類か、ご確認ください)'}));
+        curDups.slice(0, 3).forEach(d => dupBox.appendChild(h('div', {class:'rv-dup-line', text: describeDup(d)})));
+        const guide = curDups.some(d => d.kind === 'amount-diff' || d.kind === 'date-diff')
+          ? '同じ書類の読み間違いを直しただけなら、「重複なので登録しない」を押し、台帳の「編集」で直してください(訂正の履歴が残ります)。月ごとの別の書類なら「別の書類として登録する」を押してください。'
+          : '同じ書類なら「重複なので登録しない」、別の書類なら「別の書類として登録する」を押してください。';
+        dupBox.appendChild(h('div', {class:'rv-dup-line', text: guide}));
+      }
+      btnDup.style.display = curDups.length ? '' : 'none';
+      btnOk.textContent = curDups.length ? '別の書類として登録する' : 'この内容で登録';
+    };
+    const upd = () => {
+      try{ curDups = findLedgerDuplicates({date: inDate.value.trim(), vendor: inVendor.value.trim(), amount: inAmount.value.replace(/[^0-9]/g, ''), docType: selType.value}, a.file.name, a.hash, _batchConfirmed); renderDup(); }catch(e){ console.warn(e); }
+      try{ const dd = computeDueDate(selPay.value, selType.value, inDate.value.trim()); dueEl.textContent = (dd && selType.value !== 'カード利用明細') ? `カード払いの支払(引落)予定日:${dd}(台帳に別記録。ファイル名には入れません)` : (selType.value === 'カード利用明細' ? (a.cands.cardKey ? `※カード利用明細は引落日が取引年月日です。登録済みカード「${a.cands.cardKey}」の支払日ルール(土日祝は翌営業日)で算出しています` + (a.cands.dueMismatch ? `\n⚠ 明細に印字された引落日は ${a.cands.dueMismatch.printed} で、登録カードの計算結果(${a.cands.dueMismatch.computed})と違います。カードの締め日・支払日の登録が合っているか、確認してください(日付の候補ボタンで印字の日付に切り替えられます)。` : '') : '※カード利用明細は引落日が取引年月日です。このカードが「03 支払いカード」に未登録のため、書類に印字された引落日を使っています(登録すると自動計算できます)') : ''); dueEl.style.color = (selType.value === 'カード利用明細' && a.cands.dueMismatch) ? '#B45309' : ''; }catch(e){}
+      const d = /^\d{4}-\d{2}-\d{2}$/.test(inDate.value.trim()) ? inDate.value.trim() : '日付未入力';
+      const am = inAmount.value.replace(/[^0-9]/g, '') || '金額未入力';
+      try{ fnPrev.textContent = '→ ' + computeFilenameParts(d, inVendor.value.trim() || '取引先未入力', am, selType.value, a.ext); }catch(e){}
+    };
+    [inDate, inVendor, inAmount, selType, selPay].forEach(x => { x.addEventListener('input', upd); x.addEventListener('change', upd); });
+
+    let dateTouched = false;
+    inDate.addEventListener('input', ()=>{ dateTouched = true; });
+    selType.addEventListener('change', ()=>{
+      const np = normPM(selPay.value, selType.value);
+      if(np !== selPay.value){ Array.from(selPay.options).forEach(o=>{ o.selected = (o.value === np); }); }
+      if(dateTouched) return;
+      const pick = selType.value === 'カード利用明細' ? a.cands.dates.find(d => d.pay) : a.cands.dates.find(d => !d.pay);
+      if(pick){ inDate.value = pick.value; upd(); }
+    });
+    const dateChips = chipRow(a.cands.dates.slice(0, 6).map(d=>({
+      text: `${d.value}(${d.label})`, warn: !!d.time, title: d.note || '',
+      value: d.value
+    })), it=>{ inDate.value = it.value; dateTouched = true; upd(); });
+    const amtChips = chipRow(a.cands.amounts.slice(0, 6).map(x=>({ text: `${Number(x.value).toLocaleString()}円(${x.label})`, value: x.value, warn: x.score < 0 })), it=>{ inAmount.value = it.value; upd(); });
+    const venChips = chipRow(a.cands.vendors.slice(0, 6).map(x=>({ text: `${x.value}(${x.label})`, value: x.value })), it=>{ inVendor.value = it.value; upd(); });
+    const accChips = chipRow(suggestAccounts(`${inVendor.value} ${a.text}`).slice(0, 4).map(x=>({ text: x, value: x })), it=>{ inAccount.value = it.value; });
+
+    const field = (label, input, chips) => h('div', {class:'rv-field'}, h('label', {text: label}), input, chips || null);
+
+    let banner;
+    if(rm && rm.ready){
+      banner = h('div', {class:'rv-banner ok', text: `✅ 登録済みの「${rm.rule.name}」を適用しました。内容が合っているか確認してください。`});
+    } else if(rm){
+      banner = h('div', {class:'rv-banner warn', text: `⚠ 登録済みの「${rm.rule.name}」に該当しますが、${!rm.date ? '日付' : ''}${(!rm.date && !rm.amount) ? '・' : ''}${!rm.amount ? '金額' : ''}の場所を特定できませんでした。下の候補から選んでください(選ぶとルールを更新できます)。`});
+    } else {
+      banner = h('div', {class:'rv-banner new', text: '🆕 初めての書類です。読み取り結果を確認し、必要なら候補から選び直してください。登録すると、次回から同じ書類に自動で当てはめます(確認画面は毎回表示します)。'});
+    }
+
+    const done = (action) => {
+      if(action === 'ok'){
+        const date = inDate.value.trim(), vendor = inVendor.value.trim(), amount = inAmount.value.replace(/[^0-9]/g, '');
+        const dt = new Date(date + 'T00:00:00');
+        if(!/^\d{4}-\d{2}-\d{2}$/.test(date) || isNaN(dt.getTime()) || toDateStr(dt) !== date){ err.textContent = '取引年月日を「2026-08-31」の形式で入力してください。'; inDate.focus(); return; }
+        if(!vendor){ err.textContent = '取引先を入力してください。'; inVendor.focus(); return; }
+        if(!amount || !(parseInt(amount, 10) > 0)){ err.textContent = '金額を数字で入力してください。'; inAmount.focus(); return; }
+        const inv = inInvoice.value.trim();
+        resolve({ action, dupOverride: curDups.length > 0, remember: remember.checked, values: { date, vendor, amount, docType: selType.value, paymentMethod: selPay.value, account: inAccount.value.trim(), invoiceNo: inv, company: inCompany.value.trim() } });
+      } else resolve({ action });
+      ov.remove(); lockScroll(false);
+    };
+    const btnOk = h('button', {type:'button', class:'rv-btn primary', text:'この内容で登録', onclick: ()=>done('ok')});
+    const btnDup = h('button', {type:'button', class:'rv-btn danger', text:'重複なので登録しない', onclick: ()=>done('dup')});
+    btnDup.style.display = 'none';
+    const btnSkip = h('button', {type:'button', class:'rv-btn', text:'スキップ(「要確認」フォルダへ)', onclick: ()=>done('skip')});
+    const btnAbort = h('button', {type:'button', class:'rv-btn ghost', text:'中止(何も変更しません)', onclick: ()=>done('abort')});
+
+    const right = h('div', {class:'rv-right'},
+      h('div', {class:'rv-head', text: `${pos} / ${total} 件目の確認`}), banner, dupBox,
+      field('取引年月日', inDate, dateChips), field('取引先', inVendor, venChips), field('金額(税込)', inAmount, amtChips),
+      h('div', {class:'rv-row2'}, field('書類種類', selType), field('支払い方法', selPay)), dueEl,
+      field('勘定科目(任意)', inAccount, accChips), field('インボイス登録番号(任意)', inInvoice), field('カード発行会社の正式名(台帳用・任意。ファイル名には入れません)', inCompany),
+      h('div', {class:'rv-fn-wrap'}, h('div', {class:'rv-fn-label', text:'この名前で保存します'}), fnPrev),
+      h('label', {class:'rv-remember'}, remember, h('span', {text:'次回から同じ書類に、この取引先・種類・日付と金額の読み取り位置を適用する(適用時も確認画面を表示します)'})),
+      err, h('div', {class:'rv-actions'}, btnOk, btnDup, btnSkip, btnAbort));
+    card.appendChild(left); card.appendChild(right);
+    document.body.appendChild(ov); lockScroll(true);
+    upd();
+  });
+}
+
+// 登録済みルールを適用した書類の一覧確認(1件ずつ見たい行は「修正」で開ける)
+function openBatchConfirm(items){
+  return new Promise(resolve=>{
+    const ov = h('div', {class:'rv-overlay'});
+    const card = h('div', {class:'rv-card batch'});
+    ov.appendChild(card);
+    const sel = new Map();
+    const tbody = h('tbody');
+    const computeDups = () => {
+      const extra = _batchConfirmed.slice();
+      items.forEach(a=>{
+        if(a.excluded) { a.dupInfo = []; return; }
+        a.dupInfo = findLedgerDuplicates(a.values, a.file.name, a.hash, extra);
+        if(!a.dupInfo.length) extra.push(dupPseudo(a, a.values));
+      });
+    };
+    computeDups();
+    items.forEach(a => sel.set(a, !(a.dupInfo && a.dupInfo.length)));
+    const redraw = () => {
+      tbody.textContent = '';
+      items.forEach(a=>{
+        const v = a.values;
+        const dup = a.dupInfo && a.dupInfo.length ? a.dupInfo[0] : null;
+        const cb = h('input', {type:'checkbox'}); cb.checked = !!sel.get(a);
+        cb.addEventListener('change', ()=> sel.set(a, cb.checked));
+        const edit = h('button', {type:'button', class:'rv-btn small', text:'修正', onclick: async ()=>{
+          ov.style.display = 'none';
+          const res = await openReview(a, items.indexOf(a) + 1, items.length);
+          ov.style.display = '';
+          lockScroll(true);
+          if(res.action === 'ok'){ a.values = res.values; a.editedInBatch = res; sel.set(a, true); }
+          else if(res.action === 'dup'){ a.excluded = true; sel.set(a, false); }
+          else if(res.action === 'skip'){ a.skipInBatch = true; sel.set(a, false); }
+          else if(res.action === 'abort'){ ov.remove(); lockScroll(false); resolve({action:'abort'}); return; }
+          computeDups(); redraw();
+        }});
+        const tr = h('tr', a.excluded ? {class:'dup'} : null,
+          h('td', null, cb), h('td', {class:'nm', text: segPath(a.relSegs, a.file.name)}),
+          h('td', {text: v.date}), h('td', {text: v.vendor}), h('td', {class:'num', text: Number(v.amount).toLocaleString() + '円'}),
+          h('td', {text: v.docType}), h('td', {class:'rule', text: a.ruleMatch ? a.ruleMatch.rule.name : ''}),
+          h('td', {class: dup ? 'dupcell' : 'okcell', title: dup ? describeDup(dup) : '', text: a.excluded ? '重複として除外' : (dup ? `${dup.level >= 2 ? '⚠' : '△'} ${dup.reason}` : '重複なし')}),
+          h('td', null, edit));
+        tbody.appendChild(tr);
+      });
+    };
+    redraw();
+    const finish = (action) => {
+      ov.remove(); lockScroll(false);
+      resolve({ action, selected: items.filter(a => sel.get(a) && !a.excluded), others: items.filter(a => !sel.get(a) && !a.excluded) });
+    };
+    card.appendChild(h('div', {class:'rv-head', text:`登録済みルールを適用した書類(${items.length}件)の確認`}));
+    card.appendChild(h('div', {class:'rv-banner ok', text:'前に確認して登録した書類と同じ書式です。取引先・日付・金額・種類を適用しました。内容を見て、問題なければ「登録する」を押してください。違う行は「修正」か、チェックを外してください。台帳に既にある(または似た)書類は、チェックを外してあります。日付・取引先・金額がすべて同じ書類は、外したままだと登録しません。金額や日付だけ違う「似た記録」は、外したままだと1件ずつ確認します。'}));
+    card.appendChild(h('div', {class:'rv-tablewrap'}, h('table', {class:'rv-table'},
+      h('thead', null, h('tr', null, ['', 'ファイル', '取引年月日', '取引先', '金額', '種類', '適用ルール', '重複チェック', ''].map(t => h('th', {text:t})))), tbody)));
+    card.appendChild(h('div', {class:'rv-actions'},
+      h('button', {type:'button', class:'rv-btn primary', text:'表示内容を確認した。チェックした書類を登録する', onclick: ()=>finish('ok')}),
+      h('button', {type:'button', class:'rv-btn ghost', text:'中止(何も変更しません)', onclick: ()=>finish('abort')})));
+    document.body.appendChild(ov); lockScroll(true);
+  });
+}
+
+// 全件の確認フロー:新しい書類→1件ずつ / 登録済みの書類→まとめて確認
+async function reviewAll(analyses){
+  const total = analyses.length;
+  _batchConfirmed = [];
+  const doneCount = () => analyses.filter(x => x.reviewed).length;
+  const confirmWith = (a, res) => {
+    a.reviewed = true; a.skipped = false; a.values = res.values; a.dupOverride = !!res.dupOverride;
+    _batchConfirmed.push(dupPseudo(a, res.values));
+    if(res.remember){ upsertDocRule(buildRule(res.values, a.text, a.file.name)); }
+  };
+  // 1件の確認結果を反映。false=中止
+  const applyRes = (a, res) => {
+    if(res.action === 'abort') return false;
+    if(res.action === 'skip'){ a.reviewed = true; a.skipped = true; return true; }
+    if(res.action === 'dup'){ a.reviewed = true; a.excluded = true; return true; }
+    confirmWith(a, res); return true;
+  };
+  const individuals = async () => {
+    while(true){
+      const a = analyses.find(x => !x.reviewed && !x.ruleReady);
+      if(!a) return true;
+      const res = await openReview(a, doneCount() + 1, total);
+      if(!applyRes(a, res)) return false;
+      if(res.action === 'ok') analyses.filter(x => !x.reviewed && !x.ruleReady).forEach(reevalRule);
+    }
+  };
+  // ① 登録済みルールに合わない書類を、1件ずつ確認(確認するとルールができ、同じ書式の残りはまとめ確認へ移る)
+  if(!(await individuals())) return false;
+  // ② 登録済みルールを適用した書類をまとめて確認
+  let rest = analyses.filter(x => !x.reviewed && x.ruleReady);
+  while(rest.length){
+    const res = await openBatchConfirm(rest);
+    if(res.action === 'abort') return false;
+    res.selected.forEach(a=>{
+      a.reviewed = true; a.skipped = false;
+      a.dupOverride = !!(a.dupInfo && a.dupInfo.length);
+      _batchConfirmed.push(dupPseudo(a, a.values));
+      const rules = getDocRules(); const r = rules.find(x => a.ruleMatch && x.id === a.ruleMatch.rule.id);
+      if(r){ r.uses = (r.uses || 0) + 1; r.lastUsed = Date.now(); setDocRules(rules); }
+      if(a.editedInBatch && a.editedInBatch.remember) upsertDocRule(buildRule(a.values, a.text, a.file.name));
+    });
+    res.others.forEach(a=>{
+      if(a.dupInfo && a.dupInfo.some(d => d.level >= 2)){ a.reviewed = true; a.excluded = true; }   // ほぼ確実な重複のチェックを外した=登録しない
+      else if(a.dupInfo && a.dupInfo.length){ a.ruleReady = false; }                                   // 似た記録(金額・日付だけ違う等)=1件ずつ確認
+      else if(a.skipInBatch){ a.reviewed = true; a.skipped = true; }
+      else a.ruleReady = false;                                                    // 重複でない行のチェックを外した=1件ずつ確認
+    });
+    rest = analyses.filter(x => !x.reviewed && x.ruleReady);
+    if(!(await individuals())) return false;
+  }
+  analyses.filter(x => x.excluded).forEach(a => { a.reviewed = true; });
+  return true;
+}
+// 確認結果を、従来の「計画(プラン)」用の形に整える
+function finalizeAnalyses(analyses){
+  analyses.forEach(a=>{
+    if(a.excluded){ a.confident = false; a.problems = ['重複のため登録しません']; a.parsed = { date:'', vendor:'', amount:'', invoiceNo:'' }; return; }
+    if(a.skipped){
+      a.confident = false;
+      a.problems = ['確認画面でスキップしました(「要確認」フォルダへ入れます)'];
+      a.parsed = { date: '', vendor: '', amount: '', invoiceNo: '' };
+      return;
+    }
+    const v = a.values;
+    a.confident = true; a.problems = [];
+    a.parsed = { date: v.date, vendor: v.vendor, amount: v.amount, invoiceNo: v.invoiceNo || '' };
+    a.docType = v.docType; a.paymentMethod = normPM(v.paymentMethod, v.docType); a.account = v.account || '';
+    a.company = v.company || '';
+    a.sub = v.date.slice(0, 7);
+    a.dueDate = computeDueDate(a.paymentMethod, a.docType, v.date);
+    a.alreadyOk = nameAlreadySearchable(a.file.name, a.parsed);
+    a.newFilename = a.alreadyOk ? a.file.name : computeFilenameParts(v.date, v.vendor, v.amount, v.docType, a.ext);
+    const probe = { newFilename: a.newFilename, date: v.date, vendor: v.vendor, amount: v.amount, docType: v.docType, paymentMethod: a.paymentMethod };
+    a.isDup = !a.dupOverride && getLedger().some(r => ledgerDedupKey(r) === ledgerDedupKey(probe));
+    a.dateNote = '';
+  });
+}
+// 設定画面:登録済みルール一覧
+function renderDocRules(){
+  const box = document.getElementById('docRuleList'); if(!box) return;
+  const rules = getDocRules();
+  box.textContent = '';
+  if(!rules.length){ box.appendChild(h('div', {class:'learn-empty', text:'まだ登録された書類ルールはありません。確認画面で「この内容で登録」すると、ここに追加されます。'})); return; }
+  rules.forEach(r=>{
+    const info = [`取引先:${r.vendor}`, `種類:${r.docType}`, r.paymentMethod ? `支払:${r.paymentMethod}` : '', r.key ? `判別:${r.key}` : `判別:ファイル名 ${r.fnKey}`,
+      `日付:${r.dateAnchor ? (r.dateAnchor.kind === 'fn' ? 'ファイル名' : r.dateAnchor.kind === 'ymEnd' ? `「${r.dateAnchor.before || '先頭'}」の年月(月末)` : `「${r.dateAnchor.before || '先頭'}」の日付`) : '都度選択'}`,
+      `金額:${r.amountAnchor ? `「${r.amountAnchor.before || '先頭'}」の金額` : '都度選択'}`, `適用 ${r.uses || 0}回`].filter(Boolean).join(' / ');
+    box.appendChild(h('div', {class:'learn-item'},
+      h('div', {class:'learn-main'}, h('span', {class:'from', text: r.name})),
+      h('div', {class:'learn-options', text: info}),
+      h('button', {type:'button', class:'rv-btn small', text:'削除', onclick: ()=>{ setDocRules(getDocRules().filter(x => x.id !== r.id)); renderDocRules(); }})));
+  });
+}
+
+renderDocRules();
 
 function destSegsFor(a, mode){
   if(!a.confident) return [BULK_REVIEW_FOLDER];
@@ -3348,7 +4605,9 @@ function showBulkPlan(analyses, {canWrite, topDirs}){
     } else {
       addMsg('✏️ リネームが必要なファイルはありません。');
     }
-    if(review.length) addMsg(`⚠ ${review.length}件は読み取れない項目があるため、「${BULK_REVIEW_FOLDER}」フォルダに入れます(理由は処理レポートに表示します)。`, true);
+    const filled = ok.filter(a => a.dateNote);
+    if(filled.length) addMsg(`📝 ${filled.length}件は、書類に取引日がないため、請求年月・支払日・ファイル名の年月から日付を補完しました(例:${filled[0].file.name} → ${filled[0].parsed.date})。`);
+    if(review.length) addMsg(`⚠ ${review.length}件は、確認画面でスキップしたため、「${BULK_REVIEW_FOLDER}」フォルダに入れます。`, true);
     if(dup.length) addMsg(`♻ ${dup.length}件は、同じ内容がすでに台帳にあるため、重複として追加しません。`);
     if(missing.length) addMsg(`📅 ${formatMissingMonths(missing)}のファイルが見当たりません。抜けがないかご確認ください。`, true);
     addMsg('📌 元のファイルは変更・削除せず残します(新しい名前のコピーを書き出します)。');
@@ -3447,8 +4706,7 @@ async function runBulk(items, {sourceRoot = null} = {}){
     r.statusSpan.textContent = '読み取り中…';
     try{
       r.a = await analyzeBulkItem(r.it);
-      r.statusSpan.textContent = r.a.confident ? '読み取り完了' : `⚠ ${r.a.problems[0]}`;
-      if(!r.a.confident) r.row.classList.add('warn');
+      r.statusSpan.textContent = r.a.ruleReady ? '読み取り完了(登録済みルールあり・確認待ち)' : '読み取り完了(確認待ち)';
     }catch(err){
       console.error(err);
       r.statusSpan.textContent = '✕ 読み取りに失敗しました';
@@ -3463,9 +4721,32 @@ async function runBulk(items, {sourceRoot = null} = {}){
     return;
   }
 
+  // ②-1 内容の確認(初回の書類は1件ずつ、登録済みの書類はルール適用結果をまとめて確認)
+  notify('info', `${analyses.length}件の読み取りが終わりました。内容を確認していきます(確認が済むまで、ファイルにも台帳にも何も書き込みません)。`, {toast:false});
+  const reviewed = await reviewAll(analyses);
+  if(!reviewed){
+    notify('info', '確認を中止しました。ファイルも台帳も変更していません。');
+    rows.forEach(r=>{ if(r.a){ r.statusSpan.textContent = '(中止)'; r.row.classList.remove('warn'); } });
+    return;
+  }
+  finalizeAnalyses(analyses);
+  rows.forEach(r=>{ if(r.a){
+    if(r.a.excluded){ r.statusSpan.textContent = '♻ 重複のため登録しません'; r.row.classList.remove('warn'); }
+    else { r.statusSpan.textContent = r.a.confident ? '確認済み' : '⚠ スキップ(要確認)'; if(!r.a.confident) r.row.classList.add('warn'); }
+  } });
+  const excludedN = analyses.filter(a => a.excluded).length;
+  if(excludedN) notify('info', `♻ ${excludedN}件は、台帳に既にある書類のため登録しません(元のファイルはそのまま残ります)。`);
+  const planSet = analyses.filter(a => !a.excluded);
+  if(!planSet.length){
+    notify('info', '登録する書類がありませんでした(すべて重複)。ファイルも台帳も変更していません。');
+    summaryEl.style.display = 'block';
+    summaryEl.textContent = `完了:登録 0件 / 重複のため登録しない ${excludedN}件`;
+    return;
+  }
+
   // ② 整理プランの確認
   const topDirs = [...new Set(analyses.filter(a=>a.relSegs.length).map(a=>a.relSegs[0]))];
-  const decision = await showBulkPlan(analyses, {canWrite, topDirs});
+  const decision = await showBulkPlan(planSet, {canWrite, topDirs});
   if(!decision){
     notify('info', 'キャンセルしました。ファイルも台帳も変更していません。');
     rows.forEach(r=>{ if(r.a){ r.statusSpan.textContent = '(キャンセル)'; r.row.classList.remove('warn'); } });
@@ -3483,6 +4764,7 @@ async function runBulk(items, {sourceRoot = null} = {}){
   for(const r of rows){
     const a = r.a;
     if(!a) continue;
+    if(a.excluded){ dupCount++; continue; }
     const srcPath = segPath(a.relSegs, a.file.name);
     const segs = destSegsFor(a, mode);
 
@@ -3497,16 +4779,19 @@ async function runBulk(items, {sourceRoot = null} = {}){
         vendor: a.parsed.vendor,
         amount: a.parsed.amount,
         docType: a.docType,
-        paymentMethod: '現金',
+        paymentMethod: a.paymentMethod || '現金',
+        dueDate: a.dueDate || '',
+        fileHash: a.hash || '',
         account: a.account,
         invoiceNo: a.parsed.invoiceNo || '',
+        companyName: a.company || '',
         folder: segs.join('/'),
         history: []
       };
       const ledger = getLedger();
       const key = ledgerDedupKey(entry);
       okDates.push(a.parsed.date);
-      if(ledger.some(x => ledgerDedupKey(x) === key)){
+      if(!a.dupOverride && ledger.some(x => ledgerDedupKey(x) === key)){
         r.statusSpan.textContent = '既に台帳にあり(重複スキップ)';
         dupCount++;
         notify('info', `${srcPath}:同じ内容が台帳に既にあるためスキップしました。`, {toast:false});
@@ -3539,6 +4824,7 @@ async function runBulk(items, {sourceRoot = null} = {}){
         notify('warn', `${srcPath}:インボイス登録番号の記載がありそうですが、番号(T+13桁)を読み取れませんでした。`, {toast:false});
       }
       notify('ok', `${srcPath} → ${dest}${a.alreadyOk ? '(名前は変更なし)' : ''}`, {toast:false});
+      if(a.dateNote) notify('info', `${srcPath}:日付は「${a.dateNote}」しました(書類内に取引日がないため)。必要に応じて台帳で修正できます。`, {toast:false});
     } else {
       reviewCount++;
       r.row.style.cursor = 'pointer';
@@ -3618,7 +4904,8 @@ function buildDashboardHtml(){
   const tpl = document.getElementById('dashTpl').value;
   const data = getLedger().map(r=>({
     date:r.date, vendor:r.vendor, amount:r.amount, docType:r.docType, account:r.account||'',
-    invoiceNo:r.invoiceNo||'', newFilename:r.newFilename, originalFilename:r.originalFilename, folder:r.folder||''
+    invoiceNo:r.invoiceNo||'', newFilename:r.newFilename, originalFilename:r.originalFilename, folder:r.folder||'',
+    paymentMethod:r.paymentMethod||'', companyName:r.companyName||'', dueDate:r.dueDate||''
   }));
   const naming = getNamingSettings();
   const config = {
@@ -3805,7 +5092,27 @@ async function fetchDriveFilesAndCompare(){
 
 btnSave.addEventListener('click', async ()=>{
   if(!currentFile) return;
+  if(!dupAck){
+    const dups = findLedgerDuplicates({date: fDate.value, vendor: fVendor.value.trim(), amount: String(fAmount.value).replace(/[^0-9]/g, ''), docType: fDocType.value}, currentFile.name, currentHash, []);
+    if(dups.length){
+      dupAck = true;
+      notify('warn', `既に台帳にある書類の可能性があります。\n${describeDup(dups[0])}\n別の書類なら、もう一度ボタンを押すと登録します。`);
+      btnSave.textContent = '重複の可能性あり:別の書類ならもう一度押して登録';
+      return;
+    }
+  }
+  dupAck = false;
+  btnSave.textContent = 'この内容で確定・台帳に記録する';
   learnFromSave();
+  try{
+    if(currentText){
+      upsertDocRule(buildRule({
+        date: fDate.value, vendor: fVendor.value.trim(), amount: String(fAmount.value).replace(/[^0-9]/g,''), docType: fDocType.value,
+        paymentMethod: STATEMENT_DOC_TYPES.includes(fDocType.value) ? PM_STMT : ((fPaymentMethod.value === 'カード' && fCardSelect.value && fCardSelect.value !== '__new__') ? fCardSelect.value : '現金'),
+        account: fAccount.value.trim(), invoiceNo: fInvoiceNo.value.trim()
+      }, currentText, currentFile.name));
+    }
+  }catch(e){ console.warn('rule learn skipped', e); }
   const recorded = recordToLedger();
   notify(recorded ? 'ok' : 'info', recorded
     ? `台帳に記録しました:${filenamePreview.textContent}`
