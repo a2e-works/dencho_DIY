@@ -482,6 +482,81 @@
   .card-item .learn-del{margin-left:auto;}
   .card-empty{font-size:12.5px; color:var(--gray); margin-bottom:14px;}
 
+  .card-preset-overlay{
+    position:fixed; inset:0; background:rgba(26,43,34,0.45);
+    display:flex; align-items:center; justify-content:center;
+    z-index:1000; padding:20px;
+  }
+  .card-preset-modal{
+    background:#fff; border-radius:10px; max-width:440px; width:100%;
+    padding:22px; max-height:80vh; overflow-y:auto;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+  }
+  .card-preset-title{font-size:16px; font-weight:700; color:var(--ink); margin-bottom:8px;}
+  .card-preset-desc{font-size:12.5px; color:var(--ink-soft); line-height:1.7; margin-bottom:14px;}
+  .card-preset-list{display:flex; flex-direction:column; gap:8px; margin-bottom:16px;}
+  .card-preset-item{
+    display:flex; flex-direction:column; align-items:flex-start; gap:2px;
+    width:100%; text-align:left; padding:10px 12px;
+    border:1px solid var(--paper-line); border-radius:8px;
+    background:var(--paper); cursor:pointer; font-family:inherit;
+  }
+  .card-preset-item:hover{border-color:var(--stamp); background:var(--stamp-soft);}
+  .card-preset-item .cp-name{font-size:13.5px; font-weight:700; color:var(--ink);}
+  .card-preset-item .cp-note{font-size:11.5px; color:var(--gray);}
+
+  .kitei-preview{
+    white-space:pre-wrap; font-size:12px; line-height:1.8; color:var(--ink);
+    background:var(--paper); border:1px solid var(--paper-line); border-radius:8px;
+    padding:16px; max-height:420px; overflow-y:auto; font-family:inherit;
+  }
+  .suggest-row{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:4px;}
+  .suggest-chip{
+    font-size:11.5px; padding:4px 10px; border-radius:999px; border:1px solid var(--stamp);
+    background:var(--stamp-soft); color:var(--ink); cursor:pointer; font-family:inherit;
+  }
+  .suggest-chip:hover{background:var(--stamp); color:#fff;}
+  .invoice-check{font-size:11.5px; margin-top:4px;}
+  .invoice-check.ok{color:var(--ok);}
+  .invoice-check.ng{color:#B45309;}
+  .history-toggle{font-size:11px; color:var(--gray); cursor:pointer; text-decoration:underline; background:none; border:none; padding:0;}
+  .history-pop{
+    font-size:11px; color:var(--ink-soft); background:var(--paper); border:1px solid var(--paper-line);
+    border-radius:6px; padding:8px 10px; margin-top:4px; white-space:pre-wrap;
+  }
+
+  .report-head{display:flex; justify-content:space-between; align-items:center; margin-top:18px; font-size:13px;}
+  .report-list{display:flex; flex-direction:column; gap:6px; margin-top:8px; max-height:320px; overflow-y:auto;}
+  .report-empty{font-size:12px; color:var(--gray);}
+  .report-item{font-size:12px; line-height:1.7; padding:6px 10px; border-left:4px solid var(--gray); background:var(--paper); border-radius:4px; color:var(--ink);}
+  .report-item.ok{border-left-color:var(--ok);}
+  .report-item.warn{border-left-color:#D97706; background:#FFF8EB;}
+  .report-item .rt{color:var(--gray); margin-right:8px; font-size:11px;}
+  .toast-box{position:fixed; right:16px; bottom:16px; z-index:1100; display:flex; flex-direction:column; gap:8px; max-width:340px;}
+  .toast{font-size:12.5px; line-height:1.6; padding:10px 14px; border-radius:8px; background:#1A2B22; color:#fff; box-shadow:0 4px 14px rgba(0,0,0,.25);}
+  .toast.warn{background:#B45309;}
+  .toast.ok{background:#00875A;}
+
+  .bulk-plan{border:2px solid var(--stamp); border-radius:10px; background:#fff; padding:14px 16px; margin:14px 0;}
+  .bulk-plan h4{margin:0 0 8px; font-size:14px;}
+  .plan-msg{font-size:12.5px; line-height:1.8; padding:2px 0;}
+  .plan-msg.warn{color:#B45309;}
+  .plan-opts{margin:10px 0; display:flex; flex-direction:column; gap:6px; font-size:12.5px;}
+  .plan-opts label{display:flex; gap:8px; align-items:flex-start; cursor:pointer;}
+  .plan-list{max-height:220px; overflow-y:auto; border:1px solid var(--paper-line); border-radius:6px; padding:6px 8px; background:var(--paper); font-size:11.5px; line-height:1.7; margin:8px 0;}
+  .plan-list div{white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .plan-actions{display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;}
+  .cta-box{border:1px solid var(--stamp); background:var(--stamp-soft); border-radius:8px; padding:12px 14px; font-size:12.5px; line-height:1.8; margin-top:12px;}
+  .bulk-queue{display:flex; flex-direction:column; gap:8px; margin:12px 0;}
+  .bulk-item{
+    display:flex; align-items:center; gap:10px; padding:8px 10px; border:1px solid var(--paper-line);
+    border-radius:8px; background:var(--paper); font-size:12.5px;
+  }
+  .bulk-item .bi-name{flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .bulk-item .bi-status{font-size:11.5px; color:var(--gray); white-space:nowrap;}
+  .bulk-item.done .bi-status{color:var(--ok);}
+  .bulk-item.warn .bi-status{color:#B45309;}
+
   .ledger-warning{
     font-size:12px; line-height:1.8; color:#946200;
     background:#FFF6E0; border:1px solid #F0DDA0;
@@ -769,17 +844,64 @@
     <div class="section-title"><span class="no">03</span> 支払いカードを管理する</div>
     <div class="ledger-card">
       <p class="rule-desc">
-        引落日は「取引先」ではなく「使ったカード」ごとに決まります。カード名(呼び方)と
-        締め日・支払日だけを登録してください。<b>カード番号・暗証番号・セキュリティコードなどは
-        一切入力・保存しません。</b>
+        引落日は「取引先」ではなく「使ったカード」ごとに決まります。楽天カード・三井住友カード・
+        JCBカード・MUFGカード・Amazonカード・dカード・イオンカード・au PAYカードは、
+        締め日・支払日をワンタップで自動入力できます(その他のカードも手入力で登録可能)。
+        <b>カード番号・暗証番号・セキュリティコードなどは一切入力・保存しません。</b>
       </p>
       <div id="cardList" class="card-list"></div>
       <button type="button" class="dz-btn ghost" id="btnAddCard">+ カードを新規登録</button>
     </div>
   </section>
 
+  <div id="cardPresetOverlay" class="card-preset-overlay" style="display:none;">
+    <div class="card-preset-modal">
+      <div class="card-preset-title">カードを新規登録</div>
+      <p class="card-preset-desc">お使いのカードを選ぶと、締め日・支払日を自動入力します(一般的な標準設定です。実際の締め日・支払日はカード会社の会員サイト等でご確認ください)。</p>
+      <div id="cardPresetList" class="card-preset-list"></div>
+      <button type="button" class="dz-btn ghost" id="btnCardPresetCancel">キャンセル</button>
+    </div>
+  </div>
+
   <section>
-    <div class="section-title"><span class="no">04</span> 証憑を読み込む</div>
+    <div class="section-title"><span class="no">04</span> 電子取引の事務処理規程を作成する</div>
+    <div class="ledger-card">
+      <p class="rule-desc">
+        電子帳簿保存法では、保存した証憑データの「訂正・削除の防止」も求められています。
+        これは①認定タイムスタンプを付与する、②訂正削除の履歴が残るシステムを使う、
+        ③<b>「訂正削除の防止に関する事務処理規程」を整備して運用する</b>、のいずれかで満たせます。
+        個人事業主の場合は③が最も手軽です。屋号・施行日を入力すると、
+        国税庁が公開している個人事業者向けひな形の構成を参考にした規程文書を生成します。
+      </p>
+      <p class="rule-desc" style="font-size:11.5px;">
+        ⚠ 生成されるのはひな形を参考にした文書です。実際の運用に合わせて内容をご確認のうえ、
+        必要であれば国税庁の公式ひな形
+        (<a href="https://www.nta.go.jp/law/joho-zeikaishaku/sonota/jirei/0021006-031.htm" target="_blank" rel="noopener">参考資料ページ</a>)
+        と見比べてご利用ください。
+      </p>
+      <div class="field-grid kitei-field-grid">
+        <div class="field-label">屋号・氏名</div>
+        <input class="field-input" type="text" id="kiteiName" placeholder="例:A2E Works 〇〇 〇〇">
+        <div class="field-label">管理責任者名</div>
+        <input class="field-input" type="text" id="kiteiManager" placeholder="未入力の場合、屋号・氏名と同じになります">
+        <div class="field-label">規程の施行日</div>
+        <input class="field-input" type="text" id="kiteiDate" placeholder="例:2026-10-01">
+      </div>
+      <div class="actions" style="margin-top:12px;">
+        <button type="button" id="btnGenKitei">規程を生成する</button>
+      </div>
+      <div id="kiteiResult" style="display:none; margin-top:16px;">
+        <pre id="kiteiPreview" class="kitei-preview"></pre>
+        <div class="actions">
+          <button type="button" class="ghost" id="btnDownloadKitei">📄 テキストでダウンロード</button>
+          <button type="button" class="ghost" id="btnPrintKitei">🖨 印刷してPDFで保存</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title"><span class="no">05</span> 証憑を読み込む</div>
     <div class="ledger-card">
 
       <div class="dropzone" id="dropzone">
@@ -846,6 +968,16 @@
           </div>
           <div class="field-label" id="withdrawalLabel" style="display:none;">引落(予定)日</div>
           <input class="field-input" type="text" id="fWithdrawal" style="display:none;" readonly placeholder="カードを選択すると自動計算されます">
+          <div class="field-label">勘定科目(任意)</div>
+          <div>
+            <input class="field-input" id="fAccount" placeholder="例:消耗品費">
+            <div class="suggest-row" id="accountSuggestRow"></div>
+          </div>
+          <div class="field-label">インボイス登録番号(任意)</div>
+          <div>
+            <input class="field-input" id="fInvoiceNo" placeholder="例:T1234567890123">
+            <div class="invoice-check" id="invoiceCheckMsg"></div>
+          </div>
         </div>
         <p class="edit-hint">↑ 内容は自由に修正できます。取引先を確定(他の欄をクリック等)すると、次回以降その表記・書類種類・支払い方法を学習します。</p>
 
@@ -872,8 +1004,8 @@
       <div class="limit-card" id="limitCard">
         <h3>体験版は10件までです</h3>
         <p>
-          正式版では件数無制限に加え、命名ルールの自由編集・勘定科目の自動サジェスト・
-          インボイス番号のチェック・Google Drive連携などが使えるようになります。
+          正式版では件数無制限に加え、命名ルールの自由編集・Google Drive連携・
+          実際のファイル保存などが使えるようになります。
           制度改正への対応も継続してアップデート予定です。
         </p>
         <div class="price-badge">
@@ -885,7 +1017,41 @@
   </section>
 
   <section>
-    <div class="section-title"><span class="no">05</span> 台帳(Excel管理)</div>
+    <div class="section-title"><span class="no">06</span> 過去ファイルをまとめて整理する</div>
+    <div class="ledger-card">
+      <p class="rule-desc">
+        「気づいたら何年分もレシート画像がフォルダにバラバラに溜まっている」場合向けのモードです。
+        <b>元のファイル名は問いません。サブフォルダの中も対象です。</b>
+        すでにフォルダ分けしてあっても、「ファイル名から検索できるか」までは整っていないことが多いため、
+        日付・取引先・金額がファイル名に入っているかを1件ずつ確認します。
+        <b>実行前に整理プランをメッセージで確認</b>し(今のフォルダ構成を維持するか、年月フォルダに再構成するかも選べます)、
+        了承した場合だけ処理します。読めなかったものは「要確認」フォルダへ入れ、<b>元のファイルは変更せず残します</b>(コピーを書き出します)。
+        最後に、検索できる<b>「電帳ダッシュボード」</b>(HTML)を作成できます。
+      </p>
+      <p class="rule-desc" style="font-size:11.5px;">
+        書き出し先は「01 保存先を設定する」で選んだフォルダです(Chrome/Edge)。
+        <b>デモ版では実際の書き出しは行わず、振り分け結果のプレビューと台帳記録のみ</b>を行います。
+      </p>
+      <div class="dz-buttons">
+        <button type="button" class="dz-btn" id="btnBulkFolder">📂 フォルダを選んで一括整理</button>
+        <button type="button" class="dz-btn ghost" id="btnBulkPick">📁 複数ファイルを選択して整理</button>
+        <button type="button" class="dz-btn ghost" id="btnDashboard">📊 電帳ダッシュボードを作成</button>
+      </div>
+      <input type="file" id="bulkFileInput" accept="image/*,application/pdf" multiple style="display:none;">
+      <div id="bulkPlan" class="bulk-plan" style="display:none;"></div>
+      <div id="bulkQueue" class="bulk-queue"></div>
+      <div id="bulkSummary" class="rule-desc" style="display:none;"></div>
+
+      <div class="report-head">
+        <b>📣 処理レポート</b>
+        <button type="button" class="history-toggle" id="btnClearReport">クリア</button>
+      </div>
+      <div id="reportList" class="report-list"><div class="report-empty" id="reportEmpty">まだ通知はありません。</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title"><span class="no">07</span> 台帳(Excel管理)</div>
     <div class="ledger-card">
       <p class="rule-desc">
         処理した証憑は自動的にここに記録されます。<b>元のファイル名 → 新しいファイル名</b>の対応も
@@ -903,15 +1069,19 @@
         <div class="ledger-actions">
           <button type="button" class="dz-btn ghost" id="btnDedupLedger">🧹 重複を整理する</button>
           <button type="button" class="dz-btn ghost" id="btnExportCSV">📊 CSVでダウンロード(Excelで開けます)</button>
+          <button type="button" class="dz-btn ghost" id="btnCheckGaps">📅 月の抜けをチェック</button>
+          <button type="button" class="dz-btn ghost" id="btnShowAudit">🕵️ 削除履歴(監査ログ)を見る</button>
           <button type="button" class="dz-btn ghost danger" id="btnClearLedger">台帳をクリア</button>
         </div>
       </div>
+      <div id="auditLogPanel" style="display:none;" class="history-pop"></div>
       <div class="ledger-table-wrap">
         <table class="ledger-table" id="ledgerTable">
           <thead>
             <tr>
               <th>処理日時</th><th>元のファイル名</th><th>新しいファイル名</th>
               <th>取引年月日</th><th>取引先</th><th>金額</th><th>書類種類</th><th>支払い方法</th>
+              <th>勘定科目</th><th>インボイス番号</th><th>履歴</th><th>操作</th>
             </tr>
           </thead>
           <tbody id="ledgerTbody"></tbody>
@@ -922,7 +1092,7 @@
   </section>
 
   <section>
-    <div class="section-title"><span class="no">06</span> クラウド/ローカルとの同期を確認する</div>
+    <div class="section-title"><span class="no">08</span> クラウド/ローカルとの同期を確認する</div>
     <div class="ledger-card">
       <p class="rule-desc">
         台帳に記録された「新しいファイル名」の一覧と、実際の保存先(ローカルフォルダ・Googleドライブ)
@@ -954,7 +1124,7 @@
   </section>
 
   <section>
-    <div class="section-title"><span class="no">07</span> 学習した取引先の表記</div>
+    <div class="section-title"><span class="no">09</span> 学習した取引先の表記</div>
     <div class="ledger-card">
       <p class="learn-desc">
         取引先名を修正すると、同じ表記が読み取られた際に自動で正しい名前に置き換えます。
@@ -968,7 +1138,7 @@
   </section>
 
   <section>
-    <div class="section-title"><span class="no">08</span> 体験版と正式版の違い</div>
+    <div class="section-title"><span class="no">10</span> 体験版と正式版の違い</div>
     <div class="ledger-card">
       <table class="compare-table">
         <tr><th></th><th class="center">体験版</th><th class="center">正式版(予定)</th></tr>
@@ -976,14 +1146,21 @@
         <tr><td>ファイル名の自動生成</td><td class="center ok-mark">テンプレートから選択</td><td class="center ok-mark">完全自由編集・複数プリセット保存</td></tr>
         <tr><td>1回に処理できる件数</td><td class="center">10件まで</td><td class="center ok-mark">無制限</td></tr>
         <tr><td>払込用紙(電気・税金等)の判定</td><td class="center no-mark">検出のみ</td><td class="center ok-mark">内容まで判定</td></tr>
-        <tr><td>勘定科目の自動サジェスト</td><td class="center no-mark">─</td><td class="center ok-mark">○</td></tr>
-        <tr><td>インボイス番号チェック</td><td class="center no-mark">─</td><td class="center ok-mark">○</td></tr>
+        <tr><td>勘定科目の自動サジェスト</td><td class="center ok-mark">○(簡易辞書)</td><td class="center ok-mark">○(辞書拡張・編集可)</td></tr>
+        <tr><td>インボイス番号チェック</td><td class="center ok-mark">○(形式チェック)</td><td class="center ok-mark">○</td></tr>
+        <tr><td>事務処理規程の自動生成</td><td class="center ok-mark">○</td><td class="center ok-mark">○(業種別ひな形追加)</td></tr>
+        <tr><td>電帳ダッシュボード(検索・ドラッグ&ドロップ追記・カメラ)</td><td class="center ok-mark">○(プレビューのみ)</td><td class="center ok-mark">○(フォルダ先頭に自動作成・更新)</td></tr>
+        <tr><td>処理レポート(読み取り漏れ・月の抜け通知)</td><td class="center ok-mark">○</td><td class="center ok-mark">○</td></tr>
+        <tr><td>台帳の編集・削除履歴</td><td class="center ok-mark">○</td><td class="center ok-mark">○</td></tr>
+        <tr><td>過去ファイルの一括整理モード</td><td class="center ok-mark">○(振り分けプレビュー+台帳記録)</td><td class="center ok-mark">○(年月フォルダへ書き出し)</td></tr>
         <tr><td>Google Drive連携</td><td class="center no-mark">─</td><td class="center ok-mark">○</td></tr>
         <tr><td>保存機能(ローカル/ダウンロード)</td><td class="center no-mark">✕(プレビューのみ)</td><td class="center ok-mark">○(Chrome)</td></tr>
         <tr><td>台帳への記録・CSV出力</td><td class="center ok-mark">○(無制限)</td><td class="center ok-mark">○</td></tr>
       </table>
     </div>
   </section>
+
+  <div class="toast-box" id="toastBox"></div>
 
   <footer>
     本デモはサンプルです。画像・PDFの解析処理はすべてお使いのブラウザ内で完結し、<b>証憑データが外部サーバーへ送信されることはありません。</b>
@@ -992,6 +1169,354 @@
 
 </div>
 
+<textarea id="dashTpl" style="display:none" aria-hidden="true" tabindex="-1"><!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>電帳ダッシュボード</title>
+<style>
+:root{--g:#00A968;--gs:#CDEEDD;--ink:#1A2B22;--soft:#4C5B54;--line:#E1E7E4;--bg:#F5F7F6;--warn:#D97706;--gray:#79857F;}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Noto Sans JP','Hiragino Sans','Yu Gothic',Meiryo,sans-serif;background:var(--bg);color:var(--ink);font-size:14px;}
+header{background:var(--g);color:#fff;padding:16px 24px;}
+header h1{margin:0;font-size:20px;}
+header p{margin:4px 0 0;font-size:12px;opacity:.92;}
+main{max-width:1120px;margin:0 auto;padding:16px;}
+.card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:16px;margin-bottom:16px;}
+.card h2{margin:0 0 10px;font-size:15px;}
+.banner{background:#FFF8EB;border:1px solid #F3D9A4;border-radius:8px;padding:10px 14px;font-size:12.5px;line-height:1.8;margin-bottom:16px;}
+.drop{border:2px dashed var(--g);border-radius:10px;padding:20px;text-align:center;background:#FAFFFC;}
+.drop.over{background:var(--gs);}
+.drop .t{font-weight:700;margin-bottom:6px;}
+.drop .s{font-size:12px;color:var(--soft);margin-bottom:10px;}
+button,.btn{font-family:inherit;font-size:13px;padding:8px 14px;border-radius:6px;border:1px solid var(--g);background:var(--g);color:#fff;cursor:pointer;}
+button.ghost{background:#fff;color:var(--g);}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+input[type=text],select{font-family:inherit;font-size:13px;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;}
+#q{flex:1;min-width:220px;}
+.months{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;}
+.mchip{font-size:12px;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:#fff;cursor:pointer;}
+.mchip.on{background:var(--g);color:#fff;border-color:var(--g);}
+.mchip.gap{border-color:var(--warn);color:var(--warn);background:#FFF8EB;}
+.stats{font-size:12.5px;color:var(--soft);margin:10px 0 6px;}
+table{width:100%;border-collapse:collapse;font-size:12.5px;}
+th,td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;}
+th{background:var(--bg);font-size:12px;white-space:nowrap;}
+td.num{text-align:right;white-space:nowrap;}
+tr.added td{background:#F1FBF6;}
+.tag{font-size:10.5px;background:var(--g);color:#fff;border-radius:4px;padding:1px 6px;margin-left:6px;}
+.tag.warn{background:var(--warn);}
+a{color:#0B6E4F;}
+.small{font-size:11px;color:var(--gray);}
+.msgs{max-height:200px;overflow-y:auto;display:flex;flex-direction:column;gap:5px;}
+.msg{font-size:12.5px;line-height:1.7;padding:5px 10px;border-left:4px solid var(--gray);background:var(--bg);border-radius:4px;}
+.msg.ok{border-left-color:var(--g);}
+.msg.warn{border-left-color:var(--warn);background:#FFF8EB;}
+.cta{border:1px solid var(--g);background:var(--gs);border-radius:8px;padding:14px 16px;font-size:13px;line-height:1.9;}
+.cta ul{margin:6px 0 6px 18px;padding:0;}
+@media (max-width:640px){th:nth-child(n+6),td:nth-child(n+6){display:none;}}
+</style>
+</head>
+<body>
+<header>
+  <h1>📊 電帳ダッシュボード</h1>
+  <p id="sub"></p>
+</header>
+<main>
+  <div class="banner" id="demoBanner" style="display:none;">
+    <b>これはデモ版のプレビューです。</b>ここで追記した内容は、このページを開いている間だけの表示で、フォルダには保存されません。
+    正式版では、追記した証憑がフォルダに自動で保存され、このダッシュボードも自動で更新されます。
+  </div>
+
+  <div class="card">
+    <h2>📥 証憑を追加する(ドラッグ&ドロップ / カメラ)</h2>
+    <div class="drop" id="drop">
+      <div class="t">ここに画像・PDFをドラッグ&ドロップ</div>
+      <div class="s">読み取って、日付・取引先・金額が入ったファイル名を作り、下の一覧に追記します。</div>
+      <div class="row" style="justify-content:center;">
+        <button type="button" id="btnCam">📷 カメラで撮影して追加</button>
+        <button type="button" class="ghost" id="btnPick">📁 ファイルを選んで追加</button>
+      </div>
+      <input type="file" id="inCam" accept="image/*" capture="environment" style="display:none;">
+      <input type="file" id="inPick" accept="image/*,application/pdf" multiple style="display:none;">
+    </div>
+    <div class="msgs" id="msgs" style="margin-top:12px;"></div>
+  </div>
+
+  <div class="card">
+    <h2>🔎 検索</h2>
+    <div class="row">
+      <input type="text" id="q" placeholder="取引先・日付・金額・ファイル名などで検索(例:ENEOS 2026-06 3200)">
+      <select id="fMonth"><option value="">すべての月</option></select>
+      <select id="fAccount"><option value="">すべての勘定科目</option></select>
+      <button type="button" class="ghost" id="btnReset">リセット</button>
+    </div>
+    <div class="months" id="months"></div>
+    <div class="stats" id="stats"></div>
+    <div style="overflow-x:auto;">
+      <table>
+        <thead><tr><th>取引年月日</th><th>取引先</th><th>金額</th><th>書類</th><th>勘定科目</th><th>インボイス番号</th><th>ファイル(クリックで開く)</th><th></th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <p class="small" id="empty" style="display:none;">該当する証憑がありません。</p>
+  </div>
+
+  <div class="cta" id="cta" style="display:none;">
+    <b>ここまでがお試しです。</b>正式版(¥8,000 買い切り)では、
+    <ul>
+      <li>追記した証憑が<b>実際のフォルダに自動でリネーム・保存</b>され、このダッシュボードも自動更新されます</li>
+      <li>過去のフォルダを丸ごと整理し、ファイル名から検索できる状態にできます</li>
+      <li>月の抜けや読み取れなかった項目を、その都度メッセージでお知らせします</li>
+    </ul>
+    ご購入・ご相談は、ご案内元のサービスページ(メッセージ機能)からお願いします。
+  </div>
+  <p class="small" style="margin-top:14px;">証憑の読み取りはすべてお使いのブラウザ内で行われ、外部サーバーには送信されません(読み取りエンジンの読み込みのみ通信します)。</p>
+</main>
+<script>
+const DATA = /*__DATA__*/[];
+const CONFIG = /*__CONFIG__*/{};
+const rows = DATA.map(d => Object.assign({}, d, {added:false}));
+const $ = id => document.getElementById(id);
+const norm = s => String(s == null ? '' : s).replace(/[Ａ-Ｚａ-ｚ０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0)).replace(/,/g, '').toLowerCase();
+const yen = n => (n === '' || n == null || isNaN(Number(n))) ? '' : Number(n).toLocaleString('ja-JP') + '円';
+
+$('sub').textContent = '作成日時:' + (CONFIG.generatedAt || '') + ' / 登録 ' + DATA.length + ' 件';
+if (CONFIG.demo) { $('demoBanner').style.display = 'block'; $('cta').style.display = 'block'; }
+
+/* ---------- メッセージ ---------- */
+function log(level, text){
+  const d = document.createElement('div');
+  d.className = 'msg ' + level;
+  d.textContent = text;
+  $('msgs').appendChild(d);
+  $('msgs').scrollTop = $('msgs').scrollHeight;
+}
+
+/* ---------- 月の抜け ---------- */
+function monthList(){
+  return Array.from(new Set(rows.map(r => (r.date || '').slice(0, 7)).filter(x => /^\d{4}-\d{2}$/.test(x)))).sort();
+}
+function allMonthsBetween(ms){
+  if (ms.length < 1) return [];
+  let [y, m] = ms[0].split('-').map(Number);
+  const [ey, em] = ms[ms.length - 1].split('-').map(Number);
+  const out = [];
+  while (y < ey || (y === ey && m <= em)) {
+    out.push(y + '-' + String(m).padStart(2, '0'));
+    m++; if (m > 12) { m = 1; y++; }
+  }
+  return out;
+}
+
+/* ---------- 描画 ---------- */
+function refreshFilters(){
+  const ms = monthList();
+  const cur = $('fMonth').value;
+  $('fMonth').innerHTML = '<option value="">すべての月</option>';
+  ms.forEach(m => { const o = document.createElement('option'); o.value = m; o.textContent = m; $('fMonth').appendChild(o); });
+  $('fMonth').value = ms.includes(cur) ? cur : '';
+  const acc = Array.from(new Set(rows.map(r => r.account).filter(Boolean))).sort();
+  const ca = $('fAccount').value;
+  $('fAccount').innerHTML = '<option value="">すべての勘定科目</option>';
+  acc.forEach(a => { const o = document.createElement('option'); o.value = a; o.textContent = a; $('fAccount').appendChild(o); });
+  $('fAccount').value = acc.includes(ca) ? ca : '';
+
+  const all = allMonthsBetween(ms);
+  $('months').innerHTML = '';
+  all.forEach(m => {
+    const n = rows.filter(r => (r.date || '').startsWith(m)).length;
+    const c = document.createElement('span');
+    c.className = 'mchip' + (n === 0 ? ' gap' : '') + ($('fMonth').value === m ? ' on' : '');
+    c.textContent = m + (n === 0 ? ' 抜け?' : ' (' + n + ')');
+    c.onclick = () => { $('fMonth').value = ($('fMonth').value === m ? '' : m); render(); };
+    $('months').appendChild(c);
+  });
+}
+
+function render(){
+  refreshFilters();
+  const q = norm($('q').value).split(/\s+/).filter(Boolean);
+  const m = $('fMonth').value, a = $('fAccount').value;
+  const list = rows.filter(r => {
+    if (m && !(r.date || '').startsWith(m)) return false;
+    if (a && r.account !== a) return false;
+    const hay = norm([r.date, r.vendor, r.amount, r.docType, r.account, r.invoiceNo, r.newFilename, r.originalFilename, r.folder].join(' '));
+    return q.every(t => hay.includes(t));
+  }).sort((x, y) => (y.date || '').localeCompare(x.date || ''));
+
+  const total = list.reduce((s, r) => s + (Number(r.amount) || 0), 0);
+  $('stats').textContent = list.length + ' 件 / 合計 ' + total.toLocaleString('ja-JP') + '円(全 ' + rows.length + ' 件中)';
+  $('empty').style.display = list.length ? 'none' : 'block';
+
+  const tb = $('tbody');
+  tb.innerHTML = '';
+  list.forEach(r => {
+    const tr = document.createElement('tr');
+    if (r.added) tr.className = 'added';
+    const cells = [r.date, r.vendor, yen(r.amount), r.docType, r.account, r.invoiceNo];
+    cells.forEach((v, i) => {
+      const td = document.createElement('td');
+      if (i === 2) td.className = 'num';
+      td.textContent = v || '';
+      if (i === 0 && !r.date) { td.textContent = '(未入力)'; td.style.color = '#D97706'; }
+      tr.appendChild(td);
+    });
+    const tdf = document.createElement('td');
+    const path = (r.folder ? r.folder + '/' : '') + (r.newFilename || r.originalFilename || '');
+    const link = document.createElement('a');
+    link.textContent = path;
+    link.href = path.split('/').map(encodeURIComponent).join('/');
+    link.target = '_blank';
+    tdf.appendChild(link);
+    if (r.added) { const t = document.createElement('span'); t.className = 'tag'; t.textContent = '追記'; tdf.appendChild(t); }
+    if (r.originalFilename && r.originalFilename !== r.newFilename) {
+      const o = document.createElement('div'); o.className = 'small'; o.textContent = '元の名前:' + r.originalFilename; tdf.appendChild(o);
+    }
+    tr.appendChild(tdf);
+    const tde = document.createElement('td');
+    if (r.added) {
+      const b = document.createElement('button'); b.className = 'ghost'; b.textContent = '✎修正';
+      b.onclick = () => editRow(r);
+      tde.appendChild(b);
+    }
+    tr.appendChild(tde);
+    tb.appendChild(tr);
+  });
+}
+['q', 'fMonth', 'fAccount'].forEach(id => $(id).addEventListener('input', render));
+$('btnReset').onclick = () => { $('q').value = ''; $('fMonth').value = ''; $('fAccount').value = ''; render(); };
+
+/* ---------- 追記(ドラッグ&ドロップ・カメラ) ---------- */
+function loadScript(url){
+  return new Promise((res, rej) => {
+    const s = document.createElement('script');
+    s.src = url; s.onload = res; s.onerror = () => rej(new Error('load ' + url));
+    document.head.appendChild(s);
+  });
+}
+async function ocrImage(file){
+  if (!window.Tesseract) await loadScript('https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js');
+  const r = await Tesseract.recognize(file, 'jpn+eng');
+  return r.data.text;
+}
+async function pdfText(file){
+  if (!window.pdfjsLib) {
+    await loadScript('https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/legacy/build/pdf.min.js');
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/legacy/build/pdf.worker.min.js';
+  }
+  const pdf = await pdfjsLib.getDocument({data: await file.arrayBuffer()}).promise;
+  const page = await pdf.getPage(1);
+  const tc = await page.getTextContent();
+  const text = tc.items.map(i => i.str).join('\n');
+  if (text.replace(/\s/g, '').length > 8) return text;
+  const vp = page.getViewport({scale: 2});
+  const cv = document.createElement('canvas'); cv.width = vp.width; cv.height = vp.height;
+  await page.render({canvasContext: cv.getContext('2d'), viewport: vp}).promise;
+  if (!window.Tesseract) await loadScript('https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js');
+  return (await Tesseract.recognize(cv, 'jpn+eng')).data.text;
+}
+
+const ACCOUNT_RULES = [
+  [/ガソリン|スタンド|ENEOS|出光|コスモ石油|給油/i, '車両費'],
+  [/タクシー|新幹線|JR|地下鉄|バス|駐車場|ETC|Suica|PASMO|高速道路|ホテル|宿泊/i, '旅費交通費'],
+  [/コンビニ|ファミリーマート|セブン|ローソン|文具|文房具|ダイソー|ホームセンター/i, '消耗品費'],
+  [/電気|ガス|水道/i, '水道光熱費'],
+  [/携帯|ドコモ|au|ソフトバンク|インターネット|プロバイダ/i, '通信費'],
+  [/郵便局|ゆうパック|宅配|佐川|ヤマト運輸/i, '荷造運賃'],
+  [/書店|本屋|Amazon|Kindle|新聞/i, '新聞図書費'],
+  [/飲食店|レストラン|カフェ|居酒屋|食堂/i, '会議費'],
+];
+function suggestAccount(t){ for (const [re, a] of ACCOUNT_RULES) if (re.test(t)) return a; return ''; }
+
+function dashParse(text){
+  const dp = /(\d{4})[年\/\-.](\d{1,2})[月\/\-.](\d{1,2})/;
+  let date = '';
+  const lab = text.match(/(発行日|締め日|ご利用締め日)[:：]?\s*(\d{4}[年\/\-.]\d{1,2}[月\/\-.]\d{1,2})/);
+  const m = (lab ? lab[2] : text).match(dp);
+  if (m) date = m[1] + '-' + String(m[2]).padStart(2, '0') + '-' + String(m[3]).padStart(2, '0');
+  const am = [...text.matchAll(/[¥￥]\s?([0-9][0-9,]{2,})/g)].concat([...text.matchAll(/([0-9][0-9,]{2,})\s?円/g)]);
+  const nums = am.map(x => parseInt(x[1].replace(/,/g, ''), 10)).filter(n => !isNaN(n));
+  const amount = nums.length ? String(Math.max.apply(null, nums)) : '';
+  const LABEL = /^(発行日|締め日|ご利用締め日|お支払い?日|引落日|ご請求金額|合計|明細|請求書|領収書|No\.?|様)/;
+  const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+  const cand = lines.find(l => !LABEL.test(l) && !dp.test(l) && !/^[¥￥0-9,円\s:：]+$/.test(l));
+  const vendor = (cand || '').slice(0, 20);
+  const inv = text.match(/T\s?\d{3}\s?\d{4}\s?\d{4}\s?\d{2}|T\d{13}/);
+  return {date, amount, vendor, invoiceNo: inv ? inv[0].replace(/\s/g, '') : ''};
+}
+const clean = s => String(s || '').replace(/[\\\/:*?"<>|]/g, '').trim() || '未設定';
+function makeName(r, ext){
+  const d = clean(r.date), v = clean(r.vendor), a = clean(r.amount) + '円';
+  let parts = CONFIG.template === 'vendor_date_amount' ? [v, d, a] : CONFIG.template === 'amount_date_vendor' ? [a, d, v] : [d, v, a];
+  if (CONFIG.includeType) parts.push(clean(r.docType));
+  return parts.join('_') + '.' + ext;
+}
+let firstAdd = true;
+async function addFile(file){
+  const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
+  log('info', file.name + ' を読み取っています…(初回は読み取りエンジンの読み込みに数秒かかります)');
+  let p = {date: '', amount: '', vendor: '', invoiceNo: ''}, text = '', failed = false;
+  try {
+    text = (ext === 'pdf' || file.type === 'application/pdf') ? await pdfText(file) : await ocrImage(file);
+    p = dashParse(text);
+  } catch (e) {
+    failed = true;
+  }
+  const r = {date: p.date, vendor: p.vendor, amount: p.amount, docType: 'レシート', account: suggestAccount(p.vendor + ' ' + text),
+    invoiceNo: p.invoiceNo, originalFilename: file.name, folder: p.date ? p.date.slice(0, 7) : '要確認', added: true, ext: ext};
+  r.newFilename = makeName(r, ext);
+  rows.push(r);
+  render();
+  if (failed) {
+    log('warn', file.name + ':読み取りに失敗しました(通信できない環境の可能性があります)。「✎修正」から手で入力できます。');
+  } else {
+    const miss = [];
+    if (!r.date) miss.push('取引年月日'); if (!r.amount) miss.push('金額'); if (!r.vendor) miss.push('取引先');
+    if (miss.length) log('warn', file.name + ':' + miss.join('・') + 'が読み取れませんでした。「✎修正」で入力してください。');
+    else log('ok', file.name + ' を追記しました → ' + r.folder + '/' + r.newFilename);
+  }
+  if (firstAdd) {
+    firstAdd = false;
+    log('info', CONFIG.demo ? 'デモ版のため、追記はこのページ内の表示のみです。正式版ではフォルダに自動保存され、ダッシュボードも自動更新されます。' : '追記しました。');
+  }
+}
+function editRow(r){
+  const d = prompt('取引年月日(例:2026-06-10)', r.date || ''); if (d === null) return;
+  const v = prompt('取引先', r.vendor || ''); if (v === null) return;
+  const a = prompt('金額(数字のみ)', r.amount || ''); if (a === null) return;
+  r.date = d.trim(); r.vendor = v.trim(); r.amount = a.replace(/[^0-9]/g, '');
+  r.folder = /^\d{4}-\d{2}/.test(r.date) ? r.date.slice(0, 7) : '要確認';
+  r.newFilename = makeName(r, r.ext || 'jpg');
+  render();
+  log('ok', '修正しました → ' + r.folder + '/' + r.newFilename);
+}
+async function addFiles(files){ for (const f of files) await addFile(f); }
+
+const drop = $('drop');
+['dragenter', 'dragover'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('over'); }));
+['dragleave', 'drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('over'); }));
+drop.addEventListener('drop', e => addFiles(Array.from(e.dataTransfer.files)));
+$('btnCam').onclick = () => $('inCam').click();
+$('btnPick').onclick = () => $('inPick').click();
+$('inCam').onchange = e => { const f = Array.from(e.target.files); e.target.value = ''; addFiles(f); };
+$('inPick').onchange = e => { const f = Array.from(e.target.files); e.target.value = ''; addFiles(f); };
+
+/* 初期メッセージ */
+(function(){
+  const ms = monthList();
+  const gaps = allMonthsBetween(ms).filter(m => !ms.includes(m));
+  log('info', '登録されている証憑は ' + rows.length + ' 件です。');
+  if (gaps.length) log('warn', gaps.map(g => g.replace('-', '年') + '月').map(x => x.replace('年0', '年')).join('、') + 'のファイルが見当たりません。抜けがないかご確認ください。');
+  else if (ms.length > 1) log('ok', '月の抜けは見つかりませんでした。');
+})();
+render();
+</script>
+</body>
+</html>
+</textarea>
+
 <script src="lib/pdf.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <script>
@@ -999,8 +1524,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = "lib/pdf.worker.min.js";
 
 const MAX_FREE = 10;
 const TESTING_MODE = true; // ← テスト中はtrue。公開時はfalseに戻す(10件制限が復活します)
-const SAVE_ENABLED_FOR_TESTING = true; // ← テスト中はtrue。公開時はfalseに戻す(保存機能が無効化されます)
-const LEDGER_AUTO_EXPIRE_ENABLED = false; // ← テスト中はfalse。公開時はtrueにする(台帳が一定時間で自動削除されます)
+const SAVE_ENABLED_FOR_TESTING = false; // ← デモ公開中はfalse(実際のファイル保存は無効化されます。見せるだけ・体験のみ)
+const LEDGER_AUTO_EXPIRE_ENABLED = true; // ← デモ公開中はtrue(保存ができない分、台帳データは一定時間で自動削除されます)
 const LEDGER_EXPIRE_HOURS = 24; // 公開時、記録からこの時間が経過した台帳データを自動削除
 const dropzone = document.getElementById('dropzone');
 const fileInput = document.getElementById('fileInput');
@@ -1013,6 +1538,8 @@ const limitCard = document.getElementById('limitCard');
 const fDate = document.getElementById('fDate');
 const fVendor = document.getElementById('fVendor');
 const fAmount = document.getElementById('fAmount');
+const fAccount = document.getElementById('fAccount');
+const fInvoiceNo = document.getElementById('fInvoiceNo');
 const fDocType = document.getElementById('fDocType');
 const includeDocType = document.getElementById('includeDocType');
 const filenamePreview = document.getElementById('filenamePreview');
@@ -1394,16 +1921,174 @@ function renderCardList(){
 }
 renderCardList();
 
-btnAddCard.addEventListener('click', ()=>{
-  const name = prompt('カードの呼び方を入力してください(例:楽天カード、au PAYカード)');
-  if(!name || !name.trim()) return;
+/* ---------- 電子取引の事務処理規程の自動生成 ---------- */
+// 国税庁が公開している「電子取引データの訂正及び削除の防止に関する事務処理規程(個人事業者の例)」
+// の一般的な構成を参考にした雛形。実際の運用に合わせて内容の確認・調整を推奨する。
+function buildKiteiText({ name, manager, date }){
+  const n = name || '(屋号・氏名未入力)';
+  const m = manager || n;
+  const d = date || '(施行日未入力)';
+  return `電子取引データの訂正及び削除の防止に関する事務処理規程
+
+事業者名:${n}
+制定日:${d}
+
+第1条(目的)
+本規程は、${n}(以下「本事業者」という。)が行う電子取引の取引情報に係る
+電磁的記録の保存に関して、正当な理由がない訂正及び削除の防止に関する
+事務処理の方法を定め、当該電磁的記録の真実性を確保することを目的とする。
+
+第2条(適用範囲)
+本規程は、本事業者が行うすべての電子取引(電子メールによる請求書等の受領、
+インターネットを通じた取引、クラウドサービスを利用した取引等を含む)に
+より授受した取引情報の電磁的記録について適用する。
+
+第3条(管理責任者)
+本規程に基づく電磁的記録の保存に関する事務の管理責任者は、${m}とする。
+
+第4条(訂正及び削除の原則禁止)
+対象となる取引情報の電磁的記録について、正当な理由なく訂正及び削除を
+行うことは原則として禁止とする。
+
+第5条(訂正削除を行う場合)
+業務処理上やむを得ない理由により電磁的記録を訂正又は削除する必要が
+生じた場合は、以下の情報を記録し、保存することとする。
+  一 訂正・削除を行った日付
+  二 訂正・削除の内容
+  三 訂正・削除を行った理由
+  四 訂正・削除を行った者の氏名
+
+第6条(本規程の改廃)
+本規程の改廃は、管理責任者が行うものとする。
+
+附則
+本規程は、${d}から施行する。
+
+---
+本書は国税庁が公開している個人事業者向けひな形の一般的な構成を参考に、
+電帳DIYが自動生成したものです。実際の運用実態に即しているか、
+国税庁の公式ページ(https://www.nta.go.jp/law/joho-zeikaishaku/sonota/jirei/0021006-031.htm)
+のひな形とあわせてご確認のうえご利用ください。`;
+}
+
+const btnGenKitei = document.getElementById('btnGenKitei');
+const kiteiResult = document.getElementById('kiteiResult');
+const kiteiPreview = document.getElementById('kiteiPreview');
+let currentKiteiText = '';
+
+btnGenKitei.addEventListener('click', ()=>{
+  const name = document.getElementById('kiteiName').value.trim();
+  const manager = document.getElementById('kiteiManager').value.trim();
+  const date = document.getElementById('kiteiDate').value.trim();
+  if(!name){ alert('屋号・氏名を入力してください。'); return; }
+  currentKiteiText = buildKiteiText({ name, manager, date });
+  kiteiPreview.textContent = currentKiteiText;
+  kiteiResult.style.display = 'block';
+});
+
+document.getElementById('btnDownloadKitei').addEventListener('click', ()=>{
+  if(!currentKiteiText) return;
+  const blob = new Blob([currentKiteiText], {type:'text/plain;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `電子取引データの訂正及び削除の防止に関する事務処理規程_${toDateStr(new Date())}.txt`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+});
+
+document.getElementById('btnPrintKitei').addEventListener('click', ()=>{
+  if(!currentKiteiText) return;
+  const win = window.open('', '_blank');
+  if(!win){ alert('ポップアップがブロックされました。ブラウザの設定をご確認ください。'); return; }
+  const escaped = currentKiteiText.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  win.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>事務処理規程</title>
+    <style>body{font-family:'Noto Sans JP',sans-serif; white-space:pre-wrap; line-height:1.9; padding:40px; font-size:14px;}</style>
+    </head><body>${escaped}</body></html>`);
+  win.document.close();
+  win.focus();
+  win.print();
+});
+
+// よく使われるカードの標準的な締め日・支払日プリセット
+// ※各社の会員サイト等で公開されている一般的な設定を元にしています。
+//   実際の締め日・支払日はカードの契約内容により異なる場合がありますので、
+//   最終的にはご自身の会員サイト・利用明細でご確認ください。
+const CARD_PRESETS = [
+  { label:'楽天カード', closingDay:31, paymentDay:27, monthOffset:1, note:'月末締め・翌月27日払い' },
+  { label:'三井住友カード(15日締め)', closingDay:15, paymentDay:10, monthOffset:1, note:'15日締め・翌月10日払い' },
+  { label:'三井住友カード(月末締め)', closingDay:31, paymentDay:26, monthOffset:1, note:'月末締め・翌月26日払い' },
+  { label:'JCBカード', closingDay:15, paymentDay:10, monthOffset:1, note:'15日締め・翌月10日払い' },
+  { label:'MUFGカード(三菱UFJニコス)', closingDay:15, paymentDay:10, monthOffset:1, note:'15日締め・翌月10日払い' },
+  { label:'Amazonカード(三井住友カード発行)', closingDay:31, paymentDay:26, monthOffset:1, note:'月末締め・翌月26日払い' },
+  { label:'dカード', closingDay:15, paymentDay:10, monthOffset:1, note:'15日締め・翌月10日払い' },
+  { label:'イオンカード', closingDay:10, paymentDay:2, monthOffset:1, note:'10日締め・翌月2日払い(最も標準的な設定)' },
+  { label:'au PAYカード', closingDay:10, paymentDay:4, monthOffset:1, note:'10日締め・翌月4日払い(標準的な設定の一例)' },
+  { label:'自分で入力する(その他のカード)', closingDay:null, paymentDay:null, monthOffset:1, note:'締め日・支払日を後から手入力します' },
+];
+
+const cardPresetOverlay = document.getElementById('cardPresetOverlay');
+const cardPresetList = document.getElementById('cardPresetList');
+const btnCardPresetCancel = document.getElementById('btnCardPresetCancel');
+
+function closeCardPresetModal(){
+  cardPresetOverlay.style.display = 'none';
+}
+btnCardPresetCancel.addEventListener('click', closeCardPresetModal);
+cardPresetOverlay.addEventListener('click', (e)=>{
+  if(e.target === cardPresetOverlay) closeCardPresetModal();
+});
+
+function addCardFromPreset(preset){
+  let baseName = preset.label.replace(/\(.*?\)/g, '').trim() || 'カード';
   const r = getCardRegistry();
-  if(r[name.trim()]){ alert('同じ名前のカードが既に登録されています。'); return; }
-  r[name.trim()] = { closingDay: null, paymentDay: null, monthOffset: 1 };
+  let name = baseName;
+  let i = 2;
+  while(r[name]){ name = `${baseName}${i}`; i++; }
+  r[name] = { closingDay: preset.closingDay, paymentDay: preset.paymentDay, monthOffset: preset.monthOffset };
   setCardRegistry(r);
   renderCardList();
   refreshCardSelectOptions();
-});
+}
+
+function openCardPresetModal(){
+  cardPresetList.innerHTML = '';
+  CARD_PRESETS.forEach(preset=>{
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'card-preset-item';
+    const nm = document.createElement('span');
+    nm.className = 'cp-name';
+    nm.textContent = preset.label;
+    const note = document.createElement('span');
+    note.className = 'cp-note';
+    note.textContent = preset.note;
+    btn.appendChild(nm);
+    btn.appendChild(note);
+    btn.addEventListener('click', ()=>{
+      closeCardPresetModal();
+      if(preset.closingDay === null && preset.paymentDay === null){
+        // 自分で入力
+        const name = prompt('カードの呼び方を入力してください(例:〇〇カード)');
+        if(!name || !name.trim()) return;
+        const r = getCardRegistry();
+        if(r[name.trim()]){ alert('同じ名前のカードが既に登録されています。'); return; }
+        r[name.trim()] = { closingDay: null, paymentDay: null, monthOffset: 1 };
+        setCardRegistry(r);
+        renderCardList();
+        refreshCardSelectOptions();
+      } else {
+        addCardFromPreset(preset);
+      }
+    });
+    cardPresetList.appendChild(btn);
+  });
+  cardPresetOverlay.style.display = 'flex';
+}
+
+btnAddCard.addEventListener('click', openCardPresetModal);
 
 /* ---------- 取引先の学習(表記ゆれ・書類種類・支払い方法の補正) ---------- */
 function getLearnMap(){
@@ -1454,6 +2139,7 @@ function learnFromSave(){
   existing.paymentMethod = (fPaymentMethod.value === 'カード' && fCardSelect.value && fCardSelect.value !== '__new__')
     ? fCardSelect.value
     : '現金';
+  if(fAccount.value.trim()) existing.account = fAccount.value.trim();
 
   map[raw] = existing;
   setLearnMap(map);
@@ -1644,7 +2330,7 @@ btnOpenOriginal.addEventListener('click', ()=>{
 
 /* ---------- 書類種類・支払い方法に応じたUI連動 ---------- */
 const statementNote = document.getElementById('statementNote');
-const fieldLabels = document.querySelectorAll('.field-grid .field-label');
+const fieldLabels = document.querySelectorAll('#result .field-grid .field-label');
 const withdrawalLabel = document.getElementById('withdrawalLabel');
 const fWithdrawal = document.getElementById('fWithdrawal');
 const fPaymentMethod = document.getElementById('fPaymentMethod');
@@ -1791,11 +2477,26 @@ async function handleFile(file){
     fDate.value = parsed.date;
     fVendor.value = parsed.vendor;
     fAmount.value = parsed.amount;
+    fInvoiceNo.value = parsed.invoiceNo || '';
+    checkInvoiceFormat(fInvoiceNo.value);
+    fAccount.value = (parsed.learnedEntry && parsed.learnedEntry.account) ? parsed.learnedEntry.account : '';
+    renderAccountSuggestions(`${parsed.vendor} ${text}`);
 
     if(parsed.date){
       clearMissingDateFlag();
     } else {
       flagMissingDate();
+    }
+    {
+      const miss = [];
+      if(!parsed.date) miss.push('取引年月日');
+      if(!parsed.amount) miss.push('金額');
+      if(!parsed.vendor || parsed.vendor === '不明(手入力してください)') miss.push('取引先');
+      if(miss.length){
+        notify('warn', `${file.name}:${miss.join('・')}が読み取れませんでした。画面で入力・修正してください。`);
+      } else {
+        notify('info', `${file.name}:読み取り完了。内容をご確認ください。`, {toast:false});
+      }
     }
 
     // 学習済みの書類種類・支払い方法を自動反映
@@ -1931,10 +2632,15 @@ function parseText(text){
   const learnedEntry = learned ? learned.entry : null;
   if(learnedEntry) vendor = learnedEntry.vendor;
 
+  // インボイス登録番号(T+13桁)の抽出
+  const invoiceMatch = text.match(/T\s?\d{3}\s?\d{4}\s?\d{4}\s?\d{2}|T\d{13}/);
+  const invoiceNo = invoiceMatch ? invoiceMatch[0].replace(/\s/g,'') : '';
+
   return {
     date: date || '',
     amount: amount || '',
     vendor: vendor || '不明(手入力してください)',
+    invoiceNo,
     learnedEntry
   };
 }
@@ -1942,6 +2648,66 @@ function parseText(text){
 function sanitize(s){
   return (s||'').replace(/[\\\/:*?"<>|]/g, '').trim() || '未設定';
 }
+
+/* ---------- 勘定科目の自動サジェスト(簡易キーワード辞書) ---------- */
+// 取引先名・書類種類に含まれるキーワードから、想定される勘定科目を候補表示する。
+// あくまで「よくある対応例」の候補であり、最終的な判断・確定はユーザーが行う。
+const ACCOUNT_KEYWORD_RULES = [
+  [/ガソリン|スタンド|ENEOS|出光|コスモ石油|給油/i, '車両費'],
+  [/タクシー|新幹線|JR|地下鉄|バス|駐車場|ETC|Suica|PASMO|高速道路/i, '旅費交通費'],
+  [/ホテル|旅館|宿泊/i, '旅費交通費'],
+  [/コンビニ|ファミリーマート|セブン|ローソン/i, '消耗品費'],
+  [/文具|文房具|ダイソー|100円|ホームセンター|コーナン|カインズ/i, '消耗品費'],
+  [/電気|ガス|水道/i, '水道光熱費'],
+  [/携帯|ドコモ|au|ソフトバンク|楽天モバイル|インターネット|プロバイダ|Wi-?Fi/i, '通信費'],
+  [/郵便局|ゆうパック|宅配|佐川|ヤマト運輸/i, '荷造運賃'],
+  [/印刷|コピー|製本/i, '印刷製本費'],
+  [/書店|本屋|Amazon|Kindle|新聞/i, '新聞図書費'],
+  [/保険/i, '保険料'],
+  [/家賃|賃貸|不動産/i, '地代家賃'],
+  [/振込手数料|銀行|ATM/i, '支払手数料'],
+  [/広告|宣伝|求人|チラシ/i, '広告宣伝費'],
+  [/AWS|Google|Microsoft|Adobe|Zoom|Notion|サブスク|クラウド|ソフトウェア/i, '支払手数料'],
+  [/飲食店|レストラン|カフェ|居酒屋|食堂/i, '会議費'],
+];
+function suggestAccounts(text){
+  const hits = [];
+  ACCOUNT_KEYWORD_RULES.forEach(([re, account])=>{
+    if(re.test(text) && !hits.includes(account)) hits.push(account);
+  });
+  if(!hits.length){ hits.push('消耗品費', '雑費'); }
+  return hits.slice(0, 3);
+}
+const accountSuggestRow = document.getElementById('accountSuggestRow');
+function renderAccountSuggestions(text){
+  accountSuggestRow.innerHTML = '';
+  suggestAccounts(text).forEach(account=>{
+    const chip = document.createElement('button');
+    chip.type = 'button';
+    chip.className = 'suggest-chip';
+    chip.textContent = account;
+    chip.addEventListener('click', ()=>{
+      fAccount.value = account;
+      learnFromSave();
+    });
+    accountSuggestRow.appendChild(chip);
+  });
+}
+
+/* ---------- インボイス登録番号の形式チェック ---------- */
+// T+13桁の形式かどうかのみを確認する(個人事業者の登録番号にチェックディジットの
+// 公開アルゴリズムはないため、ここでは「形式として妥当か」の確認にとどめる)
+function checkInvoiceFormat(value){
+  const v = (value || '').trim();
+  const msgEl = document.getElementById('invoiceCheckMsg');
+  if(!v){ msgEl.textContent=''; msgEl.className='invoice-check'; return; }
+  const ok = /^T\d{13}$/.test(v);
+  msgEl.textContent = ok
+    ? '✓ T+13桁の正しい形式です'
+    : '⚠ 形式が「T」+数字13桁になっていません(例:T1234567890123)';
+  msgEl.className = 'invoice-check ' + (ok ? 'ok' : 'ng');
+}
+fInvoiceNo.addEventListener('input', ()=> checkInvoiceFormat(fInvoiceNo.value));
 
 /* ---------- 命名ルール設定(電子帳簿保存法の検索要件に準拠) ---------- */
 const ruleOptions = document.getElementById('ruleOptions');
@@ -2012,6 +2778,7 @@ fWithdrawal.addEventListener('blur', ()=>{ normalizeDateInput(fWithdrawal); });
 
 fVendor.addEventListener('blur', learnFromSave);
 fWithdrawal.addEventListener('blur', learnFromSave);
+fAccount.addEventListener('blur', learnFromSave);
 
 /* ---------- 取引年月日をカレンダーから選択する ---------- */
 const btnPickDate = document.getElementById('btnPickDate');
@@ -2048,7 +2815,7 @@ function flagMissingDate(){
     hint.id = 'dateMissingHint';
     hint.className = 'date-missing-hint';
     hint.textContent = '⚠ 日付を読み取れませんでした。📅ボタンから選択するか、直接入力してください。';
-    document.querySelector('.field-grid').insertAdjacentElement('afterend', hint);
+    document.querySelector('#result .field-grid').insertAdjacentElement('afterend', hint);
   }
 }
 function clearMissingDateFlag(){
@@ -2061,6 +2828,10 @@ btnReset.addEventListener('click', ()=>{
   result.classList.remove('show');
   stampEl.classList.remove('pop');
   fileInput.value = '';
+  fAccount.value = '';
+  fInvoiceNo.value = '';
+  accountSuggestRow.innerHTML = '';
+  checkInvoiceFormat('');
   setStatus('', false);
 });
 
@@ -2079,10 +2850,31 @@ function formatDateTime(d){
 function ledgerDedupKey(r){
   return [r.newFilename, r.date, r.vendor, r.amount, r.docType, r.paymentMethod].join('|');
 }
+function newLedgerId(){
+  return (crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`);
+}
+
+/* ---------- 台帳の編集・削除履歴(簡易監査ログ) ---------- */
+// 削除されたエントリは台帳からは消えるが、「いつ・何が削除されたか」という記録だけは
+// 別の監査ログに残す(電帳法の「訂正削除の履歴が残る」要件に沿った簡易実装)
+function getLedgerAudit(){
+  try{ return JSON.parse(localStorage.getItem('denshou_ledger_audit') || '[]'); }
+  catch(e){ return []; }
+}
+function setLedgerAudit(arr){
+  localStorage.setItem('denshou_ledger_audit', JSON.stringify(arr));
+}
+function appendAudit(action, detail){
+  const audit = getLedgerAudit();
+  audit.push({ ts: formatDateTime(new Date()), action, detail });
+  setLedgerAudit(audit);
+}
+
 function recordToLedger(){
   const ledger = getLedger();
   const now = new Date();
   const entry = {
+    id: newLedgerId(),
     processedAt: formatDateTime(now),
     recordedAtTs: now.getTime(), // 自動削除の判定用(表示形式によらず正確に計算するため)
     originalFilename: currentFile ? currentFile.name : '',
@@ -2091,7 +2883,11 @@ function recordToLedger(){
     vendor: fVendor.value,
     amount: fAmount.value,
     docType: fDocType.value,
-    paymentMethod: (fPaymentMethod.value === 'カード' && fCardSelect.value && fCardSelect.value !== '__new__') ? fCardSelect.value : '現金'
+    paymentMethod: (fPaymentMethod.value === 'カード' && fCardSelect.value && fCardSelect.value !== '__new__') ? fCardSelect.value : '現金',
+    account: fAccount.value || '',
+    invoiceNo: fInvoiceNo.value || '',
+    folder: '',
+    history: []
   };
 
   // 既に全く同じ内容が台帳にあれば、重複として追加しない
@@ -2105,6 +2901,46 @@ function recordToLedger(){
   setLedger(ledger);
   renderLedgerTable();
   return true;
+}
+
+const LEDGER_EDIT_FIELDS = [
+  ['date','取引年月日'], ['vendor','取引先'], ['amount','金額'],
+  ['docType','書類種類'], ['paymentMethod','支払い方法'],
+  ['account','勘定科目'], ['invoiceNo','インボイス番号']
+];
+
+function updateLedgerEntry(id, newValues){
+  const ledger = getLedger();
+  const idx = ledger.findIndex(r => r.id === id);
+  if(idx === -1) return;
+  const before = ledger[idx];
+  const changes = {};
+  LEDGER_EDIT_FIELDS.forEach(([key])=>{
+    const nv = (newValues[key] ?? '').trim();
+    const ov = (before[key] ?? '').trim();
+    if(nv !== ov) changes[key] = { from: ov, to: nv };
+  });
+  if(Object.keys(changes).length === 0) return; // 変更なしなら履歴に残さない
+  const history = Array.isArray(before.history) ? before.history.slice() : [];
+  history.push({ ts: formatDateTime(new Date()), action:'編集', changes });
+  const updated = { ...before, ...newValues, history };
+  ledger[idx] = updated;
+  setLedger(ledger);
+  renderLedgerTable();
+}
+
+function deleteLedgerEntry(id){
+  const ledger = getLedger();
+  const idx = ledger.findIndex(r => r.id === id);
+  if(idx === -1) return;
+  const entry = ledger[idx];
+  appendAudit('削除', {
+    newFilename: entry.newFilename, date: entry.date, vendor: entry.vendor,
+    amount: entry.amount, docType: entry.docType
+  });
+  ledger.splice(idx, 1);
+  setLedger(ledger);
+  renderLedgerTable();
 }
 
 // 公開時(LEDGER_AUTO_EXPIRE_ENABLED=true)、記録から一定時間経過した台帳データを自動削除する
@@ -2121,6 +2957,13 @@ function pruneExpiredLedgerEntries(){
 const ledgerTbody = document.getElementById('ledgerTbody');
 const ledgerEmpty = document.getElementById('ledgerEmpty');
 const ledgerCount = document.getElementById('ledgerCount');
+function describeChanges(changes){
+  return Object.entries(changes).map(([k,v])=>{
+    const label = (LEDGER_EDIT_FIELDS.find(([key])=>key===k) || [,k])[1];
+    return `・${label}:「${v.from || '(空欄)'}」→「${v.to || '(空欄)'}」`;
+  }).join('\n');
+}
+
 function renderLedgerTable(){
   const ledger = getLedger();
   ledgerCount.textContent = `現在 ${ledger.length} 件 記録されています`;
@@ -2129,14 +2972,95 @@ function renderLedgerTable(){
   // 新しいものを上に表示
   [...ledger].reverse().forEach(r=>{
     const tr = document.createElement('tr');
-    [r.processedAt, r.originalFilename, r.newFilename, r.date, r.vendor, `${r.amount}円`, r.docType, r.paymentMethod]
+    [r.processedAt, r.originalFilename, r.newFilename, r.date, r.vendor, `${r.amount}円`, r.docType, r.paymentMethod, r.account, r.invoiceNo]
       .forEach(v=>{
         const td = document.createElement('td');
         td.textContent = v || '';
         tr.appendChild(td);
       });
+
+    // 履歴列:編集履歴があれば件数付きで表示、クリックで詳細をトグル
+    const historyTd = document.createElement('td');
+    const hist = Array.isArray(r.history) ? r.history : [];
+    const histBtn = document.createElement('button');
+    histBtn.type = 'button';
+    histBtn.className = 'history-toggle';
+    histBtn.textContent = hist.length ? `変更${hist.length}件` : 'なし';
+    if(hist.length){
+      histBtn.addEventListener('click', ()=>{
+        const existing = tr.querySelector('.history-pop');
+        if(existing){ existing.remove(); return; }
+        const pop = document.createElement('div');
+        pop.className = 'history-pop';
+        pop.textContent = hist.map(h=>`[${h.ts}] ${h.action}\n${describeChanges(h.changes)}`).join('\n\n');
+        historyTd.appendChild(pop);
+      });
+    }
+    historyTd.appendChild(histBtn);
+    tr.appendChild(historyTd);
+
+    // 操作列:編集・削除
+    const opTd = document.createElement('td');
+    const editBtn = document.createElement('button');
+    editBtn.type = 'button';
+    editBtn.className = 'history-toggle';
+    editBtn.textContent = '✎編集';
+    editBtn.addEventListener('click', ()=> startLedgerRowEdit(tr, r));
+    const delBtn = document.createElement('button');
+    delBtn.type = 'button';
+    delBtn.className = 'history-toggle';
+    delBtn.style.color = '#B45309';
+    delBtn.textContent = '🗑削除';
+    delBtn.addEventListener('click', ()=>{
+      if(!confirm(`この記録を削除します(取引先:${r.vendor} / 金額:${r.amount}円)。\n削除したという記録自体は監査ログに残ります。よろしいですか?`)) return;
+      deleteLedgerEntry(r.id);
+    });
+    opTd.appendChild(editBtn);
+    opTd.appendChild(document.createTextNode(' '));
+    opTd.appendChild(delBtn);
+    tr.appendChild(opTd);
+
     ledgerTbody.appendChild(tr);
   });
+}
+
+// 台帳の行をその場で編集可能にする(保存すると差分が履歴として記録される)
+function startLedgerRowEdit(tr, entry){
+  const cells = tr.querySelectorAll('td');
+  // 列構成:0処理日時 1元ファイル名 2新ファイル名 3日付 4取引先 5金額 6書類種類 7支払い方法 8勘定科目 9インボイス番号 10履歴 11操作
+  const editableIdx = { date:3, vendor:4, amount:5, docType:6, paymentMethod:7, account:8, invoiceNo:9 };
+  const inputs = {};
+  Object.entries(editableIdx).forEach(([key, idx])=>{
+    const td = cells[idx];
+    const current = key === 'amount' ? String(entry.amount||'') : (entry[key] || '');
+    td.innerHTML = '';
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.value = current;
+    input.style.width = '100%';
+    input.style.fontSize = '12px';
+    td.appendChild(input);
+    inputs[key] = input;
+  });
+  const opTd = cells[11];
+  opTd.innerHTML = '';
+  const saveBtn = document.createElement('button');
+  saveBtn.type = 'button';
+  saveBtn.className = 'history-toggle';
+  saveBtn.textContent = '✓保存';
+  saveBtn.addEventListener('click', ()=>{
+    const newValues = {};
+    Object.entries(inputs).forEach(([key, input])=>{ newValues[key] = input.value; });
+    updateLedgerEntry(entry.id, newValues);
+  });
+  const cancelBtn = document.createElement('button');
+  cancelBtn.type = 'button';
+  cancelBtn.className = 'history-toggle';
+  cancelBtn.textContent = '✕キャンセル';
+  cancelBtn.addEventListener('click', renderLedgerTable);
+  opTd.appendChild(saveBtn);
+  opTd.appendChild(document.createTextNode(' '));
+  opTd.appendChild(cancelBtn);
 }
 pruneExpiredLedgerEntries();
 renderLedgerTable();
@@ -2152,8 +3076,8 @@ if(LEDGER_AUTO_EXPIRE_ENABLED){
 
 document.getElementById('btnExportCSV').addEventListener('click', ()=>{
   const ledger = getLedger();
-  const headers = ['処理日時','元のファイル名','新しいファイル名','取引年月日','取引先','金額','書類種類','支払い方法'];
-  const rows = ledger.map(r=>[r.processedAt, r.originalFilename, r.newFilename, r.date, r.vendor, r.amount, r.docType, r.paymentMethod]);
+  const headers = ['処理日時','元のファイル名','新しいファイル名','取引年月日','取引先','金額','書類種類','支払い方法','勘定科目','インボイス番号'];
+  const rows = ledger.map(r=>[r.processedAt, r.originalFilename, r.newFilename, r.date, r.vendor, r.amount, r.docType, r.paymentMethod, r.account||'', r.invoiceNo||'']);
   const csvBody = [headers, ...rows]
     .map(row => row.map(v => `"${String(v ?? '').replace(/"/g,'""')}"`).join(','))
     .join('\r\n');
@@ -2195,6 +3119,546 @@ document.getElementById('btnClearLedger').addEventListener('click', ()=>{
   if(!confirm('台帳の記録をすべて削除します。よろしいですか?(この操作は取り消せません)')) return;
   setLedger([]);
   renderLedgerTable();
+});
+
+document.getElementById('btnCheckGaps').addEventListener('click', ()=>{
+  const dates = getLedger().map(r=>r.date);
+  if(dates.filter(d=>/^\d{4}-\d{2}/.test(d)).length < 2){
+    notify('info', '台帳の件数が少ないため、月の抜けは判定できません。');
+  } else {
+    reportMissingMonths(dates, '台帳全体');
+  }
+  document.getElementById('reportList').scrollIntoView({behavior:'smooth', block:'center'});
+});
+
+document.getElementById('btnShowAudit').addEventListener('click', ()=>{
+  const panel = document.getElementById('auditLogPanel');
+  if(panel.style.display !== 'none'){ panel.style.display = 'none'; return; }
+  const audit = getLedgerAudit();
+  if(!audit.length){
+    panel.textContent = '削除の記録はまだありません。';
+  } else {
+    panel.textContent = audit.slice().reverse().map(a=>
+      `[${a.ts}] ${a.action} — 取引先:${a.detail.vendor||''} / 金額:${a.detail.amount||''}円 / 書類:${a.detail.docType||''} / ファイル名:${a.detail.newFilename||''}`
+    ).join('\n');
+  }
+  panel.style.display = 'block';
+});
+
+/* ---------- 通知・処理レポート ---------- */
+const reportListEl = document.getElementById('reportList');
+const reportEmptyEl = document.getElementById('reportEmpty');
+const toastBox = document.getElementById('toastBox');
+// level: 'info' | 'ok' | 'warn'。ログに残し、画面右下にも短く表示する
+function notify(level, message, {toast = true} = {}){
+  reportEmptyEl.style.display = 'none';
+  const item = document.createElement('div');
+  item.className = `report-item ${level}`;
+  const t = document.createElement('span');
+  t.className = 'rt';
+  t.textContent = formatDateTime(new Date()).slice(11);
+  item.appendChild(t);
+  item.appendChild(document.createTextNode(message));
+  reportListEl.appendChild(item);
+  reportListEl.scrollTop = reportListEl.scrollHeight;
+  if(toast){
+    const el = document.createElement('div');
+    el.className = `toast ${level}`;
+    el.textContent = message;
+    toastBox.appendChild(el);
+    while(toastBox.children.length > 3) toastBox.firstChild.remove();
+    setTimeout(()=> el.remove(), level === 'warn' ? 7000 : 4500);
+  }
+}
+document.getElementById('btnClearReport').addEventListener('click', ()=>{
+  reportListEl.querySelectorAll('.report-item').forEach(e=>e.remove());
+  reportEmptyEl.style.display = 'block';
+});
+
+// 日付(YYYY-MM-DD)のリストから、最古〜最新の間で1件もない月を返す
+function findMissingMonths(dates){
+  const months = [...new Set(dates.filter(d=>/^\d{4}-\d{2}/.test(d)).map(d=>d.slice(0,7)))].sort();
+  if(months.length < 2) return [];
+  const missing = [];
+  let [y, m] = months[0].split('-').map(Number);
+  const [ey, em] = months[months.length-1].split('-').map(Number);
+  while(y < ey || (y === ey && m <= em)){
+    const key = `${y}-${String(m).padStart(2,'0')}`;
+    if(!months.includes(key)) missing.push(key);
+    m++; if(m > 12){ m = 1; y++; }
+  }
+  return missing;
+}
+function formatMissingMonths(missing){
+  return missing.map(k=>{ const [y,m] = k.split('-'); return `${y}年${Number(m)}月`; }).join('、');
+}
+function reportMissingMonths(dates, label){
+  const missing = findMissingMonths(dates);
+  if(missing.length){
+    notify('warn', `${label}:${formatMissingMonths(missing)}のファイルが見当たりません。抜けがないかご確認ください。`);
+  } else if(dates.length){
+    notify('ok', `${label}:月の抜けは見つかりませんでした。`);
+  }
+}
+
+/* ---------- 過去ファイルの一括整理モード ---------- */
+const BULK_REVIEW_FOLDER = '要確認';
+const BULK_EXTS = ['jpg','jpeg','png','webp','gif','bmp','pdf'];
+const $id = id => document.getElementById(id);
+
+function computeFilenameParts(date, vendor, amount, docType, ext){
+  const template = document.querySelector('input[name="namingRule"]:checked').value;
+  const d = sanitize(date);
+  const v = sanitize(vendor);
+  const a = `${sanitize(amount)}円`;
+  let parts;
+  if(template === 'vendor_date_amount'){ parts = [v, d, a]; }
+  else if(template === 'amount_date_vendor'){ parts = [a, d, v]; }
+  else { parts = [d, v, a]; }
+  if(includeDocType.checked) parts.push(sanitize(docType));
+  return `${parts.join('_')}.${ext}`;
+}
+
+// 同名ファイルがあれば「_2」「_3」を付けて重複を避ける
+async function uniqueFileName(dirHandle, name){
+  const dot = name.lastIndexOf('.');
+  const base = dot > 0 ? name.slice(0, dot) : name;
+  const ext = dot > 0 ? name.slice(dot) : '';
+  let candidate = name, i = 2;
+  while(true){
+    try{ await dirHandle.getFileHandle(candidate); }
+    catch(e){ return candidate; } // NotFoundError → 使える
+    candidate = `${base}_${i++}${ext}`;
+  }
+}
+async function getNestedDir(root, segs){
+  let d = root;
+  for(const seg of segs){ d = await d.getDirectoryHandle(seg, {create:true}); }
+  return d;
+}
+async function writeCopyPath(root, segs, filename, file){
+  const dir = await getNestedDir(root, segs);
+  const finalName = await uniqueFileName(dir, filename);
+  const fh = await dir.getFileHandle(finalName, {create:true});
+  const w = await fh.createWritable();
+  await w.write(file);
+  await w.close();
+  return finalName;
+}
+
+const SUSPICIOUS_VENDOR = /^(発行日|締め日|ご利用締め日|お支払い?日|引落日|ご請求金額|合計|明細|請求書|領収書|No\.?|様)/;
+
+// ファイル名に「日付・取引先・金額」がすでに入っていれば、検索できる名前とみなす
+function nameAlreadySearchable(name, parsed){
+  const base = name.replace(/\.[^.]+$/, '');
+  const digits = base.replace(/[^0-9]/g, '');
+  const dateOk = base.includes(parsed.date) || digits.includes(parsed.date.replace(/-/g, ''));
+  const amtRe = new RegExp('(^|[^0-9])' + String(parsed.amount).replace(/[^0-9]/g,'') + '(?![0-9])');
+  const amtOk = amtRe.test(base.replace(/,/g, ''));
+  const vendorOk = base.includes(parsed.vendor);
+  return dateOk && amtOk && vendorOk;
+}
+
+// フォルダを再帰的に走査(サブフォルダも対象)
+async function scanFolder(dirHandle, relSegs = [], out = [], stat = {skipped:0}, depth = 0){
+  for await (const [name, handle] of dirHandle.entries()){
+    if(name.startsWith('.')) continue;
+    if(handle.kind === 'directory'){
+      if(depth < 8) await scanFolder(handle, [...relSegs, name], out, stat, depth + 1);
+    } else {
+      const ext = (name.split('.').pop() || '').toLowerCase();
+      if(BULK_EXTS.includes(ext)) out.push({file: await handle.getFile(), relSegs});
+      else stat.skipped++;
+    }
+  }
+  return {items: out, stat};
+}
+
+// 1件を読み取り、整理後の名前・振り分け先・問題点を判定する(この段階ではファイルを書き出さない)
+async function analyzeBulkItem(item){
+  const { file, relSegs } = item;
+  const ext = (file.name.split('.').pop() || 'txt').toLowerCase();
+  const text = (file.type === 'application/pdf' || ext === 'pdf') ? await extractFromPdf(file) : await extractFromImage(file);
+  const parsed = parseText(text);
+  const isoDate = /^\d{4}-\d{2}-\d{2}$/.test(parsed.date);
+  const hasVendor = !!parsed.vendor && parsed.vendor !== '不明(手入力してください)';
+  const suspiciousVendor = hasVendor && SUSPICIOUS_VENDOR.test(parsed.vendor);
+  const problems = [];
+  if(!text.replace(/\s/g,'')) problems.push('文字がほとんど読み取れませんでした(画像が不鮮明・白紙の可能性)');
+  else {
+    if(!parsed.date) problems.push('取引年月日が読み取れませんでした');
+    else if(!isoDate) problems.push(`取引年月日「${parsed.date}」を年月に変換できませんでした(和暦など)`);
+    if(!parsed.amount) problems.push('金額が読み取れませんでした');
+    if(!hasVendor) problems.push('取引先が読み取れませんでした');
+    else if(suspiciousVendor) problems.push(`取引先が「${parsed.vendor}」と読まれました(項目名の誤読の可能性)`);
+  }
+  const confident = problems.length === 0;
+  const a = { file, relSegs, ext, text, parsed, problems, confident };
+  if(confident){
+    a.docType = (parsed.learnedEntry && parsed.learnedEntry.docType) || 'レシート';
+    a.sub = parsed.date.slice(0, 7);
+    a.alreadyOk = nameAlreadySearchable(file.name, parsed);
+    a.newFilename = a.alreadyOk ? file.name : computeFilenameParts(parsed.date, parsed.vendor, parsed.amount, a.docType, ext);
+    a.account = (parsed.learnedEntry && parsed.learnedEntry.account) || suggestAccounts(`${parsed.vendor} ${text}`)[0] || '';
+    const probe = { newFilename:a.newFilename, date:parsed.date, vendor:parsed.vendor, amount:parsed.amount, docType:a.docType, paymentMethod:'現金' };
+    a.isDup = getLedger().some(r => ledgerDedupKey(r) === ledgerDedupKey(probe));
+  }
+  return a;
+}
+
+function destSegsFor(a, mode){
+  if(!a.confident) return [BULK_REVIEW_FOLDER];
+  if(mode === 'keep' && a.relSegs.length) return a.relSegs;
+  return [a.sub];
+}
+const segPath = (segs, name) => (segs.length ? segs.join('/') + '/' : '') + name;
+
+// 整理プランをメッセージで見せ、了承された場合だけ先へ進む(キャンセル時はnull)
+function showBulkPlan(analyses, {canWrite, topDirs}){
+  return new Promise(resolve=>{
+    const box = $id('bulkPlan');
+    box.innerHTML = '';
+    box.style.display = 'block';
+    const hasSub = analyses.some(a => a.relSegs.length > 0);
+    const ok = analyses.filter(a => a.confident);
+    const nSub = analyses.filter(a => a.relSegs.length).length;
+    const nKeepName = ok.filter(a => a.alreadyOk).length;
+    const renamed = ok.filter(a => !a.alreadyOk);
+    const review = analyses.filter(a => !a.confident);
+    const dup = ok.filter(a => a.isDup);
+    const missing = findMissingMonths(ok.map(a => a.parsed.date));
+
+    const h = document.createElement('h4');
+    h.textContent = '📋 整理プランの確認(まだ何も変更していません)';
+    box.appendChild(h);
+    const addMsg = (text, warn) => {
+      const d = document.createElement('div');
+      d.className = 'plan-msg' + (warn ? ' warn' : '');
+      d.textContent = text;
+      box.appendChild(d);
+    };
+    addMsg(`📂 ${analyses.length}件の画像・PDFを見つけました` + (hasSub ? `(うち${nSub}件はサブフォルダの中)。` : '。'));
+    if(topDirs.length){
+      addMsg(`📁 既存のフォルダ:${topDirs.slice(0,6).join('、')}${topDirs.length > 6 ? ` ほか${topDirs.length-6}個` : ''}`);
+    }
+    addMsg(`✅ ${nKeepName}件は、日付・取引先・金額がすでにファイル名に入っているため、名前は変えません。`);
+    if(renamed.length){
+      const ex = renamed[0];
+      addMsg(`✏️ ${renamed.length}件は、ファイル名から検索できない状態です(例:${ex.file.name} → ${ex.newFilename})。検索できる名前に整えます。`);
+    } else {
+      addMsg('✏️ リネームが必要なファイルはありません。');
+    }
+    if(review.length) addMsg(`⚠ ${review.length}件は読み取れない項目があるため、「${BULK_REVIEW_FOLDER}」フォルダに入れます(理由は処理レポートに表示します)。`, true);
+    if(dup.length) addMsg(`♻ ${dup.length}件は、同じ内容がすでに台帳にあるため、重複として追加しません。`);
+    if(missing.length) addMsg(`📅 ${formatMissingMonths(missing)}のファイルが見当たりません。抜けがないかご確認ください。`, true);
+    addMsg('📌 元のファイルは変更・削除せず残します(新しい名前のコピーを書き出します)。');
+    addMsg(canWrite ? '💾 「01 保存先」のフォルダの中に書き出します。' : '🔒 デモ版のため、実際の書き出しは行わず、振り分け結果のプレビューと台帳記録のみ行います。', !canWrite);
+
+    const opts = document.createElement('div');
+    opts.className = 'plan-opts';
+    const mk = (value, label, checked) => {
+      const l = document.createElement('label');
+      const r = document.createElement('input');
+      r.type = 'radio'; r.name = 'bulkMode'; r.value = value; r.checked = checked;
+      l.appendChild(r);
+      l.appendChild(document.createTextNode(label));
+      opts.appendChild(l);
+      r.addEventListener('change', renderList);
+    };
+    mk('keep', '今のフォルダ構成を維持し、ファイル名だけ整える(フォルダの外にあるファイルは年月フォルダへ)', hasSub);
+    mk('month', 'すべて「年月」フォルダ(例:2026-09)に再構成する', !hasSub);
+    box.appendChild(opts);
+
+    const list = document.createElement('div');
+    list.className = 'plan-list';
+    box.appendChild(list);
+    const getMode = () => box.querySelector('input[name="bulkMode"]:checked').value;
+    function renderList(){
+      list.innerHTML = '';
+      const mode = getMode();
+      analyses.slice(0, 60).forEach(a=>{
+        const d = document.createElement('div');
+        const src = segPath(a.relSegs, a.file.name);
+        const dst = segPath(destSegsFor(a, mode), a.confident ? a.newFilename : a.file.name);
+        d.textContent = `${src} → ${dst}${a.confident ? '' : '  ⚠'}`;
+        list.appendChild(d);
+      });
+      if(analyses.length > 60){
+        const d = document.createElement('div');
+        d.textContent = `…ほか ${analyses.length - 60} 件`;
+        list.appendChild(d);
+      }
+    }
+    renderList();
+
+    const actions = document.createElement('div');
+    actions.className = 'plan-actions';
+    const go = document.createElement('button');
+    go.type = 'button'; go.textContent = 'この内容で実行する';
+    const cancel = document.createElement('button');
+    cancel.type = 'button'; cancel.className = 'ghost'; cancel.textContent = 'キャンセル(何も変更しません)';
+    actions.appendChild(go); actions.appendChild(cancel);
+    box.appendChild(actions);
+    box.scrollIntoView({behavior:'smooth', block:'center'});
+
+    go.addEventListener('click', ()=>{ const m = getMode(); box.style.display = 'none'; resolve({mode: m}); });
+    cancel.addEventListener('click', ()=>{ box.style.display = 'none'; resolve(null); });
+  });
+}
+
+async function runBulk(items, {sourceRoot = null} = {}){
+  const queueEl = $id('bulkQueue');
+  queueEl.innerHTML = '';
+  const summaryEl = $id('bulkSummary');
+  summaryEl.style.display = 'none';
+  $id('bulkPlan').style.display = 'none';
+
+  let canWrite = SAVE_ENABLED_FOR_TESTING && !!savedDirHandle;
+  if(canWrite){
+    try{
+      const perm = await savedDirHandle.queryPermission({mode:'readwrite'});
+      if(perm !== 'granted' && (await savedDirHandle.requestPermission({mode:'readwrite'})) !== 'granted') canWrite = false;
+    }catch(e){ canWrite = false; }
+  }
+  if(SAVE_ENABLED_FOR_TESTING && !savedDirHandle){
+    notify('warn', '保存先フォルダが未設定のため、書き出しは行いません。「01 保存先を設定する」で設定してください。');
+  }
+  notify('info', `一括整理を開始します(${items.length}件)。まず内容を読み取って、整理プランをお見せします(この段階ではファイルを変更しません)。`, {toast:false});
+
+  // ① 読み取り・解析
+  const rows = items.map(it=>{
+    const row = document.createElement('div');
+    row.className = 'bulk-item';
+    const nameSpan = document.createElement('span');
+    nameSpan.className = 'bi-name';
+    nameSpan.textContent = segPath(it.relSegs, it.file.name);
+    const statusSpan = document.createElement('span');
+    statusSpan.className = 'bi-status';
+    statusSpan.textContent = '待機中…';
+    row.appendChild(nameSpan); row.appendChild(statusSpan);
+    queueEl.appendChild(row);
+    return { it, row, statusSpan, a: null };
+  });
+  let errorCount = 0, skipCount = 0;
+  for(const r of rows){
+    if(!TESTING_MODE && getUsedCount() >= MAX_FREE){
+      r.statusSpan.textContent = '体験版の上限のためスキップ'; r.row.classList.add('warn'); skipCount++; continue;
+    }
+    r.statusSpan.textContent = '読み取り中…';
+    try{
+      r.a = await analyzeBulkItem(r.it);
+      r.statusSpan.textContent = r.a.confident ? '読み取り完了' : `⚠ ${r.a.problems[0]}`;
+      if(!r.a.confident) r.row.classList.add('warn');
+    }catch(err){
+      console.error(err);
+      r.statusSpan.textContent = '✕ 読み取りに失敗しました';
+      r.row.classList.add('warn');
+      errorCount++;
+      notify('warn', `${segPath(r.it.relSegs, r.it.file.name)}:読み取り中にエラーが発生しました。ファイルが壊れていないかご確認ください。`);
+    }
+  }
+  const analyses = rows.filter(r=>r.a).map(r=>r.a);
+  if(!analyses.length){
+    notify('warn', '読み取れるファイルがありませんでした。');
+    return;
+  }
+
+  // ② 整理プランの確認
+  const topDirs = [...new Set(analyses.filter(a=>a.relSegs.length).map(a=>a.relSegs[0]))];
+  const decision = await showBulkPlan(analyses, {canWrite, topDirs});
+  if(!decision){
+    notify('info', 'キャンセルしました。ファイルも台帳も変更していません。');
+    rows.forEach(r=>{ if(r.a){ r.statusSpan.textContent = '(キャンセル)'; r.row.classList.remove('warn'); } });
+    return;
+  }
+  const mode = decision.mode;
+  notify('info', `プランを確認しました(${mode === 'keep' ? '今のフォルダ構成を維持' : '年月フォルダに再構成'})。処理を実行します。`, {toast:false});
+
+  // ③ 実行
+  let sameRoot = false;
+  if(canWrite && sourceRoot){ try{ sameRoot = await sourceRoot.isSameEntry(savedDirHandle); }catch(e){} }
+  let autoCount = 0, reviewCount = 0, dupCount = 0, renameCount = 0, keepCount = 0;
+  const okDates = [];
+
+  for(const r of rows){
+    const a = r.a;
+    if(!a) continue;
+    const srcPath = segPath(a.relSegs, a.file.name);
+    const segs = destSegsFor(a, mode);
+
+    if(a.confident){
+      const entry = {
+        id: newLedgerId(),
+        processedAt: formatDateTime(new Date()),
+        recordedAtTs: Date.now(),
+        originalFilename: a.file.name,
+        newFilename: a.newFilename,
+        date: a.parsed.date,
+        vendor: a.parsed.vendor,
+        amount: a.parsed.amount,
+        docType: a.docType,
+        paymentMethod: '現金',
+        account: a.account,
+        invoiceNo: a.parsed.invoiceNo || '',
+        folder: segs.join('/'),
+        history: []
+      };
+      const ledger = getLedger();
+      const key = ledgerDedupKey(entry);
+      okDates.push(a.parsed.date);
+      if(ledger.some(x => ledgerDedupKey(x) === key)){
+        r.statusSpan.textContent = '既に台帳にあり(重複スキップ)';
+        dupCount++;
+        notify('info', `${srcPath}:同じ内容が台帳に既にあるためスキップしました。`, {toast:false});
+        continue;
+      }
+      let written = a.newFilename;
+      if(canWrite){
+        const samePlace = sameRoot && segs.join('/') === a.relSegs.join('/') && a.newFilename === a.file.name;
+        if(!samePlace){
+          try{ written = await writeCopyPath(savedDirHandle, segs, a.newFilename, a.file); }
+          catch(e){
+            console.error(e);
+            notify('warn', `${srcPath}:書き出しに失敗しました(${e.name})。台帳への記録は行いません。`);
+            r.statusSpan.textContent = '✕ 書き出し失敗'; r.row.classList.add('warn'); errorCount++;
+            continue;
+          }
+        }
+      }
+      entry.newFilename = written;
+      ledger.push(entry);
+      setLedger(ledger);
+      const dest = segPath(segs, written);
+      r.statusSpan.textContent = `✓ ${canWrite ? '書き出し' : '振り分け(プレビュー)'}:${dest}`;
+      r.row.classList.remove('warn'); r.row.classList.add('done');
+      autoCount++;
+      if(a.alreadyOk) keepCount++; else renameCount++;
+      setUsedCount(getUsedCount() + 1);
+      refreshQuota();
+      if(!entry.invoiceNo && /インボイス|登録番号/.test(a.text)){
+        notify('warn', `${srcPath}:インボイス登録番号の記載がありそうですが、番号(T+13桁)を読み取れませんでした。`, {toast:false});
+      }
+      notify('ok', `${srcPath} → ${dest}${a.alreadyOk ? '(名前は変更なし)' : ''}`, {toast:false});
+    } else {
+      reviewCount++;
+      r.row.style.cursor = 'pointer';
+      r.row.title = 'クリックで内容を確認・修正できます';
+      r.row.addEventListener('click', ()=>{
+        $id('dropzone').scrollIntoView({behavior:'smooth', block:'center'});
+        handleFile(a.file);
+      });
+      let note;
+      if(canWrite){
+        try{ await writeCopyPath(savedDirHandle, [BULK_REVIEW_FOLDER], a.file.name, a.file); note = `「${BULK_REVIEW_FOLDER}」フォルダへコピーしました。`; }
+        catch(e){ console.error(e); note = `「${BULK_REVIEW_FOLDER}」へのコピーに失敗しました。`; }
+      } else {
+        note = `(「${BULK_REVIEW_FOLDER}」フォルダに振り分け予定)`;
+      }
+      r.statusSpan.textContent = `⚠ 要確認:${a.problems[0]}`;
+      notify('warn', `${srcPath}:${a.problems.join(' / ')}。${note}`);
+    }
+  }
+
+  renderLedgerTable();
+  summaryEl.style.display = 'block';
+  summaryEl.textContent = `完了:自動整理 ${autoCount}件(うち名前変更 ${renameCount}件・変更なし ${keepCount}件) / 要確認 ${reviewCount}件 / 重複スキップ ${dupCount}件 / 失敗 ${errorCount + 0}件` +
+    (skipCount ? ` / 体験版上限のためスキップ ${skipCount}件` : '');
+  notify(reviewCount || errorCount ? 'warn' : 'ok', `一括整理が完了しました。${summaryEl.textContent.replace('完了:','')}`);
+  reportMissingMonths(okDates, '今回の処理分');
+  notify('info', '続けて、右上の「📊 電帳ダッシュボードを作成」で、検索できる一覧ページを作れます。');
+  showBulkCta();
+}
+
+// デモ版では、ここまでの体験の次の一歩(正式版)を案内する
+function showBulkCta(){
+  if(SAVE_ENABLED_FOR_TESTING) return;
+  const old = $id('bulkCta'); if(old) old.remove();
+  const box = document.createElement('div');
+  box.id = 'bulkCta';
+  box.className = 'cta-box';
+  box.innerHTML = '<b>🔒 ここまでがデモ版です。</b>実際の書き出しは行っていません。正式版(¥8,000 買い切り)では、' +
+    '整理した結果をそのままフォルダに書き出し、検索できる「電帳ダッシュボード」をフォルダの先頭に自動作成・更新します。' +
+    '撮影した写真をドラッグ&ドロップするだけで、リネーム・保存・ダッシュボードへの追記までが自動で終わります。';
+  $id('bulkSummary').insertAdjacentElement('afterend', box);
+}
+
+$id('btnBulkPick').addEventListener('click', ()=> $id('bulkFileInput').click());
+$id('bulkFileInput').addEventListener('change', (e)=>{
+  const files = [...e.target.files];
+  e.target.value = '';
+  if(!files.length) return;
+  runBulk(files.map(file=>({file, relSegs:[]})));
+});
+
+// フォルダを選び、サブフォルダの中も含めて画像・PDFをすべて対象にする
+$id('btnBulkFolder').addEventListener('click', async ()=>{
+  if(!('showDirectoryPicker' in window)){
+    alert('フォルダ選択はChrome/Edgeで利用できます。「複数ファイルを選択して整理」をご利用ください。');
+    return;
+  }
+  let dir;
+  try{ dir = await window.showDirectoryPicker(); }
+  catch(e){ return; } // キャンセル
+  notify('info', `「${dir.name}」の中(サブフォルダを含む)を探しています…`, {toast:false});
+  const { items, stat } = await scanFolder(dir);
+  if(!items.length){
+    notify('warn', `「${dir.name}」に対象の画像・PDFが見つかりませんでした。`);
+    return;
+  }
+  items.sort((x,y)=> segPath(x.relSegs, x.file.name).localeCompare(segPath(y.relSegs, y.file.name)));
+  if(stat.skipped) notify('info', `画像・PDF以外のファイル ${stat.skipped}件は対象外としました。`, {toast:false});
+  runBulk(items, {sourceRoot: dir});
+});
+
+/* ---------- 電帳ダッシュボード(検索できる一覧HTML) ---------- */
+function safeJsonForScript(obj){
+  return JSON.stringify(obj).replace(/</g,'\\u003c').replace(/\u2028/g,'\\u2028').replace(/\u2029/g,'\\u2029');
+}
+function buildDashboardHtml(){
+  const tpl = document.getElementById('dashTpl').value;
+  const data = getLedger().map(r=>({
+    date:r.date, vendor:r.vendor, amount:r.amount, docType:r.docType, account:r.account||'',
+    invoiceNo:r.invoiceNo||'', newFilename:r.newFilename, originalFilename:r.originalFilename, folder:r.folder||''
+  }));
+  const naming = getNamingSettings();
+  const config = {
+    demo: !SAVE_ENABLED_FOR_TESTING,
+    generatedAt: formatDateTime(new Date()),
+    template: (document.querySelector('input[name="namingRule"]:checked')||{}).value || 'date_vendor_amount',
+    includeType: includeDocType.checked
+  };
+  return tpl
+    .replace('/*__DATA__*/[]', ()=> safeJsonForScript(data))
+    .replace('/*__CONFIG__*/{}', ()=> safeJsonForScript(config));
+}
+const DASHBOARD_FILENAME = '電帳ダッシュボード.html';
+$id('btnDashboard').addEventListener('click', async ()=>{
+  const html = buildDashboardHtml();
+  const n = getLedger().length;
+  if(!n) notify('info', '台帳がまだ空のため、空のダッシュボードを表示します(ドラッグ&ドロップでの追記を試せます)。', {toast:false});
+  if(SAVE_ENABLED_FOR_TESTING && savedDirHandle){
+    try{
+      const perm = await savedDirHandle.queryPermission({mode:'readwrite'});
+      if(perm === 'granted' || (await savedDirHandle.requestPermission({mode:'readwrite'})) === 'granted'){
+        const fh = await savedDirHandle.getFileHandle(DASHBOARD_FILENAME, {create:true});
+        const w = await fh.createWritable();
+        await w.write(new Blob([html], {type:'text/html'}));
+        await w.close();
+        notify('ok', `「${DASHBOARD_FILENAME}」を「${savedDirHandle.name}」フォルダの先頭に作成(更新)しました。${n}件を収録しています。`);
+      }
+    }catch(e){
+      console.error(e);
+      notify('warn', 'ダッシュボードの書き出しに失敗しました。プレビューのみ表示します。');
+    }
+  } else if(!SAVE_ENABLED_FOR_TESTING){
+    notify('info', `デモ版のため、フォルダへの書き出しは行わず、プレビューのみ表示します(${n}件を収録)。正式版ではフォルダの先頭に「${DASHBOARD_FILENAME}」を自動作成・更新します。`);
+  } else {
+    notify('warn', '保存先フォルダが未設定のため、プレビューのみ表示します。');
+  }
+  const url = URL.createObjectURL(new Blob([html], {type:'text/html;charset=utf-8'}));
+  const w = window.open(url, '_blank');
+  if(!w) notify('warn', 'ポップアップがブロックされました。ブラウザの設定をご確認ください。');
+  setTimeout(()=> URL.revokeObjectURL(url), 5 * 60 * 1000);
 });
 
 /* ---------- ローカルフォルダとの同期確認 ---------- */
@@ -2343,6 +3807,9 @@ btnSave.addEventListener('click', async ()=>{
   if(!currentFile) return;
   learnFromSave();
   const recorded = recordToLedger();
+  notify(recorded ? 'ok' : 'info', recorded
+    ? `台帳に記録しました:${filenamePreview.textContent}`
+    : `同じ内容が台帳に既にあるため、追加しませんでした:${filenamePreview.textContent}`);
   if(!SAVE_ENABLED_FOR_TESTING){
     setStatus(recorded
       ? '台帳に記録しました。※ファイル本体の保存は正式版でご利用いただけます。'
