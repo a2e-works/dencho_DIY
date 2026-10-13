@@ -51,7 +51,7 @@
     font-size:15px;
     color:var(--ink-soft);
     line-height:1.9;
-    max-width:56ch;
+    max-width:80ch;
   }
 
   .law-box{
@@ -553,8 +553,8 @@
   .plan-list{max-height:220px; overflow-y:auto; border:1px solid var(--paper-line); border-radius:6px; padding:6px 8px; background:var(--paper); font-size:11.5px; line-height:1.7; margin:8px 0;}
   .plan-list div{white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
   .plan-actions{display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;}
-  .rv-overlay{position:fixed; inset:0; background:rgba(20,30,25,.55); z-index:1000; overflow:auto; padding:18px 10px;}
-  .rv-card{max-width:1080px; margin:0 auto; background:#fff; border-radius:12px; padding:16px; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:16px; box-shadow:0 10px 40px rgba(0,0,0,.3);}
+  .rv-overlay{position:fixed; inset:0; background:rgba(20,30,25,.55); z-index:1000; overflow:auto; padding:12px 12px;}
+  .rv-card{max-width:min(1680px,100%); margin:0 auto; background:#fff; border-radius:12px; padding:16px 18px; display:grid; grid-template-columns:minmax(0,1.25fr) minmax(0,1fr); gap:16px; box-shadow:0 10px 40px rgba(0,0,0,.3);}
   .rv-card.batch{display:block;}
   @media (max-width:820px){ .rv-card{grid-template-columns:1fr;} }
   .rv-file{font-size:12px; color:var(--ink-soft); word-break:break-all; margin-bottom:6px;}
@@ -563,10 +563,10 @@
   .pv-btn{border:1px solid #CBD5E1; background:#fff; border-radius:6px; padding:3px 9px; font-size:12px; cursor:pointer; color:#0F172A;}
   .pv-btn:hover{background:#F1F5F9;}
   .pv-lab{min-width:3.2em; text-align:center; font-size:12px; color:#334155;}
-  .pv-scroll{max-height:60vh; overflow:auto; text-align:left; cursor:grab; background:#E2E8F0; border-radius:4px;}
+  .pv-scroll{max-height:78vh; overflow:auto; text-align:left; cursor:grab; background:#E2E8F0; border-radius:4px;}
   .pv-scroll.grab{cursor:grabbing; user-select:none;}
   .pv-scroll img,.pv-scroll canvas{display:block; width:100%; height:auto; max-width:none; user-select:none;}
-  #inlinePreview .pv-scroll{max-height:42vh;}
+  #inlinePreview .pv-scroll{max-height:56vh;}
   .pv-hint{margin-top:5px; font-size:11.5px; color:#475569; text-align:left;}
   .rv-preview.pv-full{position:fixed; inset:0; z-index:10050; max-height:none; border-radius:0; padding:10px; background:#F8FAFC; display:flex; flex-direction:column;}
   .rv-preview.pv-full .pv-scroll{max-height:none; flex:1;}
@@ -866,7 +866,7 @@
   }
 
   /* ---------- 左ペイン+右に1項目ずつ表示 ---------- */
-  .app{display:flex; gap:28px; max-width:1120px; margin:0 auto; padding:0 20px 40px; align-items:flex-start;}
+  .app{display:flex; gap:28px; max-width:1480px; margin:0 auto; padding:0 20px 40px; align-items:flex-start;}
   .side{position:sticky; top:16px; flex:0 0 236px; width:236px; max-height:calc(100vh - 32px); overflow:auto; margin-top:28px; padding:10px 8px; background:#fff; border:1px solid var(--paper-line); border-radius:12px;}
   .side .sg{font-size:11px; font-weight:700; letter-spacing:.06em; color:var(--gray); padding:12px 10px 4px;}
   .side .sg:first-child{padding-top:4px;}
@@ -875,7 +875,7 @@
   .side button[aria-current="page"]{background:var(--stamp-soft); color:var(--ink); font-weight:700;}
   .side button .n{flex:0 0 22px; height:22px; border-radius:50%; background:#E5EBE8; color:#475569; font-size:11px; font-weight:700; display:inline-flex; align-items:center; justify-content:center;}
   .side button[aria-current="page"] .n{background:var(--stamp); color:#fff;}
-  .panels{flex:1 1 auto; min-width:0; max-width:780px;}
+  .panels{flex:1 1 auto; min-width:0; max-width:1120px;}
   .panels > .panel.is-off{display:none !important;}
   .panels > section.panel{margin-top:28px;}
   .panels > header.panel{padding-top:28px;}
@@ -921,18 +921,17 @@
 
   <header>
     <div class="eyebrow">DEMO · 体験版 · 処理はすべてブラウザ内で完結</div>
-    <h1>電帳DIY <small style="font-size:11px;font-weight:400;color:#888">build 1012k</small></h1>
+    <h1>電帳DIY <small style="font-size:11px;font-weight:400;color:#888">build 1013n</small></h1>
     <p class="lead">
-      請求書・領収書・カード明細などの電子データを読み取り、日付・取引先・金額の入ったファイル名に整えます。
-      税務調査で「この取引の書類を見せてください」と言われたときに、すぐ探して出せる状態に。
+      scan_001.pdf、領収書(2).pdf……名前がバラバラの書類を、日付・取引先・金額の入った名前に整えます。
+      「この取引の書類を見せてください」と言われたときに、すぐ出せる状態にします。
     </p>
     <div class="law-box" style="border-width:2px;">
-      <div class="law-box-title">🧾 税務調査での提示・ダウンロードの求めに備える</div>
+      <div class="law-box-title">🧾 整理したあとに、できること</div>
       <p class="law-box-text">
-        <b>① 検索システム(HTML)を自動で作成</b>:日付・金額の範囲と取引先で検索できる画面を、フォルダにそのまま作ります。<br>
-        <b>② 一覧CSVをワンクリックで出力</b>:ダウンロードの求めに、検索結果をそのままCSVで出せます(提出形式は税務職員の指示に従ってください)。<br>
-        <b>③ 訂正・削除の履歴と、事務処理規程のひな形</b>も出力できます。<br>
-        ※青色・白色・法人を問わず、<b>電子データはあるが、探して出せる状態になっていない</b>方向けです(法令への適合を保証するものではありません)。
+        <b>① 日付・金額・取引先で探せる検索画面【電帳ダッシュボード】</b>を、フォルダに自動で作成<br>
+        <b>② 提出用の一覧CSV</b>を、ワンクリックで出力(提出形式は税務職員の指示に従ってください)<br>
+        <b>③ 訂正・削除の履歴</b>と、<b>事務処理規程のひな形</b>も出力
       </p>
     </div>
 
@@ -996,7 +995,7 @@
         <button type="button" class="dz-btn ghost" id="btnSetDir">📂 フォルダを設定(正式版で利用可)</button>
       </div>
       <p class="savedir-note" id="savedirNote">
-        体験版では保存機能を無効化しています。フォルダの自動保存・ファイルの保存は正式版(¥8,000)でご利用いただけます。
+        体験版では保存機能を無効化しています。フォルダの自動保存・ファイルの保存は正式版(リリース記念 ¥4,980／通常 ¥6,980)でご利用いただけます。
       </p>
     </div>
   </section>
@@ -1012,15 +1011,15 @@
       <div class="rule-options" id="ruleOptions">
         <label class="rule-radio">
           <input type="radio" name="namingRule" value="date_vendor_amount" checked>
-          <span>取引年月日_取引先_取引金額 <em>(2026-08-20_ENEOS練馬給油所_3825円)</em></span>
+          <span>取引年月日_取引先_取引金額 <em>(2026-08-20_アマゾンジャパン合同会社_3825円)</em></span>
         </label>
         <label class="rule-radio">
           <input type="radio" name="namingRule" value="vendor_date_amount">
-          <span>取引先_取引年月日_取引金額 <em>(ENEOS練馬給油所_2026-08-20_3825円)</em></span>
+          <span>取引先_取引年月日_取引金額 <em>(アマゾンジャパン合同会社_2026-08-20_3825円)</em></span>
         </label>
         <label class="rule-radio">
           <input type="radio" name="namingRule" value="amount_date_vendor">
-          <span>取引金額_取引年月日_取引先 <em>(3825円_2026-08-20_ENEOS練馬給油所)</em></span>
+          <span>取引金額_取引年月日_取引先 <em>(3825円_2026-08-20_アマゾンジャパン合同会社)</em></span>
         </label>
         <label class="rule-radio">
           <input type="radio" name="namingRule" value="custom">
@@ -1072,6 +1071,30 @@
           <button type="button" class="dz-btn" id="btnCamera">📷 カメラで撮影</button>
           <button type="button" class="dz-btn ghost" id="btnPick">📁 ファイルを選択(画像・PDF)</button>
         </div>
+        <div class="small" style="margin-top:6px;color:#475569;line-height:1.7">「カメラで撮影」は、スマートフォンではカメラが起動します。<b>パソコンでは、フォルダ(ファイルを選ぶ画面)が開きます</b>(カメラは起動しません)。<br><span class="demo-only-note">※体験版のカメラ撮影は、<b>読み取りを試すためのもの</b>です。撮影した画像は保存されません(読み取り → 確認 → 台帳への記録までを体験できます)。</span></div>
+        <details id="phoneGuide" style="margin-top:8px;font-size:13px;line-height:1.8;color:#334155;text-align:left;">
+          <summary style="cursor:pointer;font-weight:700;color:#0F766E;">📱 スマートフォンで、カメラ撮影を試す手順</summary>
+          <ol style="margin:6px 0 0 1.3em;padding:0;">
+            <li>スマートフォンのブラウザ(iPhone は Safari、Android は Chrome)で、このページを開きます。パソコンで開いている場合は、ページのURLを、メールやメモなどで自分に送ると開けます。</li>
+            <li>「03 証憑を読み込む」の<b>「📷 カメラで撮影」</b>を押します。</li>
+            <li>カメラの使用許可を聞かれたら、「許可」を選びます(許可しないと、カメラが起動しません)。</li>
+            <li>レシートや領収書を撮影して、「写真を使用」(Android は ✓)を押します。</li>
+            <li>文字の読み取りが始まります。結果を確認し、必要なら修正して、「整理プラン」→「台帳」へ進みます。</li>
+          </ol>
+          <div style="margin-top:6px;"><b>うまく読み取るコツ</b></div>
+          <ul style="margin:2px 0 0 1.3em;padding:0;">
+            <li>明るい場所で、書類を平らにして、真上から撮ります(影や斜めを避けます)。</li>
+            <li>書類全体が入るように、文字がぼやけない距離で撮ります。</li>
+            <li>長いレシートや複数枚は、「Googleドライブ ＋ → スキャン」でPDFにして、「ファイルを選択」から選ぶと、読み取りやすくなります。</li>
+          </ul>
+          <div style="margin-top:6px;"><b>ご注意</b></div>
+          <ul style="margin:2px 0 0 1.3em;padding:0;">
+            <li>初回は、読み取りエンジンの部品を取得するため、数秒〜数十秒かかります。Wi-Fi 環境での利用をおすすめします。</li>
+            <li>撮影した画像は、その端末のブラウザ内だけで処理され、外部には送信されません。</li>
+            <li>スマートフォンの台帳は、そのスマホのブラウザの中だけに残り、パソコンの台帳とは統合されません。実際の運用では、スマホで撮影した写真を「共有する」でパソコンへ送り、パソコンで整理してください。</li>
+            <li>スマートフォンのブラウザは、多くの場合、フォルダへの書き出しに対応していません。結果は、画面上の確認と、台帳(CSV出力)でお試しください。フォルダへの整理は、パソコンでお使いください。</li>
+          </ul>
+        </details>
         <div class="small" id="driveHint" style="margin-top:8px;color:#475569;line-height:1.7">長いレシートや複数枚は、<b>Googleドライブ「＋ → スキャン」</b>で撮ってPDFにし、「ファイルを選択」から選ぶと読み取りやすくなります。</div>
         <input type="file" id="fileInput" accept="image/*,application/pdf">
         <input type="file" id="cameraInput" accept="image/*" capture="environment">
@@ -1176,7 +1199,7 @@
           制度改正への対応も継続してアップデート予定です。
         </p>
         <div class="price-badge">
-          <span class="yen">¥8,000</span><span class="unit">買い切り(アップデートは都度980円)</span>
+          <span class="unit" style="color:#B45309;font-weight:700;">リリース記念(期間限定)</span><span class="yen">¥4,980</span><span class="unit">通常 ¥6,980／買い切り(アップデートは都度980円)</span>
         </div>
       </div>
 
@@ -1219,10 +1242,21 @@
 
   <section>
     <div class="section-title"><span class="no">05</span> 台帳(Excel管理)</div>
+    <div class="ledger-card" id="masterPanel" style="display:none;margin-bottom:12px;">
+      <div style="font-weight:700;font-size:15px;margin-bottom:4px;">🗂 出力フォルダ管理(電帳ダッシュボードで一元管理)</div>
+      <p class="small" style="margin:0 0 6px;line-height:1.8;">台帳・訂正削除の履歴・作業ログは、出力フォルダの「電帳ダッシュボード.html」に同梱して保存されます。<b>次回以降は、このフォルダから読み出して引き継ぎます</b>(別のパソコンでも、同じフォルダを選べば続きから使えます)。ツールの外で、ファイルを移動・削除・更新した場合は、ここで警告します。</p>
+      <p class="small" id="masterState" style="margin:0 0 8px;"></p>
+      <div class="dz-buttons" style="justify-content:flex-start;">
+        <button type="button" class="dz-btn ghost" id="btnMasterSync">🔄 出力フォルダを読み込んで照合</button>
+        <button type="button" class="dz-btn ghost" id="btnMasterXlsx">📗 フォルダ内容をExcelに出力</button>
+      </div>
+      <div id="masterWarn"></div>
+      <details style="margin-top:10px;"><summary style="cursor:pointer;font-size:13px;">作業ログ(<span id="wlCount">0</span> 件・新しい順に最新50件を表示)</summary><div id="wlList" style="margin-top:6px;"></div></details>
+    </div>
     <div class="ledger-card">
       <p class="rule-desc">
         処理した証憑は自動的にここに記録されます。<b>元のファイル名 → 新しいファイル名</b>の対応も
-        含めて記録されるので、「どれだっけ?」と迷った時に確認できます。CSV形式でダウンロードすれば、
+        含めて記録されるので、<b>取引先で絞り込んだり、月ごとの抜け(正式版・設定でオン)を見つけたり</b>できます。CSV形式でダウンロードすれば、
         そのままExcelで開いて一覧管理・検索ができます。
       </p>
       <p class="ledger-warning" id="ledgerWarningText">
@@ -1306,6 +1340,22 @@
         <li>取引金額は、<b>税込の注文合計(商品代金)</b>で登録します。ポイント・ギフト券・クーポンを使った場合も、使う前の金額です。「ご請求額が0円」の書類でも、0円にはしません(検索で見つからなくなるためです)。</li>
         <li>支払いの手段の違いは、「支払い方法」の欄で区別します(現金/登録カード/ポイント・ギフト券等/その他)。</li>
       </ul>
+      <p style="margin:0 0 6px;"><b>■ 台帳(Excel)と電帳ダッシュボードの使い分け</b></p>
+      <table class="compare-table" style="margin:0 0 8px;">
+        <tr><th></th><th class="center">台帳(Excel)</th><th class="center">電帳ダッシュボード</th></tr>
+        <tr><td>主な場面</td><td>日常の管理、集計、並べ替え</td><td>税務調査での提示、検索</td></tr>
+        <tr><td>使う環境</td><td>Excel(またはスプレッドシート)</td><td>ブラウザだけ(アプリもExcelも不要)</td></tr>
+        <tr><td>データの元</td><td>アプリ内の台帳をCSVで出力(Excelで開けます)</td><td>台帳・訂正削除の履歴・作業ログを、HTMLの中に同梱します(Excelは読みません)</td></tr>
+        <tr><td>更新のしかた</td><td>出力し直すと、新しいCSVができます</td><td>出力フォルダに1つだけ作られ、<b>台帳を変更するたびに自動で更新</b>されます(正式版)</td></tr>
+        <tr><td>できること</td><td>計算・加工・独自の集計</td><td>日付・金額の範囲と取引先で検索、一覧CSVの出力</td></tr>
+      </table>
+      <ul style="margin:0 0 12px 1.2em;padding:0;">
+        <li>電帳ダッシュボードは、<b>初回の登録で、出力フォルダに自動作成</b>されます。以後は、そのファイルで台帳を一元管理し、育てていきます。</li>
+        <li><b>次回以降は、出力フォルダのダッシュボードを読み出して、台帳を引き継ぎます。</b>別のパソコンでも、同じ出力フォルダ(同期フォルダなど)を選べば、続きから使えます。</li>
+        <li><b>作業ログ</b>(登録・修正・削除・読み込み・整合性チェック)を、常に記録します。「06 台帳」の「出力フォルダ管理」から、フォルダ内容を、作業ログ・台帳と一緒に<b>Excel(.xlsx)に出力</b>できます。</li>
+        <li><b>ツールの外で</b>ファイルを移動・削除・更新(ファイル名・サイズの相違)した場合は、台帳との不一致を警告します。警告に沿って、元に戻してください。</li>
+        <li>同じ出力フォルダを、複数のパソコンで<b>同時に</b>使わないでください(あとから保存した内容が、残ります)。</li>
+      </ul>
       <p style="margin:0 0 6px;"><b>■ 税理士・税務署への確認をおすすめすること</b></p>
       <ul style="margin:0 0 12px 1.2em;padding:0;">
         <li>ポイントやギフト券、クーポンで支払った分が、<b>経費の金額や消費税の扱いでどうなるか</b>は、事業者ごとの扱いや取引の内容で変わります。本ツールは判断しません。</li>
@@ -1316,7 +1366,7 @@
       <p style="margin:0 0 6px;"><b>■ 本ツールでできないこと</b></p>
       <ul style="margin:0 0 4px 1.2em;padding:0;">
         <li>仕訳の作成や記帳はしません(会計ソフトや税理士で行います)。書類のデータを整理し、検索できる状態にするためのツールです。</li>
-        <li>法令への適合を保証するものではありません。制度の詳細は、国税庁の資料や税務署・税理士にご確認ください。</li>
+        <li>税務調査への対応を保証するものではありません。制度の詳細は、国税庁の資料や税務署・税理士にご確認ください。</li>
       </ul>
     </div>
   </section>
@@ -1348,7 +1398,7 @@
         <tr><td>台帳(記録・編集・削除履歴)</td><td class="center">約24時間で自動削除</td><td class="center ok-mark">ブラウザ内に継続保存(CSVで保管を推奨)</td></tr>
         <tr><td>スマホでの撮影・共有</td><td class="center ok-mark">○</td><td class="center ok-mark">○</td></tr>
       </table>
-      <p class="small" style="margin-top:8px;color:#64748B">※ 法令への適合を保証するものではありません。対象は電子データで受け取った書類です。</p>
+      <p class="small" style="margin-top:8px;color:#64748B">※ 税務調査への対応を保証するものではありません。対象は電子データで受け取った書類です。</p>
     </div>
   </section>
 
@@ -1459,6 +1509,11 @@
       </ul>
       <p class="learn-desc" style="margin:0 0 10px;">学習済み:取引先の表記 <b id="learnCountVendor">0</b> 件 / 書類ルール <b id="learnCountRule">0</b> 件</p>
       <button type="button" class="dz-btn ghost" id="learnClearBtn" style="padding:4px 14px;font-size:12.5px;">学習内容をすべて消去</button>
+      <div id="learnExportBox" style="display:none;margin-top:12px;padding:10px 12px;border:1px solid var(--paper-line);border-radius:8px;background:#F8FAF9;">
+        <p class="small" style="margin:0 0 6px;"><b>読み取れない書式の、対応を依頼する(任意)</b><br>うまく読み取れない書式があるときは、学習した内容を、ファイル(JSON)として書き出し、サポートに送って対応を依頼できます。<b>自動では送信されません。</b>ご自身で、ココナラのメッセージにファイルを添付した場合のみ、届きます。対応できた書式は、次の更新に組み込みます(改善することをお約束するものではありません)。内容は、書式の追加にのみ使用します。無料更新の条件ではありません。</p>
+        <p class="small" style="margin:0 0 8px;">書き出し前に、中身を確認できます。台帳・金額・書類の画像・ファイルの保存先は、含まれません。</p>
+        <button type="button" class="dz-btn ghost" id="learnExportBtn" style="padding:4px 14px;font-size:12.5px;">対応依頼用ファイルを書き出す</button>
+      </div>
       <div style="display:none" aria-hidden="true">
         <div id="learnList" class="learn-list"><div class="learn-empty" id="learnEmpty"></div></div>
         <div id="docRuleList" class="learn-list"></div>
@@ -1472,7 +1527,7 @@
   <div class="toast-box" id="toastBox"></div>
 
   <footer>
-    本ツールは法令への適合を保証するものではありません。制度の詳細は国税庁の資料と税務署・税理士にご確認ください。<br>
+    本ツールは税務調査への対応を保証するものではありません。制度の詳細は国税庁の資料と税務署・税理士にご確認ください。<br>
     本デモはサンプルです。画像・PDFの解析処理はすべてお使いのブラウザ内で完結し、<b>証憑データが外部サーバーへ送信されることはありません。</b>(通信するのは、読み取りエンジン(OCR・PDF)の部品の取得と、「最新化」ボタンを押したときの更新情報の取得だけです。)
     ご相談・お問い合わせはサービスページのメッセージ機能よりお願いいたします。<br>
     <span class="brand-sign">電帳DIY ／ A2E Works＠2026</span>
@@ -1491,12 +1546,12 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:'Noto Sans JP','Hiragino Sans','Yu Gothic',Meiryo,sans-serif;background:var(--bg);color:var(--ink);font-size:14px;}
 header{background:#3B3FB8;color:#F4F5FF;padding:22px 24px 20px;border-bottom:4px solid #8B93FF;}
-.hd{max-width:1120px;margin:0 auto;padding:0 16px;display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.hd{max-width:1560px;margin:0 auto;padding:0 16px;display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;}
 .hd .eb{font-size:11px;letter-spacing:.28em;color:#C7CCFF;font-weight:700;margin-bottom:6px;}
 header h1{margin:0;font-size:26px;font-weight:700;letter-spacing:.04em;color:#FFFFFF;line-height:1.25;}
 header h1 small{display:block;font-size:12.5px;font-weight:400;letter-spacing:.06em;color:#D5D9FF;margin-top:4px;}
 header p{margin:0;font-size:12.5px;color:#D5D9FF;text-align:right;}
-main{max-width:1120px;margin:0 auto;padding:16px;}
+main{max-width:1560px;margin:0 auto;padding:16px;}
 .card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:16px;margin-bottom:16px;}
 .card h2{margin:0 0 10px;font-size:15px;}
 .banner{background:#FFF8EB;border:1px solid #F3D9A4;border-radius:8px;padding:10px 14px;font-size:12.5px;line-height:1.8;margin-bottom:16px;}
@@ -1612,7 +1667,7 @@ a{color:#2D31A0;font-weight:500;}
   </div>
 
   <div class="cta" id="cta" style="display:none;">
-    <b>ここまでがお試しです。</b>正式版(¥8,000 買い切り)では、
+    <b>ここまでがお試しです。</b>正式版(リリース記念 ¥4,980／通常 ¥6,980 買い切り)では、
     <ul>
       <li>過去のフォルダを丸ごと整理し、ファイル名から検索できる状態にできます</li>
       <li>整理した書類が、<b>新しい名前で実際のフォルダに自動保存</b>され、このダッシュボードも自動更新されます<br><span style="color:#B45309;font-size:12.5px;">※デモ版では、ファイルの保存・書き出しはできません(画面上のプレビューのみ)。</span></li>
@@ -1620,7 +1675,7 @@ a{color:#2D31A0;font-weight:500;}
     </ul>
     ご購入・ご相談は、ご案内元のサービスページ(メッセージ機能)からお願いします。
   </div>
-  <p class="small" style="margin-top:14px;">この画面は、保存した電子取引データの検索・一覧出力用です。法令への適合を保証するものではありません。制度の詳細は国税庁の資料と税務署・税理士にご確認ください。</p>
+  <p class="small" style="margin-top:14px;">この画面は、保存した電子取引データの検索・一覧出力用です。税務調査への対応を保証するものではありません。制度の詳細は国税庁の資料と税務署・税理士にご確認ください。</p>
   <p class="small" style="margin-top:14px;">証憑の読み取りはすべてお使いのブラウザ内で行われ、外部サーバーには送信されません(通信するのは、読み取りエンジンの部品の取得と、「最新化」ボタンを押したときの更新情報の取得だけです)。</p>
 </main>
 <script>
@@ -1733,6 +1788,16 @@ function refreshFilters(){
   });
 }
 
+function openNote(title, body){
+  var old = document.getElementById('demoOpenNote'); if(old) old.remove();
+  var d = document.createElement('div'); d.id = 'demoOpenNote';
+  d.style.cssText = 'position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:10000;max-width:min(560px,calc(100vw - 24px));background:#1B1D3A;color:#fff;border-radius:12px;padding:14px 18px;font-size:13.5px;line-height:1.75;box-shadow:0 10px 30px rgba(0,0,0,.35)';
+  var b = document.createElement('b'); b.style.cssText = 'color:#FDE68A;display:block;margin-bottom:4px'; b.textContent = title; d.appendChild(b);
+  d.appendChild(document.createTextNode(body));
+  var x = document.createElement('button'); x.type = 'button'; x.textContent = '閉じる'; x.style.cssText = 'display:block;margin:10px 0 0 auto;background:none;border:1px solid #94A3B8;color:#fff;border-radius:6px;padding:4px 12px;font-size:12px;cursor:pointer';
+  x.onclick = function(){ d.remove(); }; d.appendChild(x); document.body.appendChild(d);
+  setTimeout(function(){ if(d.parentNode) d.remove(); }, 14000);
+}
 function demoOpenNote(kind){
   var old = document.getElementById('demoOpenNote'); if(old) old.remove();
   var d = document.createElement('div'); d.id = 'demoOpenNote';
@@ -1784,11 +1849,24 @@ function render(){
     const enc = x => x.split('/').map(encodeURIComponent).join('/');
     const demoNote = (kind) => (ev) => { ev.preventDefault(); demoOpenNote(kind); };
     // プレビュー(blob:)で開いたダッシュボードは、相対リンクが効かないため、メイン画面経由で保存先フォルダのファイルを開く
+    // (file:// で開いたメイン画面とは、オリジンが別のため、直接は呼べません。postMessageで依頼し、ファイルの中身を受け取って開きます)
     const viaMain = (segs, isDir) => (ev) => {
       if (CONFIG.demo || location.protocol !== 'blob:') return;
       ev.preventDefault();
-      try { if (window.opener && !window.opener.closed && window.opener.denshouOpenPath) { window.opener.denshouOpenPath(segs, isDir); return; } } catch (e) {}
-      demoOpenNote('この画面から、' + (isDir ? 'フォルダ' : 'ファイル'));
+      let op = null; try { op = window.opener; if (op && op.closed) op = null; } catch (e) { op = null; }
+      if (!op) { demoOpenNote('この画面から、' + (isDir ? 'フォルダ' : 'ファイル')); return; }
+      const w = isDir ? null : window.open('', '_blank');   // クリックの直後に、先に空のタブを開いておく(ポップアップのブロックを避けるため)
+      const id = 'o' + Date.now() + Math.random().toString(36).slice(2);
+      let tm = null;
+      const onMsg = (e) => {
+        const d = e.data; if (!d || d.denshouReply !== id) return;
+        window.removeEventListener('message', onMsg); clearTimeout(tm);
+        if (d.ok && d.blob && w) { try { w.location.href = URL.createObjectURL(d.blob); } catch (x) { w.close(); openNote('ファイルを開けませんでした', 'もう一度お試しください。'); } }
+        else { if (w) w.close(); openNote(isDir ? 'フォルダは、この画面から開けません' : 'ファイルを開けませんでした', d.msg || 'メイン画面(電帳DIY)の状態をご確認ください。'); }
+      };
+      window.addEventListener('message', onMsg);
+      tm = setTimeout(() => { window.removeEventListener('message', onMsg); if (w) w.close(); demoOpenNote('この画面から、' + (isDir ? 'フォルダ' : 'ファイル')); }, 10000);
+      try { op.postMessage({denshou: 'openPath', id: id, segs: segs, isDir: !!isDir}, '*'); } catch (x) { clearTimeout(tm); window.removeEventListener('message', onMsg); if (w) w.close(); demoOpenNote('この画面から、' + (isDir ? 'フォルダ' : 'ファイル')); }
     };
     if (r.folder) {
       const fl = document.createElement('a'); fl.textContent = r.folder + '/';
@@ -3072,10 +3150,60 @@ const btnCamera = document.getElementById('btnCamera');
 const btnPick = document.getElementById('btnPick');
 const cameraInput = document.getElementById('cameraInput');
 
+// パソコンでは「カメラで撮影」を押しても、カメラは起動せず、ファイル選択が開く → 先に案内を出す(次回から表示しない、を選べる)
+const CAM_NOTICE_KEY = 'denshou_cam_notice_off';
+function isMobileDevice(){
+  try{ if(navigator.userAgentData && typeof navigator.userAgentData.mobile === 'boolean') return navigator.userAgentData.mobile; }catch(e){}
+  return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (/Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
+}
+function camNoticeOff(){ try{ return localStorage.getItem(CAM_NOTICE_KEY) === '1'; }catch(e){ return false; } }
+const PHONE_DEMO_URL = 'https://a2e-works.github.io/dencho_DIY/';   // 公開デモのURL(スマホで開く用)
+const PHONE_QR_SVG = '<svg viewBox="0 0 132 132" preserveAspectRatio="xMidYMid meet" shape-rendering="crispEdges" style="width:100%;height:100%;display:block" class="segno"><g transform="scale(4)"><path fill="#fff" d="M0 0h33v33h-33z"/><path class="qrline" stroke="#111827" d="M2 2.5h7m2 0h1m1 0h2m1 0h2m1 0h1m4 0h7m-29 1h1m5 0h1m1 0h4m10 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m1 0h1m1 0h3m1 0h3m5 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h2m6 0h2m1 0h2m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h2m1 0h5m1 0h3m1 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m2 0h4m3 0h3m3 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-21 1h1m2 0h1m2 0h3m1 0h1m1 0h1m-21 1h1m5 0h1m1 0h4m1 0h1m2 0h3m1 0h3m2 0h3m-28 1h2m1 0h1m1 0h1m2 0h1m1 0h1m2 0h2m2 0h3m1 0h1m1 0h2m1 0h2m-27 1h2m2 0h2m4 0h7m2 0h1m2 0h2m-22 1h3m1 0h1m1 0h1m1 0h2m1 0h3m1 0h1m2 0h3m1 0h1m-25 1h1m1 0h2m1 0h3m1 0h1m2 0h2m1 0h1m3 0h1m1 0h2m4 0h1m-28 1h1m7 0h2m1 0h1m2 0h6m1 0h1m1 0h1m2 0h2m-29 1h1m1 0h1m1 0h4m2 0h1m4 0h1m2 0h1m1 0h1m1 0h5m-27 1h1m1 0h2m3 0h3m2 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h2m1 0h1m1 0h1m-29 1h2m1 0h1m2 0h1m2 0h2m1 0h1m4 0h1m7 0h2m-27 1h3m1 0h1m3 0h6m1 0h10m1 0h3m-29 1h3m3 0h1m4 0h1m3 0h1m3 0h5m1 0h1m2 0h1m-29 1h1m4 0h1m2 0h1m4 0h1m1 0h1m3 0h2m1 0h1m1 0h1m-25 1h1m4 0h2m1 0h5m1 0h2m1 0h8m1 0h3m-21 1h5m1 0h2m1 0h2m1 0h1m3 0h2m-26 1h7m2 0h4m2 0h1m1 0h1m1 0h2m1 0h1m1 0h3m-27 1h1m5 0h1m3 0h2m2 0h3m3 0h1m3 0h1m2 0h2m-29 1h1m1 0h3m1 0h1m4 0h1m1 0h2m1 0h1m2 0h7m2 0h1m-29 1h1m1 0h3m1 0h1m5 0h5m1 0h4m1 0h1m1 0h2m1 0h1m-29 1h1m1 0h3m1 0h1m4 0h1m1 0h1m1 0h2m4 0h2m1 0h4m-28 1h1m5 0h1m2 0h1m1 0h3m4 0h2m3 0h4m1 0h1m-29 1h7m1 0h5m1 0h2m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1"/></g></svg>';   // 上のURLのQRコード(ビルド時に生成した画像。通信は発生しません)
+function openCameraWithNotice(inputEl){
+  if(isMobileDevice() || camNoticeOff()){ inputEl.click(); return; }
+  const ov = document.createElement('div');
+  ov.style.cssText = 'position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:99999;display:flex;align-items:center;justify-content:center;padding:16px;';
+  ov.innerHTML = '<div role="dialog" aria-modal="true" style="background:#fff;border-radius:12px;max-width:520px;width:100%;padding:20px 22px;box-shadow:0 10px 40px rgba(0,0,0,.3);font-size:14px;line-height:1.8;color:#1E293B;">' +
+    '<div style="font-weight:700;font-size:16px;margin-bottom:6px;">📷 パソコンでは、カメラは起動しません</div>' +
+    '<div>このボタンは、<b>スマートフォンで開いたときに、カメラが起動</b>します。パソコンでは、<b>画像・PDFを選ぶ画面(ファイル選択)</b>が開きます。</div>' +
+    '<ul style="margin:8px 0 0 1.3em;padding:0;font-size:13px;color:#334155;">' +
+      '<li>スマートフォンで撮影した写真は、パソコンに送って(メール・クラウドなど)、ここで選べます。</li>' +
+      (SAVE_ENABLED_FOR_TESTING ? '<li>スマートフォンで撮った写真は、メール・LINE・Googleドライブなどでパソコンへ送り、「ファイルを選ぶ」から選んでください(整理・台帳への記録は、パソコンで行います)。</li>' : '<li>スマートフォンでこのページを開くと、その場で撮影して試せます(ページ内の「📱 スマートフォンで、カメラ撮影を試す手順」をご覧ください)。</li>') +
+    '</ul>' +
+    (SAVE_ENABLED_FOR_TESTING ? '' : (
+      '<div style="margin-top:12px;padding:12px;border:1px solid #A7F3D0;background:#F0FDF4;border-radius:10px;">' +
+        '<div style="font-weight:700;font-size:14px;margin-bottom:6px;">📱 スマートフォンで開く(体験版)</div>' +
+        '<div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;">' +
+          '<div style="width:132px;height:132px;flex:0 0 auto;background:#fff;border:1px solid #E5E7EB;border-radius:6px;padding:4px;line-height:0;">' + PHONE_QR_SVG + '</div>' +
+          '<div style="flex:1 1 220px;min-width:0;font-size:13px;line-height:1.7;">' +
+            '<div>スマホのカメラで、左のQRコードを読み取ると、体験版が開きます。</div>' +
+            '<div style="display:flex;gap:6px;margin-top:6px;"><input type="text" id="phoneUrlBox" readonly value="' + PHONE_DEMO_URL + '" style="flex:1;min-width:0;font-size:12px;padding:6px 8px;border:1px solid #CBD5E1;border-radius:6px;"><button type="button" class="dz-btn ghost" id="phoneUrlCopy" style="padding:6px 10px;font-size:12px;">コピー</button></div>' +
+            '<div style="margin-top:6px;"><a id="phoneUrlMail" href="mailto:?subject=' + encodeURIComponent('電帳DIY 体験版(スマホで試す)') + '&body=' + encodeURIComponent('スマホで開いて、カメラ撮影を試せます。\n' + PHONE_DEMO_URL) + '" style="font-size:13px;">✉ 自分あてにメールで送る</a></div>' +
+          '</div>' +
+        '</div>' +
+      '</div>')) +
+    '<label style="display:flex;gap:8px;align-items:center;margin-top:12px;font-size:13px;cursor:pointer;"><input type="checkbox" id="camNoticeChk"> 次回から、この案内を表示しない</label>' +
+    '<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px;"><button type="button" class="dz-btn ghost" id="camNoticeCancel">やめる</button><button type="button" class="dz-btn" id="camNoticeOk">ファイルを選ぶ</button></div></div>';
+  document.body.appendChild(ov);
+  const close = () => ov.remove();
+  const save = () => { try{ if(ov.querySelector('#camNoticeChk').checked) localStorage.setItem(CAM_NOTICE_KEY, '1'); }catch(e){} };
+  ov.querySelector('#camNoticeOk').addEventListener('click', () => { save(); close(); inputEl.click(); });
+  ov.querySelector('#camNoticeCancel').addEventListener('click', () => { save(); close(); });
+  ov.addEventListener('click', e => { if(e.target === ov){ close(); } });
+  ov.addEventListener('keydown', e => { if(e.key === 'Escape') close(); });
+  const cp = ov.querySelector('#phoneUrlCopy');
+  if(cp) cp.addEventListener('click', () => {
+    const box = ov.querySelector('#phoneUrlBox');
+    const done = () => { cp.textContent = 'コピーしました'; setTimeout(() => { cp.textContent = 'コピー'; }, 2000); };
+    try{ navigator.clipboard.writeText(PHONE_DEMO_URL).then(done, () => { box.select(); document.execCommand('copy'); done(); }); }
+    catch(e){ box.select(); try{ document.execCommand('copy'); done(); }catch(x){} }
+  });
+  ov.querySelector('#camNoticeOk').focus();
+}
 btnCamera.addEventListener('click', e=>{
   e.stopPropagation();
   if(!TESTING_MODE && getUsedCount() >= MAX_FREE) return;
-  cameraInput.click();
+  openCameraWithNotice(cameraInput);
 });
 btnPick.addEventListener('click', e=>{
   e.stopPropagation();
@@ -3084,7 +3212,8 @@ btnPick.addEventListener('click', e=>{
 });
 cameraInput.addEventListener('change', e=>{
   const f = e.target.files[0];
-  if(f) handleFile(f);
+  e.target.value = '';
+  if(f) handleFile(f, {noCount: !SAVE_ENABLED_FOR_TESTING});   // 体験版:カメラ撮影は回数に数えない
 });
 fileInput.addEventListener('change', e=>{
   const f = e.target.files[0];
@@ -3244,7 +3373,8 @@ async function renderThumbnail(file){
   }
 }
 
-async function handleFile(file){
+async function handleFile(file, opts){
+  const noCount = !!(opts && opts.noCount);   // カメラ撮影は、体験の回数に数えない
   if(!TESTING_MODE && getUsedCount() >= MAX_FREE) return;
   currentFile = file;
   currentExt = (file.name.split('.').pop() || 'txt').toLowerCase();
@@ -3357,9 +3487,7 @@ async function handleFile(file){
     result.classList.add('show');
     requestAnimationFrame(()=> stampEl.classList.add('pop'));
 
-    const used = getUsedCount() + 1;
-    setUsedCount(used);
-    refreshQuota();
+    if(!noCount){ setUsedCount(getUsedCount() + 1); refreshQuota(); }
     setStatus('読み取りが完了しました。内容を確認してください。', false);
   }catch(err){
     console.error(err);
@@ -3929,7 +4057,7 @@ const ruleOptions = document.getElementById('ruleOptions');
 /* ---------- ファイル名ルール(3つの型+自由設定) ---------- */
 const NAMING_FIELDS = [
   {k:'date',    label:'取引年月日', sample:'2026-08-20'},
-  {k:'vendor',  label:'取引先',     sample:'ENEOS練馬給油所'},
+  {k:'vendor',  label:'取引先',     sample:'アマゾンジャパン合同会社'},
   {k:'amount',  label:'取引金額',   sample:'3825円'},
   {k:'docType', label:'書類の種類', sample:'レシート'},
   {k:'editor',  label:'担当者名',   sample:'担当A'}
@@ -4118,6 +4246,7 @@ function clearMissingDateFlag(){
 }
 
 btnReset.addEventListener('click', ()=>{
+  { const sn = document.getElementById('singleNext'); if(sn) sn.remove(); }
   result.classList.remove('show');
   stampEl.classList.remove('pop');
   fileInput.value = '';
@@ -4585,6 +4714,14 @@ async function writeCopyPath(root, segs, filename, file){
   await w.write(file);
   await w.close();
   return finalName;
+}
+// 書き出したファイルのサイズ・更新日時を控える(あとで、ツールの外での変更を見つけるため)
+async function statPath(root, segs, name){
+  try{
+    let d = root; for(const sg of (segs || [])){ d = await d.getDirectoryHandle(sg); }
+    const f = await (await d.getFileHandle(name)).getFile();
+    return {size: f.size, mtime: f.lastModified};
+  }catch(e){ return null; }
 }
 
 const SUSPICIOUS_VENDOR = /^(発行日|締め日|ご利用締め日|お支払い?日|引落日|ご請求金額|合計|明細|請求書|領収書|No\.?|様)|^[ぁ-ん]{1,2}$|^[ご御お][ぁ-ん一-龥]{0,3}$|(明細|内訳|ご利用|ご請求|お客様)/;
@@ -5834,6 +5971,7 @@ async function runBulk(items, {sourceRoot = null, sample = false, camera = false
         continue;
       }
       let written = a.newFilename;
+      if(!canWrite) entry.preview = true;   // 実ファイルを書き出していない記録(デモ・プレビュー)の目印
       if(canWrite){
         const samePlace = sameRoot && segs.join('/') === a.relSegs.join('/') && a.newFilename === a.file.name;
         if(!samePlace){
@@ -5847,6 +5985,7 @@ async function runBulk(items, {sourceRoot = null, sample = false, camera = false
         }
       }
       entry.newFilename = written;
+      if(canWrite){ const st = await statPath(savedDirHandle, segs, written); if(st){ entry.fsize = st.size; entry.fmtime = st.mtime; } }
       ledger.push(entry);
       nameMapRows.push(entry);
       if(a.txns && a.txns.length){   // 銀行取引明細:取引を1件ずつ「索引」として記録(同じファイルを指す)
@@ -5910,7 +6049,23 @@ async function runBulk(items, {sourceRoot = null, sample = false, camera = false
 
 // デモ版では、ここまでの体験の次の一歩(正式版)を案内する
 try{ window.name = 'denshou_main'; }catch(e){}
-window.addEventListener('message', e => {
+window.addEventListener('message', async e => {   // ダッシュボード(プレビュー)から、保存先フォルダのファイルを開く依頼
+  const q = e.data;
+  if(q && q.denshou === 'openPath' && e.source){
+    const reply = o => { try{ e.source.postMessage(Object.assign({denshouReply: q.id}, o), '*'); }catch(x){} };
+    try{
+      if(!savedDirHandle) return reply({ok:false, msg:'保存先フォルダが未設定です。メイン画面(電帳DIY)で、保存先を設定してください。'});
+      if((await savedDirHandle.queryPermission({mode:'read'})) !== 'granted') return reply({ok:false, msg:'保存先フォルダへのアクセス許可が必要です。メイン画面(電帳DIY)に戻り、「出力フォルダを読み込んで続ける」(または「電帳ダッシュボードを開く」)を押してから、もう一度お試しください。'});
+      const list = (q.segs || []).filter(Boolean);
+      if(q.isDir) return reply({ok:false, msg:'フォルダ「' + list.join('/') + '」は、保存先「' + savedDirHandle.name + '」の中にあります。エクスプローラー(Finder)で開いてください。'});
+      const last = list.pop(); let d = savedDirHandle;
+      for(const sg of list) d = await d.getDirectoryHandle(sg);
+      const f = await (await d.getFileHandle(last)).getFile();
+      return reply({ok:true, blob:f, name:f.name});
+    }catch(err){
+      return reply({ok:false, msg: (err && err.name === 'NotFoundError') ? 'ファイルが見つかりません:' + (q.segs || []).join('/') + '(移動・名前の変更・削除された可能性があります。「06 台帳」の「出力フォルダ管理」で、照合してください)' : 'ファイルを開けませんでした(' + ((err && err.name) || '') + ')'});
+    }
+  }
   if(!e.data || e.data.denshou !== 'goAdd') return;
   try{ window.focus(); }catch(err){}
   try{ notify('info', '電帳ダッシュボードから戻りました。ここ(03 証憑を読み込む)から、画像・PDFの追加や、カメラ撮影ができます。'); }catch(err){}
@@ -5930,7 +6085,7 @@ function showBulkCta(){
   box.className = 'cta-box';
   const tot = window.__bulkTotal, shown = (typeof getUsedCount === 'function') ? Math.min(MAX_FREE, tot || 0) : 0;
   const mine = (tot && tot > MAX_FREE) ? `<b>あなたのフォルダは${tot}件ありました。</b>体験版で処理したのは${MAX_FREE}件です。正式版なら、残りの${tot - MAX_FREE}件も含めて一括で処理できます(目安 約${Math.max(1, Math.round(tot * 3 / 60))}分)。<br>` : '';
-  box.innerHTML = mine + '<b>🔒 ここまでがデモ版です。</b>実際の書き出しは行っていません。正式版(¥8,000 買い切り)では、' +
+  box.innerHTML = mine + '<b>🔒 ここまでがデモ版です。</b>実際の書き出しは行っていません。正式版(リリース記念 ¥4,980／通常 ¥6,980 買い切り)では、' +
     '整理した結果をそのままフォルダに書き出し、検索できる「電帳ダッシュボード」をフォルダの先頭に自動作成・更新します。' +
     '整理した書類は新しい名前で実際のフォルダに保存され、ダッシュボードも自動で更新されます(デモ版では保存できません)。';
   $id('bulkSummary').insertAdjacentElement('afterend', box);
@@ -5955,7 +6110,7 @@ function showBulkCta(){
     const yes = document.createElement('button'); yes.type = 'button'; yes.className = 'dz-btn'; yes.textContent = '📷 撮影して試す';
     const no = document.createElement('button'); no.type = 'button'; no.className = 'dz-btn ghost'; no.style.marginLeft = '8px'; no.textContent = 'いまはしない';
     const inp = document.createElement('input'); inp.type = 'file'; inp.accept = 'image/*'; inp.setAttribute('capture', 'environment'); inp.style.display = 'none';
-    yes.addEventListener('click', () => inp.click());
+    yes.addEventListener('click', () => openCameraWithNotice(inp));
     inp.addEventListener('change', () => {
       const f = inp.files && inp.files[0]; if(!f) return;
       window.__bulkTotal = 0; cm.remove();
@@ -6126,9 +6281,16 @@ function buildDashboardHtml(){
     pageSize: (typeof window.getAppSettings === 'function') ? window.getAppSettings().dashPage : 25,
     maxFree: MAX_FREE
   };
-  return tpl
+  let html = tpl
     .replace('/*__DATA__*/[]', ()=> safeJsonForScript(data))
     .replace('/*__CONFIG__*/{}', ()=> safeJsonForScript(config));
+  // 台帳・訂正削除履歴・作業ログの全体を、ダッシュボードに同梱する(次回以降は、これを読み出して引き継ぎます)
+  if(typeof masterBlockHtml === 'function'){
+    const k = html.lastIndexOf('</body>');
+    const blk = masterBlockHtml();
+    html = k >= 0 ? html.slice(0, k) + blk + html.slice(k) : html + blk;
+  }
+  return html;
 }
 const DASHBOARD_FILENAME = '電帳ダッシュボード.html';
 $id('btnDashboard').addEventListener('click', async ()=>{
@@ -6161,8 +6323,8 @@ $id('btnDashboard').addEventListener('click', async ()=>{
     return;
   }
   const url = URL.createObjectURL(new Blob([html], {type:'text/html;charset=utf-8'}));
-  const w = window.open(url, '_blank');
-  if(!w) notify('warn', 'ポップアップがブロックされました。ブラウザの設定をご確認ください。');
+  const w = window.open(url, 'denshou_dashboard');   // 同じ名前のタブを使い回す(何度開いても、タブが増えず、いつも最新になる)
+  if(!w) notify('warn', 'ポップアップがブロックされました。ブラウザの設定をご確認ください。'); else { try{ w.focus(); }catch(e){} }
   setTimeout(()=> URL.revokeObjectURL(url), 5 * 60 * 1000);
 });
 
@@ -6308,6 +6470,39 @@ async function fetchDriveFilesAndCompare(){
   }
 }
 
+// 体験版:1枚ずつ撮影・登録したあとの「次にできること」(スマホで、台帳に記録したあとに迷わないように)
+// 体験版:撮影・読み込みの結果画面の先頭に、「体験できる範囲」を明示する
+(function(){
+  if(SAVE_ENABLED_FOR_TESTING){ document.querySelectorAll('.demo-only-note, #phoneGuide').forEach(e => e.remove()); return; }
+  const r = document.getElementById('result'); if(!r || document.getElementById('demoScopeNote')) return;
+  const d = document.createElement('div'); d.id = 'demoScopeNote';
+  d.style.cssText = 'border:1px solid #93C5FD;background:#EFF6FF;border-radius:8px;padding:10px 12px;margin:0 0 12px;font-size:13px;line-height:1.8;color:#1E3A8A;text-align:left;';
+  d.innerHTML = '<b>🧪 体験版でできること</b><br>書類を読み取って、<b>日付・金額・取引先を確認し、台帳に記録する</b>ところまでです。<b>撮影した画像・ファイルそのものは保存されません</b>(フォルダへの書き出しは、正式版の機能です)。';
+  r.insertBefore(d, r.firstChild);
+})();
+function showSingleNext(){
+  const old = document.getElementById('singleNext'); if(old) old.remove();
+  const box = document.createElement('div'); box.id = 'singleNext';
+  box.style.cssText = 'border:2px solid #10B981;background:#ECFDF5;border-radius:10px;padding:14px 16px;margin-top:12px;text-align:left;';
+  box.innerHTML = '<div style="font-weight:700;font-size:15px;margin-bottom:4px;">✅ 台帳に記録しました。次は、どうしますか?</div>' +
+    '<div style="font-size:13px;margin-bottom:10px;line-height:1.7;">① 記録した書類を、<b>日付・金額・取引先で検索</b>して確認する(電帳ダッシュボード)<br>② もう1枚、続けて撮影・追加する<br>③ 台帳の一覧を見る(CSVでダウンロードもできます)</div>';
+  const mk = (txt, cls, fn) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'dz-btn' + (cls ? ' ' + cls : ''); b.style.cssText = 'margin:0 8px 8px 0;'; b.textContent = txt; b.addEventListener('click', fn); box.appendChild(b); return b; };
+  mk('📊 ① 電帳ダッシュボードで検索する', '', () => { const d = document.getElementById('btnDashboard'); if(d) d.click(); });
+  mk('📷 ② もう1枚、追加する', 'ghost', () => { box.remove(); try{ btnReset.click(); }catch(e){} try{ document.getElementById('dropzone').scrollIntoView({behavior:'smooth', block:'center'}); }catch(e){} });
+  mk('📒 ③ 台帳を見る', 'ghost', () => { try{ const pn = document.getElementById('btnExportCSV').closest('.panel'); if(pn && pn.dataset.panel) location.hash = '#' + pn.dataset.panel; }catch(e){} });
+  if(isMobileDevice()){
+    const sh = document.getElementById('btnShare');
+    if(sh && sh.style.display !== 'none') mk('📤 撮影した写真を、パソコンへ送る', 'ghost', () => sh.click());
+    const pc = document.createElement('div'); pc.style.cssText = 'font-size:12.5px;line-height:1.7;background:#fff;border:1px solid #A7F3D0;border-radius:8px;padding:8px 10px;margin:2px 0 8px;color:#134E4A;';
+    pc.innerHTML = '<b>📱 スマホの台帳は、このスマホのブラウザの中だけにあります。</b>パソコンの台帳とは、自動では統合されません。本番では、スマホは「撮影して、パソコンへ送る」ために使い、<b>整理・台帳への記録は、パソコンで行います</b>(スマホで記録した分は、パソコンには引き継がれません)。';
+    box.appendChild(pc);
+  }
+  const note = document.createElement('div'); note.style.cssText = 'font-size:12px;color:#065F46;line-height:1.7;';
+  note.textContent = 'デモ版では、撮影した画像・ファイルそのものは保存されません。体験できるのは、「読み取り → 内容の確認 → 台帳への記録」までです(台帳の記録は、このブラウザに24時間だけ残ります)。';
+  box.appendChild(note);
+  const acts = document.querySelector('#result .actions'); (acts || document.getElementById('result')).insertAdjacentElement('afterend', box);
+  try{ box.scrollIntoView({behavior:'smooth', block:'center'}); }catch(e){}
+}
 btnSave.addEventListener('click', async ()=>{
   if(!currentFile) return;
   if(!dupAck){
@@ -6339,6 +6534,7 @@ btnSave.addEventListener('click', async ()=>{
     setStatus(recorded
       ? '台帳に記録しました。※ファイル本体の保存は正式版でご利用いただけます。'
       : 'この内容は既に台帳に記録されています(重複のため追加しませんでした)。※ファイル本体の保存は正式版でご利用いただけます。', false);
+    showSingleNext();
     return;
   }
   const filename = filenamePreview.textContent;
@@ -6352,6 +6548,7 @@ btnSave.addEventListener('click', async ()=>{
         const writable = await fh.createWritable_disabled_in_demo();
         await writable.write(currentFile);
         await writable.close();
+        try{ if(typeof masterStatLast === 'function') await masterStatLast(filename); }catch(e){}
         setStatus(`「${savedDirHandle.name}」フォルダへ保存しました。${recorded ? '' : '(台帳は重複のため未追加)'}`, false);
         return;
       }
@@ -6420,20 +6617,24 @@ btnSave.addEventListener('click', async ()=>{
     if (!/証憑を読み込む|過去ファイル|台帳|運用のルール/.test(ttl)) return;   // 読み込み・整理・台帳・運用ルールの末尾に入れる
     const box = document.createElement('div');
     box.className = 'buy-strip';
-    box.style.cssText = 'margin:18px 0 0;padding:10px 14px;border:1px dashed #10B981;background:#F0FDF4;border-radius:8px;font-size:13px;line-height:1.8;display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;';
-    const msg = document.createElement('span');
-    msg.innerHTML = '🔓 <b>正式版</b>なら、整理した結果をそのままフォルダへ書き出せます(買い切り・ダウンロード版)。';
+    box.style.cssText = 'margin:24px 0 0;padding:18px 22px;border:2px solid #059669;background:linear-gradient(135deg,#ECFDF5 0%,#D1FAE5 100%);border-radius:12px;box-shadow:0 4px 14px rgba(5,150,105,.18);display:flex;flex-wrap:wrap;align-items:center;gap:14px 28px;';
+    const msg = document.createElement('div'); msg.style.cssText = 'flex:1 1 360px;min-width:0;';
+    msg.innerHTML = '<div style="font-size:17px;font-weight:800;color:#065F46;margin-bottom:4px;">🔓 正式版なら、整理した結果が、そのままフォルダに残ります</div>' +
+      '<div style="font-size:13.5px;line-height:1.8;color:#134E4A;">✔ 年月フォルダへ書き出し(件数の制限なし)　✔ 検索できる「電帳ダッシュボード」を自動作成・更新　✔ 台帳・作業ログ・Excel出力</div>' +
+      '<div style="font-size:13px;margin-top:4px;color:#065F46;"><b>リリース記念 ¥4,980</b>(通常 ¥6,980)・買い切り・ダウンロード版</div>';
     box.appendChild(msg);
+    const act = document.createElement('div'); act.style.cssText = 'flex:0 0 auto;';
     if (BUY_URL) {
       const a = document.createElement('a'); a.href = BUY_URL; a.target = '_blank'; a.rel = 'noopener';
       a.textContent = '正式版をダウンロードする →';
-      a.style.cssText = 'font-weight:700;color:#fff;background:#059669;padding:6px 14px;border-radius:6px;text-decoration:none;white-space:nowrap;';
-      box.appendChild(a);
+      a.style.cssText = 'display:inline-block;font-weight:800;font-size:16px;color:#fff;background:#059669;padding:14px 26px;border-radius:10px;text-decoration:none;white-space:nowrap;box-shadow:0 3px 8px rgba(5,150,105,.35);';
+      act.appendChild(a);
     } else {
       const a = document.createElement('span'); a.textContent = '正式版ダウンロード(販売ページ準備中)';
-      a.style.cssText = 'font-weight:700;color:#6B7280;background:#E5E7EB;padding:6px 14px;border-radius:6px;white-space:nowrap;';
-      box.appendChild(a);
+      a.style.cssText = 'display:inline-block;font-weight:700;font-size:14px;color:#6B7280;background:#E5E7EB;padding:12px 20px;border-radius:10px;white-space:nowrap;';
+      act.appendChild(a);
     }
+    box.appendChild(act);
     sec.appendChild(box);
   });
 })();
@@ -6603,7 +6804,7 @@ const DEMO_SAMPLES = {"サンプル1_レシート.pdf": "JVBERi0xLjMKJZOMi54gUmV
     if(!plan || plan.style.display === 'none' || !plan.children.length) planDone = false;
     if(plan && !planDone && plan.style.display !== 'none' && plan.children.length && !(cur && plan.contains(cur.target)) && !document.querySelector('.rv-overlay')){
       const run = btnByText(plan, 'この内容で実行する');
-      if(run) show(run, {title:'③ 整理プランを確認して実行', text:'上に、新しいファイル名と振り分け先(年月フォルダ)が並んでいます。よければ、このボタンを押します(デモでは実際の書き出しは行いません)。'});
+      if(run) show(run, {title:'③ 整理プランを確認して実行', text:'上の整理プランで、フォルダの整理方法(今の構成を維持/年月フォルダに再構成)を選び、「元の名前 → 新しい名前と振り分け先」の一覧を確認します。よければ、このボタンを押します(デモでは実際の書き出しは行わず、台帳への記録のみ行います)。'});
     }
   });
   mo.observe(document.body, {childList:true, subtree:true});
@@ -6707,6 +6908,62 @@ const DEMO_SAMPLES = {"サンプル1_レシート.pdf": "JVBERi0xLjMKJZOMi54gUmV
       upd();
     });
     upd(); setInterval(upd, 1500);
+    // 学習データの書き出し(正式版のみ表示。自動送信はしない。ユーザーが自分でファイルを送る)
+    const eb=$('learnExportBtn'), box=$('learnExportBox');
+    if(eb && box){
+      if(SAVE_ENABLED_FOR_TESTING) box.style.display='';
+      eb.addEventListener('click', ()=>openLearnExport());
+    }
+    // ---- 書き出し前の確認画面:1件ずつ中身を見て、含めない項目を外せる。表示内容=ファイルの中身 ----
+    function openLearnExport(){
+      const vm=getLearnMap(), dr=getDocRules();
+      const items=[];
+      Object.keys(vm).forEach(k=>items.push({t:'v', k, d:vm[k], show:[['取引先',vm[k].vendor],['書類種類',vm[k].docType],['照合文字',k]]}));
+      dr.forEach(r=>items.push({t:'r', k:r.id, d:r, show:[['取引先',r.vendor],['書類種類',r.docType],['照合文字',r.key||''],['ファイル名の型',r.fnKey||'']]}));
+      if(!items.length){ alert('書き出せる学習内容がありません。'); return; }
+      const own=[]; try{ const st=JSON.parse(localStorage.getItem('denshou_settings')||'{}'); if(st.editor) own.push(st.editor); }catch(e){}
+      const kn=document.getElementById('kiteiName'); if(kn && kn.value) own.push(kn.value);
+      const owns=own.map(x=>x.normalize('NFKC').replace(/\s/g,'').toLowerCase()).filter(x=>x.length>=2);
+      const sus=txt=>{
+        const t=String(txt||''), n=t.normalize('NFKC').replace(/\s/g,'').toLowerCase();
+        if(/[\w.+-]+@[\w-]+\.[\w.-]+/.test(t)) return 'メールアドレス';
+        if(/0\d{1,4}[-ー]?\d{1,4}[-ー]?\d{3,4}/.test(t.normalize('NFKC'))) return '電話番号らしき数字';
+        if(/〒|\d{3}-\d{4}/.test(t.normalize('NFKC'))) return '住所・郵便番号';
+        if(/(都|道|府|県).{1,6}(市|区|町|村)/.test(t)) return '住所らしき文字';
+        if(/(様|殿|御中|さん)$/.test(t.trim()) || /[一-龥]{1,4}[\s　][一-龥ぁ-んァ-ヶ]{1,4}(様|殿)?/.test(t)) return '個人名らしき文字';
+        if(owns.some(o=>o && n.includes(o))) return 'ご自身の氏名・屋号と同じ文字';
+        return '';
+      };
+      items.forEach(it=>{ it.flag=''; it.show.forEach(f=>{ if(!it.flag) it.flag=sus(f[1]); }); it.on=!it.flag; });
+      const esc=x=>String(x==null?'':x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+      const ov=document.createElement('div');
+      ov.style.cssText='position:fixed;inset:0;z-index:10100;background:rgba(15,23,42,.55);display:flex;align-items:center;justify-content:center;padding:14px;';
+      const box=document.createElement('div');
+      box.style.cssText='background:#fff;color:#0F172A;border-radius:14px;width:min(920px,100%);max-height:92vh;display:flex;flex-direction:column;box-shadow:0 10px 40px rgba(0,0,0,.3);font-size:13.5px;line-height:1.7;';
+      box.innerHTML='<div style="padding:18px 22px 8px;"><b style="font-size:16px;">対応依頼用ファイルの書き出し:内容の確認</b><p style="margin:6px 0 0;">下の一覧が、書き出されるファイルの内容のすべてです。<b>チェックを外した項目は、ファイルに含まれません</b>(アプリ内の学習内容は消えません)。個人名・住所・電話番号などが含まれる項目は、チェックを外してください。<span style="color:#B45309;">⚠が付いた項目は、個人情報の可能性があるため、初期状態で外してあります。</span>自動判定は完全ではないため、必ずご自身の目でご確認ください。</p><div style="margin-top:6px;"><button type="button" id="lxAll" class="dz-btn ghost" style="padding:3px 10px;font-size:12px;">すべて含める</button> <button type="button" id="lxNone" class="dz-btn ghost" style="padding:3px 10px;font-size:12px;">すべて外す</button> <span id="lxCnt" style="margin-left:8px;"></span></div></div><div id="lxList" style="overflow:auto;padding:4px 22px;flex:1;"></div><div style="padding:10px 22px 18px;border-top:1px solid #E2E8F0;"><label style="display:flex;gap:8px;align-items:flex-start;"><input type="checkbox" id="lxOk" style="margin-top:5px;"><span>チェックした項目の内容を確認しました。この内容を、ファイルとして書き出し、書式の対応依頼として提供することに同意します(依頼は任意で、書き出したファイルは、ご自身でココナラのメッセージから送ります)。</span></label><div style="margin-top:10px;display:flex;gap:8px;justify-content:flex-end;"><button type="button" class="dz-btn ghost" id="lxCancel" style="padding:6px 16px;">やめる</button><button type="button" class="dz-btn" id="lxGo" style="padding:6px 16px;" disabled>書き出す</button></div></div>';
+      ov.appendChild(box); document.body.appendChild(ov);
+      const list=box.querySelector('#lxList'), cnt=box.querySelector('#lxCnt'), ok=box.querySelector('#lxOk'), go=box.querySelector('#lxGo');
+      items.forEach((it,ix)=>{
+        const row=document.createElement('label');
+        row.style.cssText='display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #EEF2F0;cursor:pointer;';
+        row.innerHTML='<input type="checkbox" '+(it.on?'checked':'')+' style="margin-top:5px;"><div style="flex:1;min-width:0;word-break:break-all;">'+(it.flag?'<span style="color:#B45309;font-weight:700;">⚠ '+esc(it.flag)+'</span><br>':'')+it.show.filter(f=>f[1]).map(f=>'<span style="color:#64748B;">'+esc(f[0])+':</span> '+esc(f[1])).join(' ／ ')+'</div>';
+        row.querySelector('input').addEventListener('change',e=>{ it.on=e.target.checked; upd(); });
+        list.appendChild(row);
+      });
+      function upd(){ const n=items.filter(x=>x.on).length; cnt.textContent='含める:'+n+' / '+items.length+' 件'; go.disabled=!(ok.checked && n>0); }
+      ok.addEventListener('change',upd);
+      box.querySelector('#lxAll').onclick=()=>{ items.forEach(x=>x.on=true); list.querySelectorAll('input').forEach(c=>c.checked=true); upd(); };
+      box.querySelector('#lxNone').onclick=()=>{ items.forEach(x=>x.on=false); list.querySelectorAll('input').forEach(c=>c.checked=false); upd(); };
+      box.querySelector('#lxCancel').onclick=()=>ov.remove();
+      go.onclick=()=>{
+        const vo={}, ro=[];
+        items.filter(x=>x.on).forEach(x=>{ if(x.t==='v') vo[x.k]=x.d; else { const r=Object.assign({},x.d); delete r.id; delete r.createdAt; delete r.lastUsed; ro.push(r); } });
+        const d=new Date(), ymd=d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0');
+        downloadText('電帳DIY_学習データ_'+ymd+'.json', JSON.stringify({format:'denchodiy-learn-1', exportedAt:d.toISOString(), vendor_learn:vo, doc_rules:ro},null,2), 'application/json');
+        ov.remove();
+      };
+      upd();
+    }
   })();
 
   // ⑤ 通信の確認
@@ -6804,6 +7061,389 @@ const DEMO_SAMPLES = {"サンプル1_レシート.pdf": "JVBERi0xLjMKJZOMi54gUmV
   try{ const h = location.hash.replace('#', ''); if(items.some(x => x.key === h)) start = h; else { const ss = sessionStorage.getItem('denshou_panel'); if(ss && items.some(x => x.key === ss)) start = ss; } }catch(e){}
   show(start, {keepScroll: true});
   window.addEventListener('hashchange', () => { const h = location.hash.replace('#', ''); if(h && h !== cur){ if(items.some(x => x.key === h)) show(h); else { const t = document.getElementById(h), p = t && t.closest('.panel'); if(p) show(p.dataset.panel, {keepScroll: true}); } } });
+})();
+</script>
+<script>
+/* =====================================================================
+   出力フォルダの一元管理(正式版):電帳ダッシュボード=マスター
+   ・台帳・訂正削除履歴・作業ログを「電帳ダッシュボード.html」に同梱して、出力フォルダに保存
+   ・次回以降は、出力フォルダのダッシュボードを読み出して、台帳を引き継ぐ
+   ・ツールの外でのファイルの移動・削除・更新(サイズ・更新日時の相違)を照合して警告
+   ・作業ログは常に追記。フォルダ内容は、ログと一緒にExcel(.xlsx)で出力できる
+   ===================================================================== */
+(function(){
+  const MASTER_NAME = '電帳ダッシュボード.html';
+  const WL_KEY = 'denshou_worklog';
+  const $m = id => document.getElementById(id);
+  const on = () => (typeof SAVE_ENABLED_FOR_TESTING !== 'undefined') && SAVE_ENABLED_FOR_TESTING;
+  const nowStr = () => formatDateTime(new Date());
+  const esc = x => String(x == null ? '' : x).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+  /* ---------- 作業ログ ---------- */
+  function getWorkLog(){ try{ const a = JSON.parse(localStorage.getItem(WL_KEY) || '[]'); return Array.isArray(a) ? a : []; }catch(e){ return []; } }
+  function setWorkLog(a){ try{ localStorage.setItem(WL_KEY, JSON.stringify(a)); }catch(e){} }
+  function workLog(action, detail){
+    const a = getWorkLog();
+    a.push({ ts: nowStr(), by: (typeof currentEditor === 'function' ? currentEditor() : ''), action, detail: String(detail || '') });
+    setWorkLog(a); renderWl(); masterSoon();
+  }
+  window.workLog = workLog;
+  // 同じ内容が続く記録は、1行にまとめる(「照合」「読み込み」を何度押しても、ログが増えすぎないように。日時だけ更新し、回数を添える)
+  function pushLogCollapse(L, action, detail){
+    const base = x => String(x.detail || '').replace(/(?:\s*※\d+回確認)$/, '');
+    let k = -1;
+    for(let i = L.length - 1; i >= 0 && i >= L.length - 4; i--){ if(L[i].action === action && base(L[i]) === detail){ k = i; break; } }
+    if(k >= 0){   // 直近に同じ記録があれば、その1行を最新の位置へ移し、回数だけ増やす
+      const old = L.splice(k, 1)[0], m = /※(\d+)回確認$/.exec(String(old.detail || '')), n = (m ? +m[1] : 1) + 1;
+      L.push({ts: nowStr(), by: old.by || '', action, detail: detail + ' ※' + n + '回確認'});
+    } else L.push({ts: nowStr(), by: (typeof currentEditor === 'function' ? currentEditor() : ''), action, detail});
+    return L;
+  }
+  function mergeLogs(a, b){   // 追記専用のログなので、和集合(同じ内容は1件に)
+    const seen = new Set(), out = [];
+    [...a, ...b].forEach(x => { const k = JSON.stringify([x.ts, x.by, x.action, x.detail]); if(!seen.has(k)){ seen.add(k); out.push(x); } });
+    out.sort((x, y) => String(x.ts).localeCompare(String(y.ts)));
+    return out;
+  }
+
+  /* ---------- 台帳の変更を、作業ログへ記録+ダッシュボードの更新を予約 ---------- */
+  let lastMap = null;
+  function snap(arr){ const m = new Map(); (arr || []).forEach(r => { if(r && r.id) m.set(r.id, JSON.stringify(r)); }); return m; }
+  const origSetLedger = window.setLedger;
+  window.setLedger = function(arr){
+    if(!lastMap) lastMap = snap(getLedger());
+    origSetLedger(arr);
+    if(masterBusy) return;   // ダッシュボードからの読み込み中は、ログに残さない
+    try{
+      if(!lastMap) lastMap = new Map();
+      const cur = snap(arr), L = getWorkLog();
+      (arr || []).forEach(r => {
+        if(!r || !r.id || r.isIndex) return;
+        const old = lastMap.get(r.id), now = cur.get(r.id);
+        const path = (r.folder ? r.folder + '/' : '') + (r.newFilename || '');
+        if(old === undefined) L.push({ts: nowStr(), by: r.editor || '', action: '登録', detail: path + '(元:' + (r.originalFilename || '') + ')'});
+        else if(old !== now) L.push({ts: nowStr(), by: r.editor || '', action: '修正', detail: path});
+      });
+      lastMap.forEach((v, id) => { if(!cur.has(id)){ let o = {}; try{ o = JSON.parse(v); }catch(e){} if(!o.isIndex) L.push({ts: nowStr(), by: (typeof currentEditor === 'function' ? currentEditor() : ''), action: '削除', detail: (o.folder ? o.folder + '/' : '') + (o.newFilename || '')}); } });
+      lastMap = cur; setWorkLog(L); renderWl();
+    }catch(e){ console.warn('worklog', e); }
+    masterSoon();
+  };
+  const origAudit = window.appendAudit;
+  window.appendAudit = function(action, detail){ origAudit(action, detail); masterSoon(); };
+
+  /* ---------- 同梱データ(マスター)の書き出し・読み出し ---------- */
+  function masterBlockHtml(){
+    const payload = { v: 1, app: 'denchodiy', savedAt: nowStr(), ledger: getLedger(), audit: getLedgerAudit(), worklog: getWorkLog() };
+    return '<script type="application/json" id="denshouMaster">' + safeJsonForScript(payload) + '<\/script>\n';
+  }
+  window.masterBlockHtml = masterBlockHtml;
+  async function permOk(interactive){
+    if(!savedDirHandle) return false;
+    try{
+      let p = await savedDirHandle.queryPermission({mode:'readwrite'});
+      if(p !== 'granted' && interactive) p = await savedDirHandle.requestPermission({mode:'readwrite'});
+      if(p === 'granted'){ savedDirNeedsGrant = false; return true; }
+    }catch(e){}
+    return false;
+  }
+  async function masterRead(){
+    let fh; try{ fh = await savedDirHandle.getFileHandle(MASTER_NAME); }catch(e){ return null; }
+    const t = await (await fh.getFile()).text();
+    const m = t.match(/<script type="application\/json" id="denshouMaster">([\s\S]*?)<\/script>/);
+    if(!m) return {error: '台帳のデータが見当たりません(ダッシュボードが、別の版で作られた可能性があります)'};
+    try{ const o = JSON.parse(m[1]); if(!o || !Array.isArray(o.ledger)) throw new Error('形式'); return o; }
+    catch(e){ return {error: '台帳のデータを読み取れませんでした'}; }
+  }
+  let masterBusy = false, wTimer = null, writing = false, dirty = false, lastWritten = '', synced = false;
+  function masterSoon(){
+    if(!on() || !savedDirHandle || masterBusy) return;
+    dirty = true; clearTimeout(wTimer); wTimer = setTimeout(writeMaster, 1500);
+  }
+  async function writeMaster(force){
+    if(!on() || !savedDirHandle || writing) return false;
+    if(!(await permOk(false))){ dirty = true; renderState('許可待ち'); return false; }
+    if(!synced){   // 先に、出力フォルダの既存のダッシュボードを読み込む(他のパソコンの内容を上書きしないため)
+      let ex = null; try{ ex = await masterRead(); }catch(e){}
+      if(ex && !ex.error){ await masterSync(false); if(!synced) return false; return true; }
+      synced = true;
+    }
+    writing = true;
+    try{
+      const html = buildDashboardHtml();
+      const fh = await savedDirHandle.getFileHandle(MASTER_NAME, {create: true});
+      const w = await fh.createWritable_disabled_in_demo(); await w.write(new Blob([html], {type: 'text/html'})); await w.close();
+      dirty = false; lastWritten = nowStr(); renderState(); topBar(); return true;
+    }catch(e){ console.error(e); renderState('書き出し失敗'); return false; }
+    finally{ writing = false; }
+  }
+  window.masterWriteNow = writeMaster;
+  window.masterStatLast = async function(filename){   // 個別保存:直前に台帳へ入れた分に、サイズ・更新日時を足す
+    const st = await statPath(savedDirHandle, [], filename); if(!st) return;
+    const a = getLedger(); for(let i = a.length - 1; i >= 0; i--){ if(a[i].newFilename === filename && !a[i].isIndex){ a[i].fsize = st.size; a[i].fmtime = st.mtime; a[i].folder = a[i].folder || ''; origSetLedger(a); lastMap = snap(a); break; } }
+    masterSoon();
+  };
+
+  /* ---------- 出力フォルダを読み込む(次回以降の引き継ぎ) ---------- */
+  async function masterSync(interactive){
+    if(!on() || !savedDirHandle){ renderState(); return; }
+    if(!(await permOk(!!interactive))){ renderState('許可待ち'); bannerPending(); topBar(); return; }
+    masterBusy = true; let info = null;
+    try{
+      const m = await masterRead();
+      let local = getLedger();
+      { const pv = local.filter(r => r && r.preview);
+        if(pv.length){ local = local.filter(r => !(r && r.preview)); origSetLedger(local); lastMap = snap(local);
+          workLog('プレビュー記録の除外', 'ファイルを書き出していない記録(デモ版・プレビュー) ' + pv.length + ' 件は、台帳に引き継ぎませんでした'); } }
+      if(m === null){
+        synced = true;
+        if(local.length){ workLog('ダッシュボード新規作成', '出力フォルダに「' + MASTER_NAME + '」を作成し、台帳 ' + local.length + ' 件を登録しました'); }
+        if(local.length){ masterBusy = false; await writeMaster(); masterBusy = true; }
+      } else if(m.error){
+        notify('warn', '出力フォルダの「' + MASTER_NAME + '」:' + m.error + '。このまま続けると、この端末の台帳で上書きされます。必要なら先に、ファイルをコピーして残してください。');
+        synced = true; renderState(m.error);
+      } else {
+        synced = true;
+        const ids = new Set(m.ledger.map(r => r.id));
+        const localOnly = local.filter(r => r && r.id && !ids.has(r.id));
+        let take = m.ledger.filter(r => !(r && r.preview));
+        if(localOnly.length){
+          const merge = confirm('この端末のブラウザにだけある記録が ' + localOnly.length + ' 件あります。\n\n[OK] 出力フォルダのダッシュボードに統合する(合計 ' + (m.ledger.length + localOnly.length) + ' 件)\n[キャンセル] ダッシュボードの内容(' + m.ledger.length + ' 件)だけにする(この端末の ' + localOnly.length + ' 件は使われません)');
+          if(merge) take = take.concat(localOnly);
+          workLog('台帳の引き継ぎ', merge ? 'ダッシュボード ' + m.ledger.length + ' 件+この端末 ' + localOnly.length + ' 件を統合' : 'ダッシュボードの ' + m.ledger.length + ' 件を採用(この端末の ' + localOnly.length + ' 件は不採用)');
+        }
+        info = {n: take.length, at: m.savedAt}; origSetLedger(take); lastMap = snap(take);
+        try{ const a = getLedgerAudit(), seen = new Set(a.map(x => JSON.stringify(x))); (m.audit || []).forEach(x => { if(!seen.has(JSON.stringify(x))) a.push(x); }); a.sort((x, y) => String(x.ts).localeCompare(String(y.ts))); setLedgerAudit(a); }catch(e){}
+        setWorkLog(mergeLogs(getWorkLog(), m.worklog || []));
+        { const L = getWorkLog(); pushLogCollapse(L, '読み込み', '出力フォルダのダッシュボードから、台帳 ' + take.length + ' 件を読み込みました'); setWorkLog(L); }
+        try{ renderLedgerTable(); }catch(e){}
+        if(take.length !== m.ledger.length || localOnly.length){ masterBusy = false; await writeMaster(); masterBusy = true; }
+      }
+    }catch(e){ console.error(e); notify('warn', '出力フォルダの読み込みに失敗しました(' + (e.name || e) + ')'); }
+    finally{ masterBusy = false; }
+    renderWl(); renderState(); topBar();
+    const res = await integrityCheck(false);
+    const bad = res ? res.missing.length + res.changed.length + res.unknown.length : 0;
+    if(info) bannerOk(info.n, info.at, bad); else if(getLedger().length || bad) bannerOk(getLedger().length, '', bad); else banner('', '');
+  }
+  window.masterSync = masterSync;
+
+  /* ---------- 整合性チェック:ツールの外での移動・削除・更新を見つける ---------- */
+  async function scanAll(dir, rel, out, depth){
+    for await (const [name, h] of dir.entries()){
+      if(name.startsWith('.') || /^(desktop\.ini|Thumbs\.db)$/i.test(name)) continue;
+      if(h.kind === 'directory'){ if(depth < 10) await scanAll(h, rel.concat(name), out, depth + 1); }
+      else { const f = await h.getFile(); out.push({path: rel.concat(name).join('/'), name, size: f.size, mtime: f.lastModified, rel}); }
+    }
+    return out;
+  }
+  const isOwnFile = p => /\.crswap$/i.test(p) || p === MASTER_NAME || /^名前変更一覧_.*\.csv$/.test(p) || /^電帳_フォルダ内容_.*\.xlsx$/.test(p) || p.startsWith((typeof BULK_REVIEW_FOLDER !== 'undefined' ? BULK_REVIEW_FOLDER : '要確認') + '/');
+  const ownOut = p => p === MASTER_NAME || /^名前変更一覧_.*\.csv$/.test(p) || /^電帳_フォルダ内容_.*\.xlsx$/.test(p) || /\.crswap$/i.test(p) || /\.tmp$/i.test(p);
+  let lastCheck = null;
+  const fmtSec = t => { const d = new Date(t); return formatDateTime(d) + ':' + String(d.getSeconds()).padStart(2, '0'); };
+  async function integrityCheck(interactive){
+    if(!on() || !savedDirHandle) return null;
+    if(!(await permOk(!!interactive))){ renderState('許可待ち'); return null; }
+    let files;
+    try{ files = await scanAll(savedDirHandle, [], [], 0); }catch(e){ console.error(e); notify('warn', '出力フォルダを読み取れませんでした。'); return null; }
+    const byPath = new Map(files.map(f => [f.path, f])), byName = new Map();
+    files.forEach(f => { if(!byName.has(f.name)) byName.set(f.name, []); byName.get(f.name).push(f.path); });
+    const led = getLedger().filter(r => r && !r.isIndex && r.newFilename);
+    const known = new Set(), missing = [], changed = [];
+    led.forEach(r => {
+      const path = (r.folder ? r.folder + '/' : '') + r.newFilename; known.add(path);
+      const f = byPath.get(path);
+      if(!f){ const alt = (byName.get(r.newFilename) || []).filter(x => x !== path); missing.push({path, alt}); return; }
+      const why = [];
+      if(r.fsize != null && r.fsize !== f.size) why.push('サイズ ' + r.fsize + ' → ' + f.size + ' バイト');
+      if(why.length) changed.push({path, why: why.join('、')});
+    });
+    const unknown = files.filter(f => !known.has(f.path) && !isOwnFile(f.path)).map(f => ({path: f.path}));
+    const evid = files.filter(f => !ownOut(f.path));   // 電帳DIYが作った管理用ファイル(ダッシュボード・一覧CSV・Excel)は、書類として数えない
+    const res = {at: nowStr(), total: evid.length, ledger: led.length, missing, changed, unknown, files: evid};
+    lastCheck = res;
+    const bad = missing.length + changed.length + unknown.length;
+    const L = getWorkLog();
+    pushLogCollapse(L, '整合性チェック', bad ? ('不一致あり:見当たらない ' + missing.length + ' / 内容相違 ' + changed.length + ' / 台帳にない ' + unknown.length) : ('一致(台帳 ' + led.length + ' 件・フォルダ ' + evid.length + ' ファイル)')); setWorkLog(L);
+    renderWl(); renderWarn(res); masterSoon();
+    if(interactive && !bad) notify('ok', '出力フォルダの内容と台帳は、一致しています。');
+    return res;
+  }
+  window.integrityCheck = integrityCheck;
+
+  /* ---------- 起動直後の案内(ホームの上):前回の続きは、出力フォルダのダッシュボードから ---------- */
+  function topBox(){
+    let t = $m('masterTop');
+    if(!t){ t = document.createElement('div'); t.id = 'masterTop'; const lead = document.querySelector('header .lead'); if(!lead) return null; lead.insertAdjacentElement('afterend', t); }
+    return t;
+  }
+  // ホームの一番上に、出力フォルダのダッシュボードを開くボタンを置く(フォルダが設定済みのとき)
+  async function openMasterFile(){
+    if(!savedDirHandle){ notify('warn', '保存先フォルダが未設定です。'); return; }
+    if(!(await permOk(true))){ notify('warn', '出力フォルダへのアクセスが許可されませんでした。'); return; }
+    let f; try{ f = await (await savedDirHandle.getFileHandle(MASTER_NAME)).getFile(); }catch(e){ notify('info', '出力フォルダに「' + MASTER_NAME + '」がまだありません。書類を1件登録すると、自動で作成されます。'); topBar(); return; }
+    const url = URL.createObjectURL(new Blob([await f.text()], {type: 'text/html;charset=utf-8'}));
+    const w = window.open(url, 'denshou_dashboard');   // 同じ名前のタブを使い回す(タブが増えず、いつも最新になる)
+    if(!w) notify('warn', 'ポップアップがブロックされました。ブラウザの設定をご確認ください。');
+    else { try{ w.focus(); }catch(e){} notify('info', 'リンクから書類が開けない場合は、エクスプローラー(Finder)で、出力フォルダの「' + MASTER_NAME + '」を、ダブルクリックして開いてください。', {toast: false}); }
+    setTimeout(() => URL.revokeObjectURL(url), 5 * 60 * 1000);
+  }
+  let topBusy = false;
+  async function topBar(){
+    const t = topBox(); if(!t || !on() || topBusy) return;
+    topBusy = true; try{ await topBar2(t); }finally{ topBusy = false; }
+  }
+  async function topBar2(t){
+    let bar = $m('dashOpenBar');
+    let show = !!savedDirHandle, note = '';
+    if(show){
+      try{
+        const p = await savedDirHandle.queryPermission({mode: 'read'});
+        if(p === 'granted'){ try{ await savedDirHandle.getFileHandle(MASTER_NAME); }catch(e){ show = false; } }
+        else note = '(クリックすると、フォルダへのアクセス許可を確認します)';
+      }catch(e){}
+    }
+    if(!show){ if(bar) bar.style.display = 'none'; return; }
+    if(!bar){ bar = document.createElement('div'); bar.id = 'dashOpenBar'; bar.style.cssText = 'margin:14px 0 0;'; t.insertAdjacentElement('afterbegin', bar); }
+    bar.style.display = '';
+    bar.innerHTML = '';
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'dz-btn'; b.style.cssText = 'font-size:14.5px;padding:10px 18px;';
+    b.textContent = '📊 電帳ダッシュボードを開く'; b.addEventListener('click', openMasterFile); bar.appendChild(b);
+    const sp = document.createElement('span'); sp.className = 'small'; sp.style.cssText = 'margin-left:10px;color:#475569;'; sp.textContent = '出力フォルダ「' + savedDirHandle.name + '」' + note; bar.appendChild(sp);
+  }
+  window.masterTopBar = topBar;
+  function banner(kind, html, btns){
+    let b = $m('masterBanner');
+    if(!b){ b = document.createElement('div'); b.id = 'masterBanner'; const t = topBox(); if(!t) return; t.appendChild(b); }
+    if(!html){ b.style.display = 'none'; return; }
+    const c = kind === 'ok' ? ['#BBF7D0', '#F0FDF4'] : kind === 'warn' ? ['#FDE68A', '#FFFBEB'] : ['#3B82F6', '#EFF6FF'];
+    b.style.cssText = 'border:2px solid ' + c[0] + ';background:' + c[1] + ';border-radius:12px;padding:12px 16px;margin:14px 0;font-size:13.5px;line-height:1.8;';
+    b.innerHTML = html;
+    (btns || []).forEach(x => { const e = document.createElement('button'); e.type = 'button'; e.className = 'dz-btn' + (x.ghost ? ' ghost' : ''); e.style.cssText = 'margin:8px 8px 0 0;'; e.textContent = x.t; e.addEventListener('click', x.f); b.appendChild(e); });
+  }
+  function bannerPending(){
+    banner('info', '<div style="font-weight:700;font-size:15px;">↩ 前回の続きがあります(出力フォルダ「' + esc(savedDirHandle.name) + '」)</div>先に、出力フォルダのダッシュボードを読み込んでから、作業を始めてください(台帳が、最新の状態になります)。ブラウザが、フォルダへのアクセス許可を確認します。',
+      [{t: '📂 出力フォルダを読み込んで続ける', f: () => masterSync(true)}]);
+  }
+  function bannerOk(n, savedAt, bad){
+    banner(bad ? 'warn' : 'ok', '<div style="font-weight:700;font-size:15px;">' + (bad ? '⚠ ' : '✓ ') + '出力フォルダ「' + esc(savedDirHandle.name) + '」のダッシュボードから、台帳 ' + n + ' 件を読み込みました' + (savedAt ? '(' + esc(savedAt) + ' 保存)' : '') + '</div>' +
+      (bad ? '出力フォルダの内容と台帳が、一致していません(' + bad + ' 件)。「06 台帳」の「出力フォルダ管理」で、内容を確認してください。' : '台帳は、出力フォルダのダッシュボードと一致しています。このまま、続きから作業できます。'),
+      [{t: '🔄 再読み込み', ghost: true, f: () => masterSync(true)}]);
+  }
+
+  /* ---------- 画面(台帳の上の「出力フォルダ管理」カード) ---------- */
+  function renderState(note){
+    const el = $m('masterState'); if(!el) return;
+    if(!savedDirHandle){ el.textContent = '保存先フォルダが未設定です。「01 保存先を設定する」で、出力フォルダを決めてください。'; return; }
+    el.innerHTML = '保存先:<b>' + esc(savedDirHandle.name) + '</b> ／ 台帳 <b>' + getLedger().length + '</b> 件' +
+      (lastWritten ? ' ／ ダッシュボード更新:' + esc(lastWritten) : '') + (note ? ' ／ <span style="color:#B45309;">' + esc(note) + '</span>' : '');
+  }
+  function renderWarn(res){
+    const el = $m('masterWarn'); if(!el) return;
+    if(!res){ el.innerHTML = ''; return; }
+    const bad = res.missing.length + res.changed.length + res.unknown.length;
+    if(!bad){ el.innerHTML = '<div style="margin-top:10px;padding:8px 12px;border-radius:8px;background:#F0FDF4;border:1px solid #BBF7D0;font-size:13px;">✓ 出力フォルダの内容と台帳は、一致しています(' + esc(res.at) + ' 確認:台帳 ' + res.ledger + ' 件)</div>'; return; }
+    const lim = (arr, f) => arr.slice(0, 30).map(f).join('') + (arr.length > 30 ? '<li>…ほか ' + (arr.length - 30) + ' 件(Excel出力で、すべて確認できます)</li>' : '');
+    const sec = (title, guide, arr, f) => arr.length ? '<div style="margin-top:8px;"><b>' + title + '(' + arr.length + ' 件)</b><div class="small" style="margin:2px 0 4px;">' + guide + '</div><ul style="margin:0 0 0 1.2em;padding:0;font-size:12.5px;word-break:break-all;">' + lim(arr, f) + '</ul></div>' : '';
+    el.innerHTML = '<div style="margin-top:10px;padding:10px 14px;border-radius:8px;background:#FFFBEB;border:1px solid #FDE68A;font-size:13.5px;line-height:1.7;">' +
+      '<b>⚠ 出力フォルダの内容と、台帳が一致していません(' + esc(res.at) + ' 確認)</b><br>電帳DIY の外で、ファイルの移動・削除・更新が行われた可能性があります。検索や、訂正・削除の履歴の整合性に関わるため、下の案内に沿って、元に戻してください。' +
+      sec('見当たらないファイル', '移動・名前の変更・削除された可能性があります。元の場所・元の名前に戻してください。', res.missing, x => '<li>' + esc(x.path) + (x.alt.length ? '(別の場所に同じ名前のファイルがあります:' + esc(x.alt.slice(0, 3).join('、')) + ')' : '') + '</li>') +
+      sec('内容が変わった可能性があるファイル', 'サイズが、書き出したときと違います。ツールの外で編集・上書きされた可能性があるため、元のファイルに戻してください。意図した訂正の場合は、台帳の「操作」から削除(履歴は残ります)し、取り込み直してください。', res.changed, x => '<li>' + esc(x.path) + '(' + esc(x.why) + ')</li>') +
+      sec('台帳にないファイル', 'ツールの外で追加されたファイルです。「過去ファイルをまとめて整理」で取り込むか、不要であれば削除してください。', res.unknown, x => '<li>' + esc(x.path) + '</li>') +
+      (res.missing.length ? '<div style="margin-top:10px;"><button type="button" class="btn" id="btnDropMissing">🗑 見当たらない ' + res.missing.length + ' 件を、台帳から外す</button><div class="small" style="margin-top:4px;">元に戻せない(もう存在しない)ファイルの場合に使います。台帳の「訂正・削除の履歴」と作業ログに、記録が残ります。</div></div>' : '') +
+      '<div class="small" style="margin-top:8px;">この結果は、作業ログに記録しています。</div></div>';
+    const bd = $m('btnDropMissing');
+    if(bd) bd.onclick = () => {
+      const paths = new Set(res.missing.map(x => x.path));
+      const led = getLedger(), n = led.filter(r => r && !r.isIndex && paths.has((r.folder ? r.folder + '/' : '') + r.newFilename)).length;
+      if(!confirm('見当たらないファイル ' + n + ' 件の記録を、台帳から外します。\nファイル自体は、操作しません。よろしいですか?(履歴は残ります)')) return;
+      setLedger(led.filter(r => r && !paths.has((r.folder ? r.folder + '/' : '') + r.newFilename)));
+      workLog('台帳から除外', 'フォルダに存在しない ' + n + ' 件を、台帳から外しました');
+      try{ renderLedgerTable(); }catch(e){}
+      integrityCheck(false);
+    };
+  }
+  function renderWl(){
+    const el = $m('wlList'), c = $m('wlCount'); if(!el) return;
+    const a = getWorkLog(); if(c) c.textContent = a.length;
+    el.innerHTML = a.slice(-50).reverse().map(x => '<div style="padding:3px 0;border-bottom:1px solid #EEF2F0;font-size:12.5px;word-break:break-all;"><span style="color:#64748B;">' + esc(x.ts) + (x.by ? ' [' + esc(x.by) + ']' : '') + '</span> <b>' + esc(x.action) + '</b> ' + esc(x.detail) + '</div>').join('') || '<div class="small">まだ記録はありません。</div>';
+  }
+
+  /* ---------- Excel(.xlsx)の出力:最小構成のxlsxを、自前で作る(外部ライブラリなし) ---------- */
+  const crcT = (() => { const t = []; for(let n = 0; n < 256; n++){ let c = n; for(let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+  const crc32 = u => { let c = 0xFFFFFFFF; for(let i = 0; i < u.length; i++) c = crcT[(c ^ u[i]) & 255] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; };
+  function zipStore(files){   // files: [{name, data:Uint8Array}] 無圧縮のzip
+    const enc = new TextEncoder(), parts = [], cen = []; let off = 0;
+    const u16 = n => [n & 255, (n >>> 8) & 255], u32 = n => [n & 255, (n >>> 8) & 255, (n >>> 16) & 255, (n >>> 24) & 255];
+    files.forEach(f => {
+      const nm = enc.encode(f.name), crc = crc32(f.data), sz = f.data.length;
+      const lh = new Uint8Array([0x50,0x4b,3,4, 20,0, 0,8, 0,0, 0,0, 0x21,0, ...u32(crc), ...u32(sz), ...u32(sz), ...u16(nm.length), 0,0]);
+      parts.push(lh, nm, f.data);
+      cen.push(new Uint8Array([0x50,0x4b,1,2, 20,0, 20,0, 0,8, 0,0, 0,0, 0x21,0, ...u32(crc), ...u32(sz), ...u32(sz), ...u16(nm.length), 0,0, 0,0, 0,0, 0,0, 0,0,0,0, ...u32(off)]), nm);
+      off += lh.length + nm.length + sz;
+    });
+    let cl = 0; cen.forEach(c => cl += c.length);
+    const eocd = new Uint8Array([0x50,0x4b,5,6, 0,0, 0,0, ...u16(files.length), ...u16(files.length), ...u32(cl), ...u32(off), 0,0]);
+    return new Blob([...parts, ...cen, eocd], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+  }
+  const colL = n => { let s = ''; n++; while(n > 0){ const m = (n - 1) % 26; s = String.fromCharCode(65 + m) + s; n = Math.floor((n - 1) / 26); } return s; };
+  const xe = v => String(v).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F￾￿]/g, '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  function sheetXml(rows){
+    const w = []; rows.forEach(r => r.forEach((v, i) => { const s = String(v == null ? '' : v); let n = 0; for(const ch of s) n += ch.charCodeAt(0) > 255 ? 2 : 1; w[i] = Math.min(60, Math.max(w[i] || 8, n + 2)); }));
+    let x = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetViews><sheetView workbookViewId="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews><cols>' + w.map((c, i) => '<col min="' + (i + 1) + '" max="' + (i + 1) + '" width="' + c + '" customWidth="1"/>').join('') + '</cols><sheetData>';
+    rows.forEach((r, ri) => { x += '<row r="' + (ri + 1) + '">' + r.map((v, ci) => { const ref = colL(ci) + (ri + 1), st = ri === 0 ? ' s="1"' : ''; if(typeof v === 'number' && isFinite(v)) return '<c r="' + ref + '"' + st + '><v>' + v + '</v></c>'; return '<c r="' + ref + '" t="inlineStr"' + st + '><is><t xml:space="preserve">' + xe(v == null ? '' : v) + '</t></is></c>'; }).join('') + '</row>'; });
+    return x + '</sheetData>' + (rows.length > 1 && rows[0].length ? '<autoFilter ref="A1:' + colL(rows[0].length - 1) + rows.length + '"/>' : '') + '</worksheet>';
+  }
+  function makeXlsx(sheets){
+    const enc = new TextEncoder(), F = [], n = sheets.length;
+    F.push({name: '[Content_Types].xml', data: enc.encode('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>' + sheets.map((s, i) => '<Override PartName="/xl/worksheets/sheet' + (i + 1) + '.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>').join('') + '</Types>')});
+    F.push({name: '_rels/.rels', data: enc.encode('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>')});
+    F.push({name: 'xl/workbook.xml', data: enc.encode('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>' + sheets.map((s, i) => '<sheet name="' + xe(s.name.replace(/[\[\]:*?\/\\]/g, '_').slice(0, 31)) + '" sheetId="' + (i + 1) + '" r:id="rId' + (i + 1) + '"/>').join('') + '</sheets></workbook>')});
+    F.push({name: 'xl/_rels/workbook.xml.rels', data: enc.encode('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' + sheets.map((s, i) => '<Relationship Id="rId' + (i + 1) + '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet' + (i + 1) + '.xml"/>').join('') + '<Relationship Id="rId' + (n + 1) + '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>')});
+    F.push({name: 'xl/styles.xml', data: enc.encode('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><fonts count="2"><font><sz val="11"/><name val="Meiryo UI"/></font><font><b/><sz val="11"/><name val="Meiryo UI"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFE5EBE8"/></patternFill></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="2"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0" applyFont="1" applyFill="1"/></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>')});
+    sheets.forEach((s, i) => F.push({name: 'xl/worksheets/sheet' + (i + 1) + '.xml', data: enc.encode(sheetXml(s.rows))}));
+    return zipStore(F);
+  }
+  window.makeXlsx = makeXlsx;
+
+  async function exportXlsx(){
+    if(!on() || !savedDirHandle){ notify('warn', '保存先フォルダが未設定です。「01 保存先を設定する」で出力フォルダを決めてください。'); return; }
+    const res = await integrityCheck(true); if(!res) return;
+    const stat = new Map(); res.missing.forEach(x => stat.set(x.path, '見当たらない')); res.changed.forEach(x => stat.set(x.path, '内容相違:' + x.why));
+    const led = getLedger().filter(r => r && !r.isIndex), inLed = new Set(led.map(r => (r.folder ? r.folder + '/' : '') + r.newFilename));
+    const fmt = t => formatDateTime(new Date(t));
+    const s1 = [['パス', 'フォルダ', 'ファイル名', 'サイズ(バイト)', '更新日時', '台帳との照合']];
+    res.files.slice().sort((a, b) => a.path.localeCompare(b.path, 'ja')).forEach(f => s1.push([f.path, f.rel.join('/'), f.name, f.size, fmt(f.mtime), stat.get(f.path) || (inLed.has(f.path) ? '一致' : (isOwnFile(f.path) ? '(電帳DIYの出力物)' : '台帳にない'))]));
+    res.missing.forEach(x => s1.push([x.path, '', '', '', '', '見当たらない(台帳にはある)']));
+    const s2 = [['処理日時', '元のファイル名', '新しいファイル名', 'フォルダ', '取引年月日', '取引先', '金額', '書類種類', '支払い方法', '勘定科目', 'インボイス番号', '支払予定日', '担当者', '記録サイズ(バイト)', '記録更新日時']];
+    led.forEach(r => s2.push([r.processedAt || '', r.originalFilename || '', r.newFilename || '', r.folder || '', r.date || '', r.vendor || '', Number(r.amount) || r.amount || '', r.docType || '', r.paymentMethod || '', r.account || '', r.invoiceNo || '', r.dueDate || '', r.editor || '', r.fsize != null ? r.fsize : '', r.fmtime ? fmt(r.fmtime) : '']));
+    const s3 = [['日時', '担当者', '操作', '内容']]; getWorkLog().forEach(x => s3.push([x.ts, x.by || '', x.action, x.detail]));
+    const s4 = [['日時', '操作', '内容', '担当者']]; getLedgerAudit().forEach(x => s4.push([x.ts, x.action, typeof x.detail === 'string' ? x.detail : JSON.stringify(x.detail), x.by || '']));
+    const blob = makeXlsx([{name: 'フォルダ内容', rows: s1}, {name: '台帳', rows: s2}, {name: '作業ログ', rows: s3}, {name: '訂正削除履歴', rows: s4}]);
+    const d = new Date(), p2 = n => String(n).padStart(2, '0'), fn = '電帳_フォルダ内容_' + d.getFullYear() + p2(d.getMonth() + 1) + p2(d.getDate()) + '_' + p2(d.getHours()) + p2(d.getMinutes()) + '.xlsx';
+    try{
+      const fh = await savedDirHandle.getFileHandle(fn, {create: true}); const w = await fh.createWritable_disabled_in_demo(); await w.write(blob); await w.close();
+      workLog('Excel出力', fn + '(フォルダ ' + res.files.length + ' ファイル・台帳 ' + led.length + ' 件・作業ログ ' + getWorkLog().length + ' 件)');
+      notify('ok', '出力フォルダに「' + fn + '」を書き出しました(シート:フォルダ内容/台帳/作業ログ/訂正削除履歴)。');
+    }catch(e){
+      console.error(e); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = fn; document.body.appendChild(a); a.click(); a.remove();
+      notify('warn', 'フォルダへ書き出せなかったため、ダウンロードしました:' + fn);
+    }
+  }
+  window.masterExportXlsx = exportXlsx;
+
+  function init(){
+    const card = $m('masterPanel'); if(!card) return;
+    if(!on()){ card.style.display = 'none'; return; }
+    card.style.display = '';
+    $m('btnMasterSync').addEventListener('click', () => masterSync(true));
+    $m('btnMasterXlsx').addEventListener('click', exportXlsx);
+    renderWl(); renderState();
+    let tries = 0; const t = setInterval(() => { tries++; if(savedDirHandle || tries > 20){ clearInterval(t); if(savedDirHandle){ topBar(); masterSync(false); } else renderState(); } }, 300);
+    const sd = $m('btnSetDir'); if(sd) sd.addEventListener('click', () => { let n = 0; const w = setInterval(() => { n++; if(n > 60){ clearInterval(w); return; } if(savedDirHandle && savedDirHandle !== window.__lastDirMaster){ window.__lastDirMaster = savedDirHandle; clearInterval(w); masterSync(false); } }, 500); });
+    window.__lastDirMaster = savedDirHandle;
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
 </script>
 </body>
