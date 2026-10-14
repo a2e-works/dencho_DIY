@@ -921,7 +921,7 @@
 
   <header>
     <div class="eyebrow">DEMO · 体験版 · 処理はすべてブラウザ内で完結</div>
-    <h1>電帳DIY <small style="font-size:11px;font-weight:400;color:#888">build 1013o</small></h1>
+    <h1>電帳DIY <small style="font-size:11px;font-weight:400;color:#888">build 1013r</small></h1>
     <p class="lead">
       scan_001.pdf、領収書(2).pdf……名前がバラバラの書類を、日付・取引先・金額の入った名前に整えます。
       「この取引の書類を見せてください」と言われたときに、すぐ出せる状態にします。
@@ -1057,7 +1057,6 @@
     </div>
   </div>
 
-  <div id="kiteiStub" style="display:none" aria-hidden="true"><input id="kiteiName"><input id="kiteiManager"><input id="kiteiDate"><button type="button" id="btnGenKitei"></button><div id="kiteiResult"><pre id="kiteiPreview"></pre><button type="button" id="btnDownloadKitei"></button><button type="button" id="btnPrintKitei"></button></div></div>
 
   <section>
     <div class="section-title"><span class="no">03</span> 証憑を読み込む</div>
@@ -1283,6 +1282,7 @@
           </div>
         </details>
       </div>
+      <div id="kiteiStub" style="display:none" aria-hidden="true"><input id="kiteiName"><input id="kiteiManager"><input id="kiteiDate"><button type="button" id="btnGenKitei"></button><div id="kiteiResult"><pre id="kiteiPreview"></pre><button type="button" id="btnDownloadKitei"></button><button type="button" id="btnPrintKitei"></button></div></div>
       <div id="auditLogPanel" style="display:none;" class="history-pop"></div>
       <div class="ledger-table-wrap">
         <table class="ledger-table" id="ledgerTable">
@@ -1352,7 +1352,7 @@
       <ul style="margin:0 0 12px 1.2em;padding:0;">
         <li>電帳ダッシュボードは、<b>初回の登録で、出力フォルダに自動作成</b>されます。以後は、そのファイルで台帳を一元管理し、育てていきます。</li>
         <li><b>次回以降は、出力フォルダのダッシュボードを読み出して、台帳を引き継ぎます。</b>別のパソコンでも、同じ出力フォルダ(同期フォルダなど)を選べば、続きから使えます。</li>
-        <li><b>作業ログ</b>(登録・修正・削除・読み込み・整合性チェック)を、常に記録します。「06 台帳」の「出力フォルダ管理」から、フォルダ内容を、作業ログ・台帳と一緒に<b>Excel(.xlsx)に出力</b>できます。</li>
+        <li><b>作業ログ</b>(登録・修正・削除・読み込み・整合性チェック)を、常に記録します。「05 台帳」の「出力フォルダ管理」から、フォルダ内容を、作業ログ・台帳と一緒に<b>Excel(.xlsx)に出力</b>できます。</li>
         <li><b>ツールの外で</b>ファイルを移動・削除・更新(ファイル名・サイズの相違)した場合は、台帳との不一致を警告します。警告に沿って、元に戻してください。</li>
         <li>同じ出力フォルダを、複数のパソコンで<b>同時に</b>使わないでください(あとから保存した内容が、残ります)。</li>
       </ul>
@@ -2056,13 +2056,28 @@ const drop = $('drop');
 drop.addEventListener('drop', e => addFiles(Array.from(e.dataTransfer.files)));
 $('btnToMain').onclick = () => {
   var tip = $('mainTip'); if(tip) tip.style.display = 'block';
-  var sent = false;
+  var sent = false, opened = false;
   try{ if(window.opener && !window.opener.closed){ window.opener.postMessage({denshou: 'goAdd'}, '*'); try{ window.opener.focus(); }catch(e){} sent = true; } }catch(e){}
-  try{ var mw = window.open('', 'denshou_main'); if(mw){ try{ mw.focus(); }catch(e){} sent = true; } }catch(e){}
+  // 名前付きウィンドウを呼び出すと、ブラウザがそのタブを前面に出す(focus()だけでは、タブが切り替わらないことがある)
+  try{
+    var mw = window.open('', 'denshou_main');
+    if(mw){
+      var blank = false;
+      try{ blank = (mw.location.href === 'about:blank'); }catch(e){ blank = false; }   // 読めない=別の出どころのページ=既存のメイン画面
+      if(blank){
+        if(sent){ try{ mw.close(); }catch(e){} }   // 既存のメイン画面は見つからず、空白のタブができた:閉じる
+        else if(CONFIG.appUrl){ try{ mw.location.href = CONFIG.appUrl + '#p03'; sent = true; opened = true; }catch(e){} }
+        if(!sent){ try{ mw.close(); }catch(e){} }
+      } else {
+        try{ mw.postMessage({denshou: 'goAdd'}, '*'); mw.focus(); }catch(e){}
+        sent = true;
+      }
+    }
+  }catch(e){}
   if(!sent){
-    if(CONFIG.appUrl){ window.open(CONFIG.appUrl, '_blank'); if(tip) tip.textContent = '電帳DIY(メイン画面)を新しいタブで開きました。'; }
-    else if(tip) tip.textContent = 'ブラウザ上部のタブから「電帳DIY」の画面に切り替えてください。';
-  }
+    if(CONFIG.appUrl){ window.open(CONFIG.appUrl + '#p03', '_blank'); if(tip) tip.textContent = '電帳DIY(メイン画面)を新しいタブで開きました。'; }
+    else if(tip) tip.textContent = 'ブラウザ上部のタブから「電帳DIY」の画面に切り替えるか、フォルダの「電帳DIY.html」を開いてください。';
+  } else if(opened && tip){ tip.textContent = '電帳DIY(メイン画面)を新しいタブで開きました。「03 証憑を読み込む」から追加できます。'; }
 };
 $('btnCam').onclick = () => $('inCam').click();
 $('btnPick').onclick = () => $('inPick').click();
@@ -5362,6 +5377,13 @@ function openReview(a, pos, total){
     const dupBox = h('div', {class:'rv-dup-box'});
     let curDups = [];
     const inDate = h('input', {class:'rv-in', value: v.date, placeholder:'例:2026-08-31', inputmode:'numeric'});
+    const inDateHid = h('input', {type:'date', tabindex:'-1', 'aria-hidden':'true'}); inDateHid.style.cssText = 'position:absolute;right:0;bottom:0;width:38px;height:38px;opacity:0;pointer-events:none;border:0;';
+    const inDateBtn = h('button', {type:'button', class:'date-pick-btn', title:'カレンダーから選択', text:'📅', onclick: ()=>{
+      const cur = inDate.value.trim(); if(/^\d{4}-\d{2}-\d{2}$/.test(cur)) inDateHid.value = cur;
+      try{ if(inDateHid.showPicker) inDateHid.showPicker(); else inDateHid.click(); }catch(e){ try{ inDateHid.click(); }catch(e2){} }
+    }});
+    inDateHid.addEventListener('change', ()=>{ if(inDateHid.value){ inDate.value = inDateHid.value; dateTouched = true; upd(); } });
+    inDate.style.flex = '1'; const inDateWrap = h('div', {class:'date-field-wrap'}, inDate, inDateBtn, inDateHid); inDateWrap.style.position = 'relative';
     const inVendor = h('input', {class:'rv-in', value: v.vendor, placeholder:'取引先'});
     const inAmount = h('input', {class:'rv-in', value: v.amount, placeholder:'例:4436', inputmode:'numeric'});
     const selType = h('select', {class:'rv-in'}); ['レシート','領収書','請求書','明細書','カード利用明細','銀行取引明細','納品書','その他'].forEach(o=>{ const op = h('option', {value:o, text:o}); if(o === v.docType) op.selected = true; selType.appendChild(op); });
@@ -5518,7 +5540,7 @@ function openReview(a, pos, total){
 
     const right = h('div', {class:'rv-right'},
       h('div', {class:'rv-head', text: `${pos} / ${total} 件目の確認`}), banner, dupBox,
-      field('取引年月日', inDate, dateChips), field('取引先', inVendor, venChips), field('金額(税込)', inAmount, amtChips),
+      field('取引年月日', inDateWrap, dateChips), field('取引先', inVendor, venChips), field('金額(税込)', inAmount, amtChips),
       h('div', {class:'rv-row2'}, field('書類種類', selType), field('支払い方法', selPay)), dueEl, txnBox,
       field('勘定科目(任意)', inAccount, accChips), field('インボイス登録番号(任意)', inInvoice), field('カード発行会社の正式名(台帳用・任意。ファイル名には入れません)', inCompany),
       h('div', {class:'rv-fn-wrap'}, h('div', {class:'rv-fn-label', text:'この名前で保存します'}), fnPrev),
@@ -6063,7 +6085,7 @@ window.addEventListener('message', async e => {   // ダッシュボード(プ�
       const f = await (await d.getFileHandle(last)).getFile();
       return reply({ok:true, blob:f, name:f.name});
     }catch(err){
-      return reply({ok:false, msg: (err && err.name === 'NotFoundError') ? 'ファイルが見つかりません:' + (q.segs || []).join('/') + '(移動・名前の変更・削除された可能性があります。「06 台帳」の「出力フォルダ管理」で、照合してください)' : 'ファイルを開けませんでした(' + ((err && err.name) || '') + ')'});
+      return reply({ok:false, msg: (err && err.name === 'NotFoundError') ? 'ファイルが見つかりません:' + (q.segs || []).join('/') + '(移動・名前の変更・削除された可能性があります。「05 台帳」の「出力フォルダ管理」で、照合してください)' : 'ファイルを開けませんでした(' + ((err && err.name) || '') + ')'});
     }
   }
   if(!e.data || e.data.denshou !== 'goAdd') return;
@@ -6092,7 +6114,7 @@ function showBulkCta(){
   if(getLedger().length){ // 次の一歩:検索できることの確認(ダッシュボード)へ
     const nx = document.createElement('div'); nx.id = 'bulkNext';
     nx.style.cssText = 'border:2px solid #10B981;background:#ECFDF5;border-radius:10px;padding:14px 16px;margin-top:12px;';
-    nx.innerHTML = '<div style="font-weight:700;font-size:15px;margin-bottom:4px;">✅ 登録できました。次は「電帳ダッシュボード」(ステップ3)です</div><div style="font-size:13px;margin-bottom:8px;">台帳に記録した書類を、<b>日付・金額・取引先で検索できる</b>画面で確認してみましょう。税務調査で「見せてください」と言われたときに使う画面です。</div>';
+    nx.innerHTML = '<div style="font-weight:700;font-size:15px;margin-bottom:4px;">✅ 登録できました。次は「電帳ダッシュボード」で、確認してみましょう</div><div style="font-size:13px;margin-bottom:8px;">台帳に記録した書類を、<b>日付・金額・取引先で検索できる</b>画面で確認してみましょう。税務調査で「見せてください」と言われたときに使う画面です。</div>';
     const bt = document.createElement('button'); bt.type = 'button'; bt.className = 'dz-btn'; bt.textContent = '📊 電帳ダッシュボードを開く(次はここ・別のタブで開きます)';
     const tabNote = document.createElement('div'); tabNote.style.cssText = 'font-size:12.5px;margin-top:8px;color:#065F46;display:none;';
     tabNote.innerHTML = '➡ <b>新しいタブ「電帳ダッシュボード」で開きました。</b>ブラウザ上部のタブに表示されています。この画面に戻るときは、左側の「電帳DIY」のタブをクリックしてください。';
@@ -7018,7 +7040,7 @@ const DEMO_SAMPLES = {"サンプル1_レシート.pdf": "JVBERi0xLjMKJZOMi54gUmV
   });
   if(footer) main.appendChild(footer);
 
-  const groups = [['はじめに', [/^ホーム/]], ['準備', [/保存先を設定/,/命名ルール/,/事務処理規程/]], ['書類を整理する', [/証憑を読み込む/,/過去ファイル/]], ['台帳・管理', [/台帳/]], ['ルール・案内', [/運用のルール/,/購入後/]], ['設定', [/^設定$/]]];
+  const groups = [['はじめに', [/^ホーム/]], ['準備', [/保存先を設定/,/命名ルール/]], ['書類を整理する', [/証憑を読み込む/,/過去ファイル/]], ['台帳・管理', [/台帳/]], ['ルール・案内', [/運用のルール/,/購入後/]], ['設定', [/^設定$/]]];
   groups.forEach(g => {
     const mine = items.filter(it => g[1].some(re => re.test(it.label))); if(!mine.length) return;
     const h = document.createElement('div'); h.className = 'sg'; h.textContent = g[0]; side.appendChild(h);
@@ -7325,9 +7347,34 @@ const DEMO_SAMPLES = {"サンプル1_レシート.pdf": "JVBERi0xLjMKJZOMi54gUmV
     banner('info', '<div style="font-weight:700;font-size:15px;">↩ 前回の続きがあります(出力フォルダ「' + esc(savedDirHandle.name) + '」)</div>先に、出力フォルダのダッシュボードを読み込んでから、作業を始めてください(台帳が、最新の状態になります)。ブラウザが、フォルダへのアクセス許可を確認します。',
       [{t: '📂 出力フォルダを読み込んで続ける', f: () => masterSync(true)}]);
   }
+  function bannerRecheck(bad){
+    const l = document.querySelector('#masterBanner');
+    if(bad){
+      banner('warn', '<div style="font-weight:700;font-size:15px;">⚠ 出力フォルダ「' + esc(savedDirHandle.name) + '」の内容が、台帳と一致しなくなりました(' + esc(nowStr()) + ' 確認)</div>' +
+        '電帳DIY の外で、ファイルの移動・削除・更新が行われた可能性があります(' + bad + ' 件)。「05 台帳」の「出力フォルダ管理」で、内容を確認してください。',
+        [{t: '📒 台帳で内容を確認する', f: () => { try{ const pn = document.getElementById('btnDropMissing') || document.getElementById('masterWarn'); location.hash = '#p05'; setTimeout(() => { try{ (document.getElementById('masterWarn') || pn).scrollIntoView({behavior:'smooth', block:'center'}); }catch(e){} }, 200); }catch(e){} }},
+         {t: '🔄 もう一度確認', ghost: true, f: () => recheckNow(true)}]);
+    } else if(l && l.style.display !== 'none' && /一致しなくなりました|一致していません/.test(l.textContent)){
+      banner('ok', '<div style="font-weight:700;font-size:15px;">✓ 出力フォルダの内容と台帳は、一致しています(' + esc(nowStr()) + ' 確認)</div>', [{t: '🔄 もう一度確認', ghost: true, f: () => recheckNow(true)}]);
+    }
+  }
+  let lastRecheck = 0, rechecking = false;
+  async function recheckNow(force){
+    if(!on() || !savedDirHandle || !synced || masterBusy || rechecking) return;
+    if(!force && Date.now() - lastRecheck < 5000) return;
+    rechecking = true; lastRecheck = Date.now();
+    try{
+      if(!force){ let q = 'prompt'; try{ q = await savedDirHandle.queryPermission({mode:'readwrite'}); }catch(e){} if(q !== 'granted') return; }   // 許可ダイアログは、勝手には出さない
+      const res = await integrityCheck(!!force); if(!res) return;
+      bannerRecheck(res.missing.length + res.changed.length + res.unknown.length);
+    }catch(e){ console.error(e); }
+    finally{ rechecking = false; }
+  }
+  window.addEventListener('focus', () => { recheckNow(false); });
+  document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'visible') recheckNow(false); });
   function bannerOk(n, savedAt, bad){
     banner(bad ? 'warn' : 'ok', '<div style="font-weight:700;font-size:15px;">' + (bad ? '⚠ ' : '✓ ') + '出力フォルダ「' + esc(savedDirHandle.name) + '」のダッシュボードから、台帳 ' + n + ' 件を読み込みました' + (savedAt ? '(' + esc(savedAt) + ' 保存)' : '') + '</div>' +
-      (bad ? '出力フォルダの内容と台帳が、一致していません(' + bad + ' 件)。「06 台帳」の「出力フォルダ管理」で、内容を確認してください。' : '台帳は、出力フォルダのダッシュボードと一致しています。このまま、続きから作業できます。'),
+      (bad ? '出力フォルダの内容と台帳が、一致していません(' + bad + ' 件)。「05 台帳」の「出力フォルダ管理」で、内容を確認してください。' : '台帳は、出力フォルダのダッシュボードと一致しています。このまま、続きから作業できます。'),
       [{t: '🔄 再読み込み', ghost: true, f: () => masterSync(true)}]);
   }
 
