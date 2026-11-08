@@ -80,6 +80,22 @@
     font-weight:700;
   }
 
+
+  .sched-box{margin-top:18px;border:1px solid var(--paper-line);background:var(--card);border-radius:8px;padding:14px 16px;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+  .sched-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-weight:700;font-size:14px;}
+  .sched-badge{display:inline-block;background:#B45309;color:#fff;border-radius:999px;font-size:12px;padding:1px 9px;}
+  .sched-sub{font-size:12px;color:var(--gray);margin:6px 0 8px;line-height:1.6;}
+  .sched-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 0;border-top:1px solid var(--paper-line);font-size:13.5px;}
+  .sched-row .nm{flex:1 1 200px;min-width:0;font-weight:700;word-break:break-all;}
+  .sched-row .nm small{display:block;font-weight:400;color:var(--gray);font-size:12px;}
+  .sched-st{flex:0 0 auto;font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;border:1px solid var(--paper-line);}
+  .sched-st.due{background:#FEF3C7;border-color:#F59E0B;color:#78350F;}
+  .sched-st.late{background:#FEE2E2;border-color:#EF4444;color:#7F1D1D;}
+  .sched-st.done{background:#DCFCE7;border-color:#22C55E;color:#14532D;}
+  .sched-row .dz-btn{padding:4px 10px;font-size:12px;}
+  .sched-form{display:grid;grid-template-columns:auto 1fr;gap:6px 10px;align-items:center;margin-top:8px;font-size:13px;}
+  .sched-form input,.sched-form select{padding:6px 8px;border:1px solid var(--paper-line);border-radius:6px;font-size:13px;font-family:inherit;min-width:0;}
+  .sched-presets{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0;}
   .newsbar{
     margin-top:26px;
     border:1px solid var(--paper-line);
@@ -901,6 +917,9 @@
     .side button{width:auto; flex:0 0 auto; white-space:nowrap; padding:7px 10px;}
     .panels{max-width:none; width:100%;}
   }
+  .demo-off{opacity:.45;filter:grayscale(1);}
+  .demo-off *{cursor:not-allowed!important;}
+  .dz-btn.demo-off,.dz-btn:disabled{opacity:.45;filter:grayscale(1);cursor:not-allowed;}
 </style>
 <script>
 /* 通信の記録:このページ自身の fetch / XMLHttpRequest / sendBeacon / WebSocket の呼び出しを、画面の「設定 > 通信の確認」に表示するために記録します(記録のみ。内容は保存・送信しません) */
@@ -921,7 +940,7 @@
 
   <header>
     <div class="eyebrow">DEMO · 体験版 · 処理はすべてブラウザ内で完結</div>
-    <h1>電帳DIY <small style="font-size:11px;font-weight:400;color:#888">build 1013r</small></h1>
+    <h1>電帳DIY <small style="font-size:11px;font-weight:400;color:#888">build 1105a</small></h1>
     <p class="lead">
       scan_001.pdf、領収書(2).pdf……名前がバラバラの書類を、日付・取引先・金額の入った名前に整えます。
       「この取引の書類を見せてください」と言われたときに、すぐ出せる状態にします。
@@ -967,32 +986,61 @@
       <div id="newsList"></div>
       <div class="news-item" style="font-size:11.5px;color:var(--gray);" id="updateStatus"></div>
     </div>
+
+    <div class="sched-box" id="schedBox">
+      <div class="sched-head">📅 今月の取得予定 <span id="schedMonth" style="font-weight:400;color:var(--gray);font-size:12.5px;"></span><span class="sched-badge" id="schedBadge" style="display:none"></span></div>
+      <div class="sched-sub">Amazon・楽天・カード・銀行などの明細を取る日を登録しておくと、開いたときにお知らせします。<b>お知らせだけ</b>で、サイトへのログインや自動での取得は行いません(PDFの保存はご自身で行い、あとで「03 証憑を読み込む」から取り込みます)。</div>
+      <div id="schedList"></div>
+      <div id="schedEmpty" class="sched-sub" style="display:none">まだ予定がありません。下の「予定を登録する」から追加できます。</div>
+      <details id="schedManage" style="margin-top:8px;">
+        <summary style="cursor:pointer;font-size:13px;font-weight:700;">予定を登録する・カレンダーに書き出す</summary>
+        <div class="sched-presets">
+          <span class="sched-sub" style="margin:0;align-self:center">よく使うもの:</span>
+          <button type="button" class="dz-btn ghost" data-preset="amazon">＋ Amazon</button>
+          <button type="button" class="dz-btn ghost" data-preset="rakuten">＋ 楽天</button>
+          <button type="button" class="dz-btn ghost" data-preset="card">＋ クレジットカード</button>
+          <button type="button" class="dz-btn ghost" data-preset="bank">＋ 銀行</button>
+        </div>
+        <div class="sched-form">
+          <label for="schedName">名前</label><input id="schedName" type="text" maxlength="40" placeholder="例:楽天カードの利用明細">
+          <label for="schedUrl">ページのURL(任意)</label><input id="schedUrl" type="url" placeholder="https://… 明細をダウンロードするページ">
+          <label for="schedDay">毎月の取得日</label>
+          <select id="schedDay"></select>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+          <button type="button" class="dz-btn" id="schedAdd">予定を追加</button>
+          <button type="button" class="dz-btn ghost" id="schedCancel" style="display:none">編集をやめる</button>
+          <button type="button" class="dz-btn ghost" id="schedIcs">📆 カレンダーに書き出す(.ics)</button>
+        </div>
+        <div class="sched-sub">「カレンダーに書き出す」で作ったファイルを、Google カレンダーや Outlook などに取り込むと、電帳DIYを開いていないときも、毎月の取得日の朝9時にお知らせが届きます。予定は、このブラウザの中にだけ保存されます(外部には送信しません)。サイトのURLは変わることがあります。開けないときは、ご自身でURLを直してください。将来、拡張機能として、承認のうえで取得を助ける機能を検討しています。</div>
+      </details>
+    </div>
   </header>
 
   <div class="qs" id="quickStart" style="display:none;">
     <h2>🔰 はじめての方へ:3ステップ・約2分で体験できます</h2>
     <div class="qs-sub">難しい設定は不要です。下のボタンを押すだけで、書類の読み取りから「日付_取引先_金額円_書類種類」への整理、検索までを体験できます。</div>
     <div class="qs-steps">
-      <div class="qs-step"><b class="n">1</b><b>書類を選ぶ</b><br>まず手軽に試すなら「サンプル書類」。ご自身の書類で試すなら、保管フォルダを選びます(中身は変更しません)。
+      <div class="qs-step"><b class="n">1</b><b>書類を選ぶ</b><br>まず手軽に試すなら「サンプル書類」。ご自身の書類は、下の「03 証憑を読み込む」から3件まで試せます。
         <button type="button" class="dz-btn" id="qsSample">▶ サンプル書類で体験する(おすすめ)</button>
-        <button type="button" class="dz-btn ghost" id="qsFolder">📁 自分の書類フォルダで試す</button></div>
+        <button type="button" class="dz-btn ghost demo-off" id="qsFolder" disabled>📁 自分の書類フォルダで試す(正式版で利用可)</button></div>
       <div class="qs-step"><b class="n">2</b><b>読み取り結果を確認</b><br>画面に出る日付・取引先・金額を、書類の画像(拡大できます)と見比べます。合っていれば「この内容で登録」を押すだけ。違えば直せます。直した内容は次回から自動で当てはまります。</div>
       <div class="qs-step"><b class="n">3</b><b>整理結果を確認・検索</b><br>新しいファイル名と振り分け先(年月フォルダ)を確認し、「電帳ダッシュボード」で日付・金額・取引先から検索できます。
         <button type="button" class="dz-btn ghost" id="qsDash">🔎 電帳ダッシュボードを開く</button></div>
     </div>
     <div class="qs-safe"><span>✅ 書類は外部に送信されません(ブラウザ内で処理)</span><span>✅ 元のファイルは変更しません</span><span>✅ 銀行・カード会社への接続やID/パスワード入力はありません</span></div>
-    <div class="qs-note">推奨環境:パソコンの Chrome / Edge。フォルダ選択は Chrome / Edge で使えます(スマホではファイル選択のみ)。体験版では、ご自身の書類は10件まで読み取れます(サンプル書類は何度でも試せます)。ファイルの書き出しは行いません。<span id="qsNoFolder" style="display:none;color:#B45309;"> ※お使いのブラウザはフォルダ選択に対応していません。「サンプル書類」か、下の「ファイルを選択」をご利用ください。</span></div>
+    <div class="qs-note">推奨環境:パソコンの Chrome / Edge。体験版では、ご自身の書類は3件まで読み取れます(サンプル書類は何度でも試せます)。フォルダの選択、ファイルの書き出しは行いません。</div>
   </div>
 
   <section>
     <div class="section-title"><span class="no">01</span> 保存先を設定する</div>
-    <div class="ledger-card">
+    <div class="ledger-card demo-off" aria-disabled="true">
       <div class="savedir-row">
         <div class="savedir-info">
           <div class="savedir-label">現在の保存先</div>
           <div class="savedir-path" id="savedirPath">未設定(保存のたびにダウンロードフォルダへ)</div>
         </div>
-        <button type="button" class="dz-btn ghost" id="btnSetDir">📂 フォルダを設定(正式版で利用可)</button>
+        <button type="button" class="dz-btn ghost demo-off" id="btnSetDir" disabled>📂 フォルダを設定(正式版で利用可)</button>
       </div>
       <p class="savedir-note" id="savedirNote">
         体験版では保存機能を無効化しています。フォルダの自動保存・ファイルの保存は正式版(リリース記念 ¥4,980／通常 ¥6,980)でご利用いただけます。
@@ -1191,7 +1239,7 @@
       </div>
 
       <div class="limit-card" id="limitCard">
-        <h3>体験版は10件までです</h3>
+        <h3>体験版は3件までです</h3>
         <p>
           正式版では件数無制限に加え、命名ルールの自由編集・Google Drive連携・
           実際のファイル保存などが使えるようになります。
@@ -1218,15 +1266,14 @@
         最後に、検索できる<b>「電帳ダッシュボード」</b>(HTML)を作成できます。
       </p>
       <p class="rule-desc" style="font-size:11.5px;">
-        書き出し先は「01 保存先を設定する」で選んだフォルダです(Chrome/Edge)。
-        <b>デモ版では実際の書き出しは行わず、振り分け結果のプレビューと台帳記録のみ</b>を行います。
+        <b>体験版では、この一括整理の2つのボタンは使えません。</b>正式版で、書き出し先のフォルダを選んで、年月フォルダへまとめて整理できます。
+        ご自身の書類は「03 証憑を読み込む」から3件まで、サンプル書類は上の「はじめての方へ」から何度でも、お試しいただけます。
       </p>
       <div class="dz-buttons">
-        <button type="button" class="dz-btn" id="btnBulkFolder">📂 フォルダを選んで一括整理</button>
-        <button type="button" class="dz-btn ghost" id="btnBulkPick">📁 複数ファイルを選択して整理</button>
+        <button type="button" class="dz-btn demo-off" id="btnBulkFolder" disabled>📂 フォルダを選んで一括整理(正式版で利用可)</button>
+        <button type="button" class="dz-btn ghost demo-off" id="btnBulkPick" disabled>📁 複数ファイルを選択して整理(正式版で利用可)</button>
         <button type="button" class="dz-btn ghost" id="btnDashboard">📊 電帳ダッシュボードを作成</button>
       </div>
-      <input type="file" id="bulkFileInput" accept="image/*,application/pdf" multiple style="display:none;">
       <div id="bulkPlan" class="bulk-plan" style="display:none;"></div>
       <div id="bulkQueue" class="bulk-queue"></div>
       <div id="bulkSummary" class="rule-desc" style="display:none;"></div>
@@ -1390,7 +1437,7 @@
         <tr><th></th><th class="center">体験版(このページ)</th><th class="center">正式版</th></tr>
         <tr><td>画像・PDFの読み取り、確認画面での修正</td><td class="center ok-mark">○</td><td class="center ok-mark">○</td></tr>
         <tr><td>ファイル名の自動生成(日付_取引先_金額円_書類種類)</td><td class="center ok-mark">○</td><td class="center ok-mark">○</td></tr>
-        <tr><td>処理できる件数</td><td class="center">体験は10件まで(サンプル書類は除く)</td><td class="center ok-mark">無制限</td></tr>
+        <tr><td>処理できる件数</td><td class="center">体験は3件まで(サンプル書類は除く)</td><td class="center ok-mark">無制限</td></tr>
         <tr><td>過去ファイルの一括整理</td><td class="center">振り分けのプレビューと台帳記録</td><td class="center ok-mark">年月フォルダへ書き出し(元のファイルは変更せず、コピーを作成)</td></tr>
         <tr><td>名前変更一覧(元の名前→新しい名前のCSV)</td><td class="center no-mark">─</td><td class="center ok-mark">○(書き出し時に自動作成)</td></tr>
         <tr><td>電帳ダッシュボード(日付・金額の範囲と取引先で検索、一覧CSV)</td><td class="center">プレビューのみ</td><td class="center ok-mark">出力先フォルダに自動作成・更新</td></tr>
@@ -2003,7 +2050,7 @@ let firstAdd = true;
 function demoQuotaOk(){   // デモ版:メイン画面と同じ「体験回数」を共有する(上限に達したら、この画面からの追加も止める)
   if (!CONFIG.demo) return true;
   try {
-    const lim = Number(CONFIG.maxFree) || 10, used = parseInt(localStorage.getItem('denshou_used') || '0', 10);
+    const lim = Number(CONFIG.maxFree) || 3, used = parseInt(localStorage.getItem('denshou_used') || '0', 10);
     if (used >= lim) { log('warn', '体験版の上限(' + lim + '件)に達しました。続きは正式版でご利用いただけます。'); return false; }
     localStorage.setItem('denshou_used', String(used + 1));
   } catch (e) { /* 保存できない環境では数えられないため、そのまま進める */ }
@@ -2105,7 +2152,7 @@ render();
 <script>
 pdfjsLib.GlobalWorkerOptions.workerSrc = "lib/pdf.worker.min.js";
 
-const MAX_FREE = 10;
+const MAX_FREE = 3;
 const BUY_URL = ''; // ← 正式版の販売ページ(ココナラ)のURL。10/14に出品後ここへ貼る。空なら「準備中」表示
 // フッターの規約ページ(自社で用意したURLを貼る。空のものは表示しない)
 const LEGAL_LINKS = [
@@ -2187,46 +2234,8 @@ async function idbGet(key){
   });
 }
 
-const savedirPath = document.getElementById('savedirPath');
-const savedirNote = document.getElementById('savedirNote');
-const btnSetDir = document.getElementById('btnSetDir');
 
-async function refreshSavedirUI(){
-  if(savedDirHandle){
-    savedirPath.textContent = `📁 ${savedDirHandle.name}` + (savedDirNeedsGrant ? '(前回の設定を記憶中・書き出し時に許可を再確認します)' : '');
-    savedirPath.classList.add('set');
-    btnSetDir.textContent = '📂 フォルダを変更';
-  } else {
-    savedirPath.textContent = '未設定(保存のたびにダウンロードフォルダへ)';
-    savedirPath.classList.remove('set');
-    btnSetDir.textContent = '📂 フォルダを設定';
-  }
-}
 
-(async function initSavedir(){
-  if(!SAVE_ENABLED_FOR_TESTING){
-    // 公開版(体験版)では保存機能そのものを無効化する
-    btnSetDir.disabled = true;
-    btnSetDir.textContent = '📂 フォルダを設定(正式版で利用可)';
-    return;
-  }
-  if(!('showDirectoryPicker' in window)){
-    btnSetDir.disabled = true;
-    savedirNote.textContent = 'お使いのブラウザ、または file:// で直接開いている場合はこの機能を利用できません。GitHub Pages等で公開後、Chrome/Edgeでお試しください。';
-    return;
-  }
-  try{
-    const handle = await idbGet('saveDir');
-    if(handle){
-      const perm = await handle.queryPermission({mode:'readwrite'});
-      if(perm !== 'denied'){   // 'prompt'(ブラウザを閉じた後など)でも記憶したフォルダを残す。書き出し時に再許可を聞く
-        savedDirHandle = handle;
-        savedDirNeedsGrant = (perm !== 'granted');
-      }
-    }
-  }catch(e){ /* 何もしない(未設定として扱う) */ }
-  refreshSavedirUI();
-})();
 
 // フォルダ選択の前に、ブラウザの確認画面(許可のお願い)が出ることを、先に説明する
 function showFolderGuide(kind){
@@ -2277,24 +2286,6 @@ window.denshouOpenPath = async function(segs, isDir){
     setTimeout(()=> URL.revokeObjectURL(url), 5 * 60 * 1000);
   }catch(e){ if(w) w.close(); notify('warn', 'ファイルを開けませんでした(保存先が未設定、または許可がありません)。'); }
 };
-btnSetDir.addEventListener('click', async ()=>{
-  if(btnSetDir.disabled || !SAVE_ENABLED_FOR_TESTING) return;
-  if(!(await showFolderGuide('write'))) return;
-  try{
-    let startIn; try{ startIn = await idbGet('saveDir'); }catch(e){}
-    const handle = await window.showDirectoryPicker_disabled_in_demo(startIn ? {id:'denshou-dst', mode:'readwrite', startIn} : {id:'denshou-dst', mode:'readwrite'});
-    const perm = await handle.requestPermission({mode:'readwrite'});
-    if(perm !== 'granted'){
-      setStatus('フォルダへの書き込み許可が得られませんでした。', false);
-      return;
-    }
-    savedDirHandle = handle; savedDirNeedsGrant = false;
-    await idbSet('saveDir', handle);
-    refreshSavedirUI();
-  }catch(e){
-    if(e.name !== 'AbortError') console.error(e);
-  }
-});
 
 /* ---------- 日本の祝日データ(任意の年を計算、振替休日・国民の休日も算出) ---------- */
 // 春分の日・秋分の日は天文計算に基づく近似式(1980年以降で有効、内閣府公表値と照合済み)
@@ -4753,19 +4744,6 @@ function nameAlreadySearchable(name, parsed){
 }
 
 // フォルダを再帰的に走査(サブフォルダも対象)
-async function scanFolder(dirHandle, relSegs = [], out = [], stat = {skipped:0}, depth = 0){
-  for await (const [name, handle] of dirHandle.entries()){
-    if(name.startsWith('.')) continue;
-    if(handle.kind === 'directory'){
-      if(depth < 8) await scanFolder(handle, [...relSegs, name], out, stat, depth + 1);
-    } else {
-      const ext = (name.split('.').pop() || '').toLowerCase();
-      if(BULK_EXTS.includes(ext)) out.push({file: await handle.getFile(), relSegs});
-      else stat.skipped++;
-    }
-  }
-  return {items: out, stat};
-}
 
 // =====================================================================
 // 書類ルール:初回は「読み取り→確認→登録」、2回目以降は「登録済みルールを適用→確認だけ」
@@ -6128,7 +6106,7 @@ function showBulkCta(){
     const again = window.__runMode === 'camera';
     cm.innerHTML = '<div style="font-weight:700;font-size:15px;margin-bottom:4px;">📷 ' + (again ? 'もう1枚、撮影して試しますか?' : 'カメラで撮影した書類も試してみますか?') + '</div>' +
       '<div style="font-size:13px;margin-bottom:8px;">手元のレシートや領収書を撮影すると、文字を読み取って、同じ流れ(確認→整理プラン→台帳)で体験できます。' +
-      'スマホで開いていればそのままカメラが起動します(パソコンではファイル選択になります)。撮影した画像はこの端末のブラウザ内だけで処理され、外部には送信されません。体験の回数(10件)には数えません。</div>';
+      'スマホで開いていればそのままカメラが起動します(パソコンではファイル選択になります)。撮影した画像はこの端末のブラウザ内だけで処理され、外部には送信されません。体験の回数(3件)には数えません。</div>';
     const yes = document.createElement('button'); yes.type = 'button'; yes.className = 'dz-btn'; yes.textContent = '📷 撮影して試す';
     const no = document.createElement('button'); no.type = 'button'; no.className = 'dz-btn ghost'; no.style.marginLeft = '8px'; no.textContent = 'いまはしない';
     const inp = document.createElement('input'); inp.type = 'file'; inp.accept = 'image/*'; inp.setAttribute('capture', 'environment'); inp.style.display = 'none';
@@ -6144,139 +6122,13 @@ function showBulkCta(){
   }
 }
 
-$id('btnBulkPick').addEventListener('click', ()=> $id('bulkFileInput').click());
-$id('bulkFileInput').addEventListener('change', (e)=>{
-  const files = [...e.target.files];
-  e.target.value = '';
-  if(!files.length) return;
-  window.__bulkTotal = files.length;
-  runBulk(files.map(file=>({file, relSegs:[]})));
-});
 
 
 // ---- フォルダ診断:中身を読み取る前に、ファイル名と更新日だけで「このフォルダがどこまで整うか」を見せる(読み取りなし・件数制限なし) ----
 const escHtml = x => String(x).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function spreadPick(items, n){
-  if(n <= 0) return [];
-  if(items.length <= n) return items;
-  const groups = new Map();
-  items.forEach(it => { const k = it.relSegs.join('/') + '|' + (it.file.name.split('.').pop() || '').toLowerCase(); if(!groups.has(k)) groups.set(k, []); groups.get(k).push(it); });
-  const lists = [...groups.values()], out = []; let i = 0;
-  while(out.length < n){ let moved = false; for(const l of lists){ if(out.length >= n) break; if(i < l.length){ out.push(l[i]); moved = true; } } if(!moved) break; i++; }
-  return [...new Set(out)].slice(0, n);
-}
-function diagnoseFolder(items, rootName, stat){
-  const total = items.length;
-  let pdf = 0, img = 0, withDate = 0, withAmt = 0, cryptic = 0, big = 0;
-  const subs = new Set(), months = new Map(), sizeNames = new Map();
-  for(const it of items){
-    const nm = it.file.name, base = nm.replace(/\.[^.]+$/, ''), ext = (nm.split('.').pop() || '').toLowerCase();
-    if(ext === 'pdf') pdf++; else img++;
-    if(it.relSegs.length) subs.add(it.relSegs[0]);
-    const dm = base.match(/(20\d{2})[-_.年]?(0[1-9]|1[0-2])[-_.月]?(0[1-9]|[12]\d|3[01])/);
-    const hasDate = !!dm, hasAmt = /\d[\d,]*\s*円/.test(base);
-    if(hasDate) withDate++;
-    if(hasAmt) withAmt++;
-    if(!hasDate && !hasAmt && (/^(IMG|DSC|scan|image|photo|document|スキャン|無題|新規|PXL|CCI|Screenshot|スクリーンショット)?[-_ ]?\d*$/i.test(base) || base.length <= 12)) cryptic++;
-    const d = hasDate ? `${dm[1]}-${dm[2]}` : (it.file.lastModified ? new Date(it.file.lastModified).toISOString().slice(0, 7) : '');
-    if(d) months.set(d, (months.get(d) || 0) + 1);
-    const key = it.file.size + '|' + ext; sizeNames.set(key, (sizeNames.get(key) || 0) + 1);
-    if(it.file.size > 15 * 1024 * 1024) big++;
-  }
-  const dupSuspect = [...sizeNames.values()].filter(v => v > 1).reduce((a, v) => a + v - 1, 0);
-  const keys = [...months.keys()].sort();
-  const missing = keys.length >= 2 ? findMissingMonths(keys.map(k => k + '-01')) : [];
-  return { rootName, total, pdf, img, subs: subs.size, withDate, withAmt, cryptic, big, dupSuspect, firstM: keys[0] || '', lastM: keys[keys.length - 1] || '', missing, skipped: stat.skipped || 0, minutes: Math.max(1, Math.round(total * 3 / 60)) };
-}
-function showDiagnosis(dg){
-  return new Promise(resolve => {
-    const ov = document.createElement('div');
-    ov.style.cssText = 'position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;';
-    const box = document.createElement('div');
-    box.style.cssText = 'background:#fff;color:#0F172A;border-radius:14px;max-width:560px;width:100%;max-height:92vh;overflow:auto;padding:22px 24px;box-shadow:0 10px 40px rgba(0,0,0,.3);font-size:14px;line-height:1.7;';
-    const row = (ic, html) => `<div style="margin:3px 0">${ic} ${html}</div>`;
-    const remain = Math.max(0, MAX_FREE - getUsedCount());
-    const demo = !TESTING_MODE;
-    let h = `<div style="font-size:17px;font-weight:700;margin-bottom:2px">🔍 「${escHtml(dg.rootName)}」フォルダの診断結果</div><div style="font-size:12.5px;color:#475569;margin-bottom:10px">ファイル名と更新日だけで調べた、読み取り前の結果です(まだ何も変更していません)。</div>`;
-    h += row('📂', `画像・PDFが<b>${dg.total}件</b>(PDF ${dg.pdf} / 画像 ${dg.img})` + (dg.subs ? `、サブフォルダ${dg.subs}個` : '') + (dg.skipped ? `。ほか${dg.skipped}件は対象外のファイル` : ''));
-    if(dg.firstM) h += row('📅', `期間の目安:<b>${dg.firstM} 〜 ${dg.lastM}</b>` + (dg.missing.length ? `<br>　⚠ ${escHtml(formatMissingMonths(dg.missing))}のファイルが見当たりません(抜けの可能性)` : ''));
-    h += row('✅', `ファイル名に日付が入っている:<b>${dg.withDate}件</b> / 金額も入っている:<b>${dg.withAmt}件</b>`);
-    h += row('✏️', `名前から中身が分からない(IMG_0001のような):<b>${dg.cryptic}件</b> → 中身を読んで「日付_取引先_金額円_書類種類」に整えます`);
-    if(dg.dupSuspect) h += row('♻', `同じサイズ・種類のファイルが重なっています(重複の疑い):<b>${dg.dupSuspect}件</b> → 読み取り後、内容で重複を判定します`);
-    if(dg.big) h += row('⚠', `15MBを超える大きなファイルが${dg.big}件あります(読み取りに時間がかかります)`);
-    h += `<div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:8px 10px;margin:10px 0;font-size:13px">` + (demo
-      ? `<b>体験版の範囲:</b>${dg.total}件のうち<b>${Math.min(remain, dg.total)}件</b>を、フォルダや種類が偏らないよう抜粋して実際に読み取ります。<br>読み取り結果の確認画面・整理プラン(新しいファイル名と振り分け先)・重複判定・台帳・電帳ダッシュボードまで、本番と同じ流れで体験できます。<br><b>正式版</b>では、この${dg.total}件を一括で処理します(目安 約${dg.minutes}分)。年月フォルダへの書き出し、台帳CSV、検索用の一覧HTMLも使えます。`
-      : `${dg.total}件を読み取ります(目安 約${dg.minutes}分)。`) + `</div>`;
-    h += `<div style="font-size:12.5px;color:#475569;margin-bottom:12px">試す手順:①このまま「読み取りを始める」→ ②1件ずつ確認画面で結果を見る(直せます)→ ③整理プランを確認 → ④「電帳ダッシュボード」で検索を試す。元のファイルは変更しません。書類の中身は外部に送信されません。</div>`;
-    box.innerHTML = h;
-    const bar = document.createElement('div'); bar.style.cssText = 'display:flex;gap:8px;justify-content:flex-end';
-    const no = document.createElement('button'); no.type = 'button'; no.className = 'rv-btn'; no.textContent = 'やめる';
-    const ok = document.createElement('button'); ok.type = 'button'; ok.className = 'rv-btn primary'; ok.textContent = '読み取りを始める';
-    no.onclick = () => { ov.remove(); resolve(false); }; ok.onclick = () => { ov.remove(); resolve(true); };
-    bar.appendChild(no); bar.appendChild(ok); box.appendChild(bar); ov.appendChild(box); document.body.appendChild(ov);
-  });
-}
 
 // 前回の取り込み元フォルダ(作業フォルダ)をそのまま使うか聞く(true=使う / false=別を選ぶ / null=やめる)
-function askLastSrc(name){
-  return new Promise(resolve=>{
-    const ov = document.createElement('div');
-    ov.style.cssText = 'position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;';
-    const box = document.createElement('div');
-    box.style.cssText = 'background:#fff;color:#0F172A;border-radius:14px;max-width:460px;width:100%;padding:22px 24px;box-shadow:0 10px 40px rgba(0,0,0,.3);font-size:14px;line-height:1.7;';
-    const t = document.createElement('div'); t.style.cssText = 'font-size:16px;font-weight:700;margin-bottom:6px;'; t.textContent = '前回の書類フォルダを使いますか?';
-    const p = document.createElement('div'); p.style.cssText = 'margin-bottom:14px;'; p.textContent = `前回選んだフォルダ: 📁 ${name}`;
-    const row = document.createElement('div'); row.style.cssText = 'display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;';
-    const mk = (txt, primary, v)=>{ const b = document.createElement('button'); b.type = 'button'; b.textContent = txt; b.style.cssText = 'padding:9px 16px;border-radius:8px;font-size:14px;cursor:pointer;border:1px solid ' + (primary ? '#0B5D3B' : '#CBD5E1') + ';background:' + (primary ? '#0B5D3B' : '#fff') + ';color:' + (primary ? '#fff' : '#0F172A') + ';font-weight:' + (primary ? '700' : '400') + ';'; b.onclick = ()=>{ ov.remove(); resolve(v); }; return b; };
-    row.appendChild(mk('やめる', false, null)); row.appendChild(mk('別のフォルダを選ぶ', false, false)); row.appendChild(mk('このフォルダを使う', true, true));
-    box.appendChild(t); box.appendChild(p); box.appendChild(row); ov.appendChild(box); document.body.appendChild(ov);
-  });
-}
 
-// フォルダを選び、サブフォルダの中も含めて画像・PDFをすべて対象にする
-$id('btnBulkFolder').addEventListener('click', async ()=>{
-  if(!('showDirectoryPicker' in window)){
-    alert('フォルダ選択はChrome/Edgeで利用できます。「複数ファイルを選択して整理」をご利用ください。');
-    return;
-  }
-  let dir = null;
-  try{
-    const last = await idbGet('srcDir');
-    if(last && (await last.queryPermission({mode:'read'})) !== 'denied'){
-      const useLast = await askLastSrc(last.name);
-      if(useLast === null) return;
-      if(useLast){
-        try{ if((await last.queryPermission({mode:'read'})) === 'granted' || (await last.requestPermission({mode:'read'})) === 'granted') dir = last; }catch(e){}
-      }
-    }
-  }catch(e){}
-  if(!dir){
-    if(!(await showFolderGuide('read'))) return;
-    let startIn; try{ startIn = await idbGet('srcDir'); }catch(e){}
-    try{ dir = await window.showDirectoryPicker(startIn ? {id:'denshou-src', startIn} : {id:'denshou-src'}); }
-    catch(e){ return; } // キャンセル
-  }
-  try{ await idbSet('srcDir', dir); }catch(e){}
-  notify('info', `「${dir.name}」の中(サブフォルダを含む)を探しています…`, {toast:false});
-  const { items, stat } = await scanFolder(dir);
-  if(!items.length){
-    notify('warn', `「${dir.name}」に対象の画像・PDFが見つかりませんでした。`);
-    return;
-  }
-  items.sort((x,y)=> segPath(x.relSegs, x.file.name).localeCompare(segPath(y.relSegs, y.file.name)));
-  if(stat.skipped) notify('info', `画像・PDF以外のファイル ${stat.skipped}件は対象外としました。`, {toast:false});
-  window.__bulkTotal = items.length;
-  const dg = diagnoseFolder(items, dir.name, stat);
-  const go = await showDiagnosis(dg);
-  if(!go) return;
-  let run = items;
-  if(!TESTING_MODE){ // 体験版:残り回数ぶんを、フォルダ・種類・年月が偏らないように間引いて処理する(正式版は全件)
-    const remain = Math.max(0, MAX_FREE - getUsedCount());
-    run = remain >= items.length ? items : spreadPick(items, remain);
-    if(run.length < items.length) notify('info', `体験版のため、${items.length}件のうち${run.length}件(フォルダや種類が偏らないよう抜粋)を処理します。正式版では全${items.length}件を一括で処理します。`, {toast:false});
-  }
-  runBulk(run, {sourceRoot: dir});
-});
 
 /* ---------- 電帳ダッシュボード(検索できる一覧HTML) ---------- */
 function safeJsonForScript(obj){
@@ -6693,10 +6545,6 @@ const DEMO_SAMPLES = {"サンプル1_レシート.pdf": "JVBERi0xLjMKJZOMi54gUmV
     secs.forEach(x => det.appendChild(x));
   };
   const go = id => { const e = document.getElementById(id); if(e) e.scrollIntoView({behavior:'smooth', block:'start'}); };
-  const supportsFolder = ('showDirectoryPicker' in window);
-  const btnF = document.getElementById('qsFolder');
-  if(!supportsFolder){ btnF.disabled = true; document.getElementById('qsNoFolder').style.display = ''; }
-  btnF.addEventListener('click', () => { const b = document.getElementById('btnBulkFolder'); if(b) b.click(); });
   document.getElementById('qsDash').addEventListener('click', () => { const b = document.getElementById('btnDashboard'); if(b) b.click(); });
   document.getElementById('qsSample').addEventListener('click', () => {
     const names = Object.keys(DEMO_SAMPLES);
@@ -6705,7 +6553,7 @@ const DEMO_SAMPLES = {"サンプル1_レシート.pdf": "JVBERi0xLjMKJZOMi54gUmV
       const bin = Uint8Array.from(atob(DEMO_SAMPLES[n]), c => c.charCodeAt(0));
       return {file: new File([bin], n, {type:'application/pdf'}), relSegs: [], sample: true};
     });
-    window.__bulkTotal = 0; // サンプルは体験の回数(10件)に数えない
+    window.__bulkTotal = 0; // サンプルは体験の回数(3件)に数えない
     go('btnBulkFolder');
     runBulk(items, {sample:true});
   });
@@ -6781,7 +6629,6 @@ const DEMO_SAMPLES = {"サンプル1_レシート.pdf": "JVBERi0xLjMKJZOMi54gUmV
     setTimeout(() => { const q = document.getElementById('bulkQueue'); if(q && q.children.length && !document.querySelector('.rv-overlay') && !cur) show(q, {title:'読み取り中です', text:'書類を1件ずつ読み取っています。数秒かかるので、そのままお待ちください。読み取りが終わると、確認画面が開きます。'}); }, 900);
   };
   document.getElementById('qsSample').addEventListener('click', () => start('sample'), true);
-  document.getElementById('qsFolder').addEventListener('click', () => start('folder'), true);
 
   // ---- 確認画面(1件ずつ) ----
   let reviewCount = 0, planDone = false;
@@ -7073,8 +6920,6 @@ const DEMO_SAMPLES = {"サンプル1_レシート.pdf": "JVBERi0xLjMKJZOMi54gUmV
     return origSIV.apply(this, arguments);
   };
   const panelOf = id => { const e = document.getElementById(id); return e && e.closest('.panel'); };
-  const qsF = document.getElementById('qsFolder');
-  if(qsF) qsF.addEventListener('click', () => { const p = panelOf('btnBulkFolder'); if(p) show(p.dataset.panel, {keepScroll: true}); });
   const qsS = document.getElementById('qsSample');
   if(qsS) qsS.addEventListener('click', () => { const p = panelOf('btnBulkFolder'); if(p) show(p.dataset.panel, {keepScroll: true}); });
 
@@ -7491,6 +7336,110 @@ const DEMO_SAMPLES = {"サンプル1_レシート.pdf": "JVBERi0xLjMKJZOMi54gUmV
     window.__lastDirMaster = savedDirHandle;
   }
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+
+/* ---------- 取得予定のお知らせ(ログイン・自動取得はしない。お知らせと、カレンダー書き出しだけ) ---------- */
+(function(){
+  const KEY = 'denshou_sched';
+  const el = id => document.getElementById(id);
+  if(!el('schedBox')) return;
+  const load = () => { try{ const a = JSON.parse(localStorage.getItem(KEY) || '[]'); return Array.isArray(a) ? a : []; }catch(e){ return []; } };
+  const save = a => { try{ localStorage.setItem(KEY, JSON.stringify(a)); }catch(e){ try{ notify('warn', '予定を保存できませんでした(ブラウザの保存領域が使えません)。'); }catch(e2){} } };
+  const PRESETS = {
+    amazon: {name:'Amazonの注文履歴・領収書', url:'https://www.amazon.co.jp/your-orders/orders', day:'end'},
+    rakuten: {name:'楽天の購入履歴・領収書', url:'https://order.my.rakuten.co.jp/', day:'end'},
+    card: {name:'クレジットカードの利用明細', url:'', day:10},
+    bank: {name:'銀行の入出金明細', url:'', day:'end'}
+  };
+  const daySel = el('schedDay');
+  for(let d = 1; d <= 28; d++){ const o = document.createElement('option'); o.value = String(d); o.textContent = d + '日'; daySel.appendChild(o); }
+  { const o = document.createElement('option'); o.value = 'end'; o.textContent = '月末'; daySel.appendChild(o); }
+  daySel.value = 'end';
+  let editId = null;
+  const ym = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+  const dueDay = (it, y, m) => it.day === 'end' ? new Date(y, m + 1, 0).getDate() : Math.min(Number(it.day) || 1, new Date(y, m + 1, 0).getDate());
+  const okUrl = u => /^https?:\/\//i.test(u || '');
+  function status(it, now){
+    const key = ym(now);
+    if(it.done && it.done[key]) return {cls:'done', txt:'取得済み', rank:3};
+    const dd = dueDay(it, now.getFullYear(), now.getMonth()), today = now.getDate();
+    if(today > dd) return {cls:'late', txt:'取得日を過ぎています', rank:0};
+    if(today === dd) return {cls:'due', txt:'今日が取得日', rank:1};
+    return {cls:'', txt:'あと' + (dd - today) + '日', rank:2};
+  }
+  function render(){
+    const now = new Date(), key = ym(now), list = load();
+    el('schedMonth').textContent = '(' + now.getFullYear() + '年' + (now.getMonth() + 1) + '月)';
+    const box = el('schedList'); box.textContent = '';
+    el('schedEmpty').style.display = list.length ? 'none' : '';
+    const rows = list.map(it => ({it, st: status(it, now)})).sort((a, b) => a.st.rank - b.st.rank || dueDay(a.it, now.getFullYear(), now.getMonth()) - dueDay(b.it, now.getFullYear(), now.getMonth()));
+    let attention = 0;
+    rows.forEach(({it, st}) => {
+      if(st.rank <= 1) attention++;
+      const row = document.createElement('div'); row.className = 'sched-row';
+      const nm = document.createElement('div'); nm.className = 'nm'; nm.textContent = it.name;
+      const sm = document.createElement('small'); sm.textContent = '毎月' + (it.day === 'end' ? '月末' : it.day + '日') + '(今月は' + dueDay(it, now.getFullYear(), now.getMonth()) + '日)'; nm.appendChild(sm);
+      const b = document.createElement('span'); b.className = 'sched-st ' + st.cls; b.textContent = st.txt;
+      row.appendChild(nm); row.appendChild(b);
+      const mk = (txt, fn, ghost) => { const x = document.createElement('button'); x.type = 'button'; x.className = 'dz-btn' + (ghost === false ? '' : ' ghost'); x.textContent = txt; x.addEventListener('click', fn); row.appendChild(x); return x; };
+      if(okUrl(it.url)){ const a = document.createElement('a'); a.href = it.url; a.target = '_blank'; a.rel = 'noopener noreferrer'; a.className = 'dz-btn'; a.textContent = 'ページを開く'; a.style.textDecoration = 'none'; row.appendChild(a); }
+      const isDone = it.done && it.done[key];
+      mk(isDone ? '取り消す' : '取得した ✓', () => { const a = load(), t = a.find(x => x.id === it.id); if(!t) return; t.done = t.done || {}; if(isDone) delete t.done[key]; else t.done[key] = true; save(a); render(); });
+      mk('編集', () => startEdit(it));
+      mk('削除', () => { if(!confirm('「' + it.name + '」の予定を削除します。よろしいですか?')) return; save(load().filter(x => x.id !== it.id)); if(editId === it.id) stopEdit(); render(); });
+      box.appendChild(row);
+    });
+    const bd = el('schedBadge'); bd.style.display = attention ? '' : 'none'; bd.textContent = attention ? '要確認 ' + attention + ' 件' : '';
+    return attention;
+  }
+  function startEdit(it){
+    editId = it.id; el('schedName').value = it.name; el('schedUrl').value = it.url || ''; daySel.value = String(it.day);
+    el('schedAdd').textContent = '予定を更新'; el('schedCancel').style.display = ''; el('schedManage').open = true; el('schedName').focus();
+  }
+  function stopEdit(){ editId = null; el('schedName').value = ''; el('schedUrl').value = ''; daySel.value = 'end'; el('schedAdd').textContent = '予定を追加'; el('schedCancel').style.display = 'none'; }
+  el('schedCancel').addEventListener('click', stopEdit);
+  el('schedAdd').addEventListener('click', () => {
+    const name = el('schedName').value.trim(), url = el('schedUrl').value.trim();
+    if(!name){ alert('名前を入力してください(例:楽天カードの利用明細)'); el('schedName').focus(); return; }
+    if(url && !okUrl(url)){ alert('URLは、https:// で始まるものを入力してください(空のままでも登録できます)。'); el('schedUrl').focus(); return; }
+    const a = load(), day = daySel.value === 'end' ? 'end' : Number(daySel.value);
+    if(editId){ const t = a.find(x => x.id === editId); if(t){ t.name = name; t.url = url; t.day = day; } }
+    else a.push({id: 's' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), name, url, day, done: {}});
+    save(a); stopEdit(); render();
+  });
+  document.querySelectorAll('#schedBox [data-preset]').forEach(b => b.addEventListener('click', () => {
+    const pr = PRESETS[b.dataset.preset]; if(!pr) return;
+    stopEdit(); el('schedName').value = pr.name; el('schedUrl').value = pr.url; daySel.value = String(pr.day); el('schedManage').open = true;
+    el('schedName').focus();
+    if(!pr.url) notify('info', '明細をダウンロードするページのURLを入れておくと、ここから開けます(任意)。内容を確認して「予定を追加」を押してください。');
+  }));
+  /* .ics(カレンダー)への書き出し */
+  const icsEsc = t => String(t).replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\r?\n/g, '\\n');
+  const fold = line => { const enc = new TextEncoder(); let out = '', cur = '', bytes = 0; for(const ch of line){ const n = enc.encode(ch).length; if(bytes + n > 72){ out += cur + '\r\n '; cur = ''; bytes = 1; } cur += ch; bytes += n; } return out + cur; };
+  const ymd = d => d.getFullYear() + String(d.getMonth() + 1).padStart(2, '0') + String(d.getDate()).padStart(2, '0');
+  el('schedIcs').addEventListener('click', () => {
+    const list = load(); if(!list.length){ alert('先に、予定を登録してください。'); return; }
+    const now = new Date(), stamp = now.toISOString().replace(/[-:]/g, '').replace(/\.\d+Z$/, 'Z');
+    const L = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//A2E Works//dencho DIY//JA', 'CALSCALE:GREGORIAN', 'X-WR-CALNAME:電帳DIY 取得予定'];
+    list.forEach(it => {
+      let d = new Date(now.getFullYear(), now.getMonth(), dueDay(it, now.getFullYear(), now.getMonth()));
+      if(d < new Date(now.getFullYear(), now.getMonth(), now.getDate())) d = new Date(now.getFullYear(), now.getMonth() + 1, dueDay(it, now.getFullYear(), now.getMonth() + 1));
+      L.push('BEGIN:VEVENT', 'UID:' + it.id + '@dencho-diy', 'DTSTAMP:' + stamp, 'DTSTART;VALUE=DATE:' + ymd(d),
+        'RRULE:FREQ=MONTHLY;BYMONTHDAY=' + (it.day === 'end' ? '-1' : String(it.day)),
+        'SUMMARY:' + icsEsc('【電帳DIY】' + it.name + 'を取得'),
+        'DESCRIPTION:' + icsEsc('明細・領収書のPDFを保存して、電帳DIYの「03 証憑を読み込む」から取り込みます。' + (okUrl(it.url) ? '\n' + it.url : '')));
+      if(okUrl(it.url)) L.push('URL:' + it.url);
+      L.push('TRANSP:TRANSPARENT', 'BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:' + icsEsc('電帳DIY 取得予定'), 'TRIGGER:PT9H', 'END:VALARM', 'END:VEVENT');
+    });
+    L.push('END:VCALENDAR');
+    const blob = new Blob([L.map(fold).join('\r\n') + '\r\n'], {type: 'text/calendar;charset=utf-8'});
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = '電帳DIY_取得予定.ics'; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 10000);
+    notify('ok', '取得予定を、カレンダー用のファイル(.ics)に書き出しました。カレンダーアプリで開くと、取り込めます。');
+  });
+  const n = render();
+  if(n){ setTimeout(() => { try{ notify('info', '今月の取得予定で、確認が必要なものが ' + n + ' 件あります(ホームの「今月の取得予定」)。'); }catch(e){} }, 1200); }
+  window.__schedRender = render;
 })();
 </script>
 </body>
