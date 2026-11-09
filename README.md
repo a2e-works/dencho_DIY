@@ -73,6 +73,19 @@ Amazon・楽天・カード・銀行などの明細を取る日を登録して�
 
 正式版は 通常 ¥6,980(買い切り)です(リリース記念価格 ¥4,980。期間限定)。販売ページは、決まり次第お知らせします。
 
+## 国税庁の資料(はじめての方へ)
+
+副業を始めた方が、「自分は対象か」「基準はどこか」「何をしておけば、税務調査のときに困らないか」を確かめるための、国税庁の資料です。制度は改正されることがあるため、最新の内容は各ページでご確認ください。
+
+<!--NTA_LINKS:md-->
+- [電子帳簿保存法関係(入口)](https://www.nta.go.jp/law/joho-zeikaishaku/sonota/jirei/index.htm) ― まず全体を見る
+- [個人で事業を行っている方の記帳・帳簿等の保存について](https://www.nta.go.jp/taxes/shiraberu/shinkoku/kojin_jigyo/index.htm) ― 自分が記帳・保存の対象かを確かめる(副業の場合も、所得の区分や収入金額で扱いが変わります)
+- [電子取引データの保存方法(パンフレット・PDF)](https://www.nta.go.jp/law/joho-zeikaishaku/sonota/jirei/tokusetsu/pdf/0024011-003_01.pdf) ― 保存の要件と、検索の条件が不要になる基準を確かめる
+- [電子取引データ保存要件チェックシート(PDF)](https://www.nta.go.jp/law/joho-zeikaishaku/sonota/jirei/tokusetsu/pdf/0024011-003_02.pdf) ― 要件を満たしているかを、自分で確かめる
+- [事務処理規程などのサンプル](https://www.nta.go.jp/law/joho-zeikaishaku/sonota/jirei/0021006-031.htm) ― 改ざん防止のための規程の、ひな形を見る
+- [電子帳簿保存法一問一答(Q&A)](https://www.nta.go.jp/law/joho-zeikaishaku/sonota/jirei/4-3.htm) ― 細かい疑問を調べる(【電子取引関係】の項目)
+<!--/NTA_LINKS-->
+
 ## 動作環境・注意
 
 - 推奨:パソコンの Chrome / Edge。スマホではファイル選択のみです。

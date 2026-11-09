@@ -966,7 +966,7 @@
         <summary>詳しく見る(根拠・対象範囲・注意)</summary>
         <p class="law-box-text" style="margin-top:8px">
         電子取引で受け取った請求書・領収書などのデータは、電子データのまま保存し、<b>「取引年月日・取引金額・取引先」で検索できる状態</b>にしておくことが求められています
-        (国税庁:<a href="https://www.nta.go.jp/law/joho-zeikaishaku/sonota/jirei/tokusetsu/index.htm" target="_blank" rel="noopener">電子帳簿保存法 特設サイト</a>)。
+        (国税庁:<a href="https://www.nta.go.jp/law/joho-zeikaishaku/sonota/jirei/index.htm" target="_blank" rel="noopener">電子帳簿保存法関係(入口)</a>)。
         ただし、<b>基準期間(個人は前々年)の売上高が5,000万円以下</b>で、税務職員のダウンロードの求めに応じられる状態にしてあれば、検索機能の確保は不要とされています(国税庁・一問一答 問49・51)。
         この場合も、求められたときに書類を探して出せる状態であることは変わりません。
         ファイル名に規則性をもって内容を表示する方法は、国税庁の一問一答(問19)に例として示されています。
@@ -1661,12 +1661,17 @@ a{color:#2D31A0;font-weight:500;}
   <div class="audit">
     <h2>🧾 検索・一覧出力について</h2>
     <p>電子取引データは<b>「取引年月日・取引金額・取引先」</b>で検索できる状態での保存が求められます。この画面では、<b>日付・金額の範囲指定と取引先の組合せ検索</b>ができ、結果を<b>一覧CSV</b>として保存できます(提出形式は税務職員の指示に従ってください)。原本のファイルは、各行のリンク先(保存フォルダ内)にあります。</p>
-    <ul>
-      <li><a href="https://www.nta.go.jp/law/joho-zeikaishaku/sonota/jirei/tokusetsu/index.htm" target="_blank" rel="noopener">国税庁:電子帳簿保存法 特設サイト</a></li>
-      <li><a href="https://www.nta.go.jp/law/joho-zeikaishaku/sonota/jirei/pdf/0026007-006_05.pdf" target="_blank" rel="noopener">電子帳簿保存法一問一答【電子取引関係】(PDF)</a></li>
-      <li><a href="https://www.nta.go.jp/law/joho-zeikaishaku/sonota/jirei/pdf/0021010-200.pdf" target="_blank" rel="noopener">「ダウンロードの求め」に応じる場合の取扱い(PDF)</a></li>
-      <li><a href="https://www.nta.go.jp/law/joho-zeikaishaku/sonota/jirei/0021006-031.htm" target="_blank" rel="noopener">事務処理規程などのサンプル</a></li>
+    <p class="small" style="margin-bottom:4px"><b>国税庁の資料(はじめての方へ)</b> ― 自分は対象か、基準はどこか、何をしておけば困らないかを、確かめられます。</p>
+    <!--NTA_LINKS:html-->
+<ul>
+      <li><a href="https://www.nta.go.jp/law/joho-zeikaishaku/sonota/jirei/index.htm" target="_blank" rel="noopener">電子帳簿保存法関係(入口)</a><span class="nta-use"> ― まず全体を見る</span></li>
+      <li><a href="https://www.nta.go.jp/taxes/shiraberu/shinkoku/kojin_jigyo/index.htm" target="_blank" rel="noopener">個人で事業を行っている方の記帳・帳簿等の保存について</a><span class="nta-use"> ― 自分が記帳・保存の対象かを確かめる(副業の場合も、所得の区分や収入金額で扱いが変わります)</span></li>
+      <li><a href="https://www.nta.go.jp/law/joho-zeikaishaku/sonota/jirei/tokusetsu/pdf/0024011-003_01.pdf" target="_blank" rel="noopener">電子取引データの保存方法(パンフレット・PDF)</a><span class="nta-use"> ― 保存の要件と、検索の条件が不要になる基準を確かめる</span></li>
+      <li><a href="https://www.nta.go.jp/law/joho-zeikaishaku/sonota/jirei/tokusetsu/pdf/0024011-003_02.pdf" target="_blank" rel="noopener">電子取引データ保存要件チェックシート(PDF)</a><span class="nta-use"> ― 要件を満たしているかを、自分で確かめる</span></li>
+      <li><a href="https://www.nta.go.jp/law/joho-zeikaishaku/sonota/jirei/0021006-031.htm" target="_blank" rel="noopener">事務処理規程などのサンプル</a><span class="nta-use"> ― 改ざん防止のための規程の、ひな形を見る</span></li>
+      <li><a href="https://www.nta.go.jp/law/joho-zeikaishaku/sonota/jirei/4-3.htm" target="_blank" rel="noopener">電子帳簿保存法一問一答(Q&amp;A)</a><span class="nta-use"> ― 細かい疑問を調べる(【電子取引関係】の項目)</span></li>
     </ul>
+<!--/NTA_LINKS-->
     <p class="small">※リンク先は国税庁の公開資料です。制度の詳細・最新の取扱いは各ページと、税務署・税理士にご確認ください。</p>
   </div>
 
@@ -2756,7 +2761,7 @@ const NEWS_BASE = [
     url: 'https://www.nta.go.jp/law/joho-zeikaishaku/sonota/jirei/tokusetsu/index.htm' },
   { date: '2026-10-08', tag: '国税庁', title: '電子帳簿保存法一問一答【電子取引関係】(令和8年7月版)が公開されています。',
     body: '検索機能の確保(ファイル名への記載の例など)や、ダウンロードの求めへの対応が示されています。',
-    url: 'https://www.nta.go.jp/law/joho-zeikaishaku/sonota/jirei/pdf/0026007-006_05.pdf' },
+    url: 'https://www.nta.go.jp/law/joho-zeikaishaku/sonota/jirei/4-3.htm' },
 ];
 function safeUrl(u){ try{ const x = new URL(u); return x.protocol === 'https:' ? x.href : ''; }catch(e){ return ''; } }
 function loadUpdatesCache(){ try{ return JSON.parse(localStorage.getItem(UPDATES_CACHE_KEY) || 'null'); }catch(e){ return null; } }
